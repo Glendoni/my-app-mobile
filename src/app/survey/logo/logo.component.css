@@ -1,0 +1,13 @@
+.s-header__logo-img-default{
+  color: grey !important;
+}
+.s-header__logo-img-shrink span{
+  color: #16b1cd ;
+}
+.s-header__logo-img-default span{
+  color: rgba(22, 177, 205, 0.29);
+}
+
+.s-header__logo-img-default .study-title-initial, .s-header__logo-img-shrink .study-title-initial{
+  color:grey ;
+}

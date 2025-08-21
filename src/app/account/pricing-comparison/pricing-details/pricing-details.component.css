@@ -1,0 +1,33 @@
+.list-unstyled li{
+  font-weight: 300;
+  text-align: center;
+}
+.purchase  p{
+  color:#236591 !important;
+}
+.modal-title{
+  color:white;
+}
+.closeBtn{
+  text-align: right;
+  margin-top: 20px;
+  position: absolute;
+  width: auto;
+  left: 86%;
+  top: 29px;
+}
+.modal-content{
+  background: #727272;
+}
+.toggleLink a{
+  cursor: pointer;
+}
+.formStyle{
+  background:#ffffff;
+}
+.paymentHeading{
+  color: #236591;
+}
+.closeBtn{
+  cursor: pointer;
+}

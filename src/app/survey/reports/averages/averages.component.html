@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-4 text-center">AVERAGES</div>
+  <div class="col-md-8">
+    <div *ngFor="let item of result; index as i" class="d-sm-inline-block mb-1">
+      <p *ngFor="let datasets of item['datasets']; index as i">{{datasets['avg']['labelAvg'] }}  : {{datasets['avg']['dataAvg'] }}  <br/></p>
+    </div>
+  </div>
+</div>
+
+
+

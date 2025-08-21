@@ -1,0 +1,6 @@
+<p>profile working!</p>
+
+<div class="container" *ngIf="model">
+
+<app-dynamic-form [model]="model" (profile)="submit($event)"></app-dynamic-form>
+</div>

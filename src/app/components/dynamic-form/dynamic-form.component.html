@@ -1,0 +1,15 @@
+<form [formGroup]="dynamicFormGroup" (submit)="onSubmit()">
+    <div *ngFor="let field of fields" >
+
+<!--      <pre> {{field |json}}</pre>-->
+        <app-field-input [field]="field"></app-field-input>
+        <app-dynamic-error [fieldName]="field['fieldName']"></app-dynamic-error>
+    </div>
+  <input type="submit" value="Submit" class="btn btn-outline-success" />
+</form>
+<div>
+<button class="border-t-neutral-50" (click)=" onSubmit()">Submit</button>
+</div>
+
+
+<!--<pre>{{dynamicFormGroup.value |json}}</pre>-->

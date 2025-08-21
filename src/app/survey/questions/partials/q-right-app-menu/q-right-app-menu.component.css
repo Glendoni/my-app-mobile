@@ -1,0 +1,30 @@
+.scroll{
+  top: 65%;
+}
+.scroll p{
+  color:#9f9f9f;
+  text-align: center;
+
+}
+
+li{
+  color:#9f9f9f;
+  font-size: 12px;
+
+
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+  font-weight: 800;
+}
+hr{
+  color: white;
+}
+.matrix{
+  background: #242424;
+  border-top: solid thin #444444;
+  border-bottom: solid thin #343434;
+  padding: 29px 0px;
+}

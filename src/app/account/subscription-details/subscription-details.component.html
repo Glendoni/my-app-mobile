@@ -1,0 +1,219 @@
+<div class="container-fluid">
+  <div class="row equal-height-container">
+
+    <!--    <div class="col-12">-->
+    <!--      <h5 class="mb-4 text-center">Upgrade Detail</h5>-->
+    <!--    </div>-->
+    <div class="row">
+      <div class="col-md-12 col-lg-8 mb-6 col-item">
+        <div>
+
+
+        </div>
+        <div *ngIf="!showPayment" class="card">
+
+
+          <div class="card-body pt-2 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column ">
+            <p class="closeBtn" (click)="onBackToListing()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><line x1="368" y1="368" x2="144" y2="144" style="fill:none;stroke:#999;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/><line x1="368" y1="144" x2="144" y2="368" style="fill:none;stroke:#999;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/></svg></p>
+            <div class="price-top-part purchase">
+
+              <i class="iconsminds-male large-icon"></i>
+              <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">{{pkg['pricing']['name']}} <span *ngIf="pkg['pricing']['status'] =='active'" class="packageActive"> <i class="bi bi-check-circle packageActive"></i></span></h5>
+              <p class="text-large mb-2 text-default">{{pkg['pricing']['price']}}</p>
+              <p class="text-muted text-small">User/Month</p>
+            </div>
+            <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1 purchase">
+              <ul class="list-unstyled">
+                <li *ngFor="let package of pkg['pricing']['pkgDetails']" >
+                  {{package}}
+                </li>
+              </ul>
+
+              <h6 class="text-center mt-3 paymentHeading"> Status: {{unsubscribeSuccessMsg ? 'THIS SUBSCRIPTION HAS BEEN CANCELED ' : ''}}<span [class]="pkg['pricing']['status']">{{pkg['pricing']['status'] |uppercase}} </span> </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12 col-xl-4 col-left">
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="verbiage mb-5 flex-column flex-grow-1 purchase">
+              <h5
+                class="mb-0 font-weight-semibold color-theme-1 mb-4 text-center">Subscription Details</h5>
+
+<!--              {{pkg|json}}-->
+              <p class="text-center"> <strong>{{pkg['pricing']['name']}}</strong> -  monthly</p>
+              <ul class="list-unstyled">
+
+                <li *ngIf="pkg['pricing']['status'] == 'active'">
+                  <strong>{{pkg['pricing']['cancel_at_period_end'] ? 'Subscription Ends' : 'Subscription Auto Renewal Date' }} <br> {{pkg['pricing']['ends_at'] |date}}</strong>
+                </li>
+                <li *ngIf="unsubscribeSuccessMsg">
+                  This account will become inactive after the day shown above. Your account will not be charged after this date.
+                </li>
+<!--                <li *ngIf="!pkg['pricing']['cancel_at_period_end'] && pkg['pricing']['status'] != 'pending'">-->
+<!--                  Auto Renews on: 01-07-2025</li>-->
+
+<!--                <li *ngIf="!pkg['pricing']['cancel_at_period_end'] && pkg['pricing']['status'] == 'active'">-->
+<!--                  Auto Renews on: 01-07-2025</li>-->
+
+                <li *ngIf="!pkg['pricing']['cancel_at_period_end'] && pkg['pricing']['status'] == 'pending'">
+                  Begins on: {{'01-07-2025'|date}}</li>
+
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="mb-5">
+              <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4 text-center">Subscription</h5>
+
+
+              <div *ngIf="unsubscribeSuccessMsg"></div>
+            <div *ngIf="pkg['pricing']['status'] == 'pending'">
+
+
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button  (click)="onShowCancelPendingModal()" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-outline-warning btn-">Cancel Pending Subscription</button>
+              </div>
+            </div>
+
+              <div *ngIf="pkg['pricing']['status'] == 'active'&& !pkg['pricing']['cancel_at_period_end']">
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <button  (click)="onShowCancellationModal()" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-outline-danger btn-">Cancel Subscription</button>
+              </div>
+            </div>
+              <div *ngIf="pkg['pricing']['status'] == 'active'&& pkg['pricing']['cancel_at_period_end']">
+                <div class="d-grid gap-2 col-12 mx-auto">
+                  <button (click)="onShowResumeModal()" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-outline-success text-center">Resume Subscription</button>
+                </div>
+              </div>
+            </div>
+<!--            <p class="toggleLink">For more user information please take a look at our-->
+<!--              <a (click)="onToggleNotices(true)" data-toggle="modal" data-target="#exampleModalUs"><strong>Terms and Conditions</strong></a>-->
+<!--              and-->
+<!--              <a (click)="onToggleNotices(false)" data-toggle="modal" data-target="#exampleModalUs"><strong>Privacy Policy</strong></a>.-->
+<!--            </p>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div  class="modal fade" id="exampleModalUs" tabindex="-1" role="dialog" aria-hidden="true"
+        style="display: none;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="exampleModalLabel">{{toggleNotices?'Terms and Conditions':'Privacy Policy'}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row col-12" >
+            <div *ngIf="toggleNotices; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+                <app-customer-terms></app-customer-terms>
+            </ng-template>
+            <ng-template #elseBlock><app-customer-privacy-policy></app-customer-privacy-policy></ng-template>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!--            <button type="button" class="btn btn-primary">Save changes</button>-->
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true"
+        style="display: none;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <h5 class="modal-title text-center" id="exampleModalUsLabel">{{subTitleAction}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body mb-3">
+<!--          {{ 'general.welcome' | translate }}-->
+          <div *ngIf="showCancellationModal" class="row col-12 mb-1">
+<!--            <h6><strong>Unsubscribe ~ Premium Package</strong></h6>-->
+              <p class="mt-1">After cancelling your current subscription your account will continue to operate as normal until the subscription has fully expired.</p>
+              <p>If you choose to resume your subscription before the scheduled subscription ends the account will be re-activated and the account will be billed on the original billing cycle.</p>
+              <p><strong>Please state your reason for wanting to unsubscribe</strong></p>
+            <form [formGroup]="cancellationForm" class="form-control mb-5" >
+              <div class="form-check">
+                <input formControlName="reason"  class="form-check-input" type="radio" name="reason" value="R1" id="radioDefault1" >
+                <label class="form-check-label" for="radioDefault1">
+                  Service no longer required
+                </label>
+              </div>
+              <div class="form-check">
+                <input formControlName="reason"  class="form-check-input" type="radio" name="reason" value="R2" id="radioDefault2">
+                <label class="form-check-label" for="radioDefault2">
+                  To Expensive
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input formControlName="reason"  class="form-check-input" type="radio"  name="reason" value="R3" id="radioDefault3">
+                <label class="form-check-label" for="radioDefault2">
+                  I require additional features
+                </label>
+              </div>
+<!--              {{submitted}}-->
+<!--              {{f['reason'].errors|json}}-->
+<!--           //   [ngClass]="{ 'is-invalid': submitted && f['reason'].errors }"-->
+              <div *ngIf="submitted && f['reason'].errors" class="invalid-feedback mb-3">
+                <div *ngIf="f['reason'].errors">reason is required</div>
+              </div>
+
+              <div *ngIf="submitted && cancellationForm.get('reason')?.invalid" style="color: red;">
+                reason is required.
+              </div>
+<div  class="mb-5 mt-3">
+
+              <button type="submit" class="btn btn-sm btn-outline-danger unsubscribeBtn" (click)="onCancelSubscription()">Cancel Subscription</button>
+
+
+
+
+<!--              <button type="button" class="btn btn-sm btn-primary" (click)="onResumeSubscription()">Resume Subscription</button>-->
+</div>
+            </form>
+          </div>
+          <div *ngIf="showResumeModal" class="row col-12 mb-1">
+            <p><strong>If you choose to resume your subscription before the scheduled subscription ends the account will be re-activated and the account will be billed on the original billing cycle.</strong></p>
+            <div class="d-grid gap-2 col-12 mx-auto mt-3">
+              <button (click)="onResumeSubscription()" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-outline-success text-center">Resume Subscription</button>
+            </div>
+          </div>
+
+          <div *ngIf="showCancelPendingModal" class="row col-12 mb-1">
+            <p>Any pending subscription that is cancelled before the start date will not be charged.</p>
+            <p><strong>For more information please review out terms and conditions on subscription cancellation</strong></p>
+            <div class="d-grid gap-2 col-12 mx-auto mt-3">
+              <button (click)="onCancelPendingSubscription(pkg['pricing']['product'])" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-outline-warning text-center">Cancel Pending Subscription</button>
+            </div>
+          </div>
+          <div *ngIf="unsubscribeSuccessMsg">
+          <h5 class="text-center">Subscription Canceled</h5>
+            <p>If you choose to resume your subscription before the scheduled subscription ends the account will be re-activated and the account will be billed on the original billing cycle.</p>
+          </div>
+        </div>
+        <div class="modal-footer mt-5">
+           <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

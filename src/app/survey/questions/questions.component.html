@@ -1,0 +1,64 @@
+<!--<pre>{{studyInfo.study_categories |json}}</pre>-->
+<div class="container-fluid" *ngIf="studyInfo">
+  <div class="row">
+    <div class="col-12 survey-app">
+      <div class="mb-2">
+<!--  <app-q-header></app-q-header>-->
+      </div>
+
+      <app-q-tabs (loadReports)="getReports($event)"></app-q-tabs>
+      <div class="tab-content mb-4">
+        <div class="tab-pane show active" id="first" role="tabpanel" aria-labelledby="first-tab">
+          <div class="row">
+            <div class=" col-4 mb-4 d-none d-sm-none d-md-none d-lg-block d-xl-block left-side">
+              <app-q-left-summary [studyInfo]="studyInfo"></app-q-left-summary>
+
+            </div>
+            <div *ngIf="addQuestion" class="col-12 col-xs-8 col-sm-12 col-md-12  col-lg-8 col-xl-8 mb-4">
+              <app-questions-drag-and-drop (toggleEdit)="onToggle($event)" [createQuestion]="true"  [studyInfo]="study"></app-questions-drag-and-drop>
+            </div>
+            <div *ngIf="!addQuestion"  class="col-12 col-xs-8 col-sm-12 col-md-12  col-lg-8 col-xl-8 mb-4">
+              <div class="sortable-survey">
+                <app-questions-drag-and-drop (toggleEdit)="onToggle($event)" [createQuestion]="false" [studyInfo]="study"></app-questions-drag-and-drop>
+              </div>
+
+<!--              <div class="text-center mt-5" *ngIf="showAddQuestionBtn" >-->
+<!--                &lt;!&ndash;                <app-q-add-question-button></app-q-add-question-button>&ndash;&gt;-->
+<!--                <button type="button" class="btn btn-outline-primary btn-sm mt-5" (click)="onAddQuestion()" style="-->
+<!--    margin-left: 150px;-->
+<!--">-->
+<!--                  <i class="simple-icon-plus btn-group-icon"></i>-->
+<!--                  Add Element-->
+<!--                </button>-->
+<!--              </div>-->
+            </div>
+
+
+          </div>
+
+        </div>
+        <div class="tab-pane fade " id="third" role="tabpanel" aria-labelledby="third-tab">
+          <div class="row">
+            <div class="col-12 col-lg-4  mb-4 left-side">
+
+              <app-q-result-quota [studyInfo]="studyInfo"></app-q-result-quota>
+            </div>
+
+            <div *ngIf="showReport" class="col-12 col-lg-8 right-side">
+              <app-q-result-charts [studyInfo]="studyInfo"></app-q-result-charts>
+<!--              <app-bar-chart-data-processor ></app-bar-chart-data-processor>-->
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-menu">
+<app-q-right-app-menu [studyInfo]="studyInfo"></app-q-right-app-menu>
+</div>
+
+

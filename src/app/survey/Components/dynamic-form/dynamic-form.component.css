@@ -1,0 +1,14 @@
+.filterBtn{
+  font-size: 11px;
+  width: 91px;
+  border: #e6e6e6 thin solid;
+  height: 32px;
+}
+.filterBtnContainer{
+  float:left;
+  margin-left: 25px;
+}
+a:hover{
+  color: white!important;
+
+}

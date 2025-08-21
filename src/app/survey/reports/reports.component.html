@@ -1,0 +1,161 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+<!--    <div style="width: 50%;">-->
+<!--      <app-table-dragand-drop (toggleEdit)="onToggle($event)" [studyInfo]="study"></app-table-dragand-drop>-->
+
+<!--    </div>-->
+
+<!--      <div *ngIf="!showEdit">-->
+<!--<app-matrix [studyInfo]="study"></app-matrix>-->
+<!--      </div>-->
+<div *ngIf="noQuestionsMsg || !result.length" id="orange" class="col-12  col-sm-0 offset-sm-0 text-center">
+
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>There is nothing to report!</strong>
+<!--    <button (click)="dismiss()" type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--      <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+  </div>
+
+</div>
+<div *ngIf="result.length" id="orange" class="col-12 offset-4 col-sm-0 offset-sm-0">
+  <div *ngIf="!showInfoIcons" class="alert alert-info fade show mt-1" data-timeout="5000" role="alert">
+    <p style="text-align: end;" (click)="hideShowInfoIcons()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 15px; "><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></p>
+    <p>Click on the <i class="bi bi-funnel"></i><i class="fa-solid fa-magnifying-glass"></i> icon to filter columns</p>
+    <p>Click on the <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="
+    width: 15px;
+"> <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+      icon to toggle fullscreen</p>
+
+    <p>Use <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="
+    width: 15px;"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M406.6 374.6l96-96c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224l-293.5 0 41.4-41.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288l293.5 0-41.4 41.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+    </span>
+      keys on your keyboard to switch between charts
+    </p>
+
+    <p style="text-align: end; cursor: pointer;" (click)="neverShowInfoIcons()">Do not show this message again</p>
+  </div>
+
+  <div *ngFor="let item of result | paginate: { itemsPerPage: pageItems, currentPage: p, id:'reports'}  index as i ">
+    <div class="card mb-4">
+      <div class="card-body" [class]="fullScreenPadding">
+        <div *ngIf="showEdit" >
+          <div *ngIf="chartShow" #downloadEl>
+            <h6 class="toggle-fullscreen" title="Toggle Fullscreen"><span (click)="openOrangeFullscreen() " data-toggle="modal" data-target="#exampleModal"
+                      data-toggle="modal" data-target="#exampleModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="
+    width: 20px;
+"> <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+            </span> {{item[0].title}}
+            </h6>
+
+<p *ngIf="filterInfo['showDateRange']">{{filterInfo['startDateRange'] |date}} - {{filterInfo['endDateRange']|date}}</p>
+            <p class="text-right chartFilterBtn"><span *ngIf="item[0]['type']=='multivalued'" (click)="onAverage()">AVG | </span>  <span   (click)="toggleFilter()" [class]="filterChartToggleIcon? 'toggleOn': 'toggleOff'" title="Filter Chart Options">
+              <i [hidden]="hideFilterIcon" class="bi bi-funnel"></i> <i class="fa-solid fa-magnifying-glass"></i>
+            </span></p>
+
+            <div *ngIf="showAverages">
+
+              <app-averages [result]="item"></app-averages>
+            </div>
+
+            <div *ngIf="!showAverages">
+            <div *ngIf="filterChartToggle; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+
+              <div *ngIf="item[0]['chartType']== '1'">
+                <app-bar-chart-data-processor [result]="item"></app-bar-chart-data-processor>
+              </div>
+              <div *ngIf="item[0]['chartType'] == '4'">
+                <app-pie-chart-processor [result]="item"></app-pie-chart-processor>
+              </div>
+
+              <div *ngIf="item[0]['chartType'] == '3'">
+                <app-doughnut-chart-processor [result]="item"></app-doughnut-chart-processor>
+              </div>
+              <div *ngIf="item[0]['chartType'] == '2'">
+                <app-bar-chart-horizontal-processor [result]="item"></app-bar-chart-horizontal-processor>
+              </div>
+
+              <!--            <button *ngIf="isFullScreen" (click)="openOrangeFullscreen();">Open only orange Fullscreen</button>-->
+
+            </ng-template>
+            <ng-template #elseBlock>
+
+              <app-filter (filtercat)="toggleFilter()"
+                          (showComments)="onShowHidecoments($event)"
+                          [studyInfo]="studyInfo"
+                          [filterInfo]="filterInfo"
+              ></app-filter>
+            </ng-template>
+            </div>
+            <!--            <div *ngFor="let category of categoryList; index as i">-->
+
+
+            <!--              <p (click)="categoryFilterChart(category)">{{category.name}}</p>-->
+            <!--              <input type="checkbox" value="{{i}}"/>-->
+
+            <!--            </div>-->
+
+            <!--            <button (click)="filterSelection()">Apply</button>-->
+            <!--            <button (click)="filterSelectionReset()">Reset</button>-->
+
+            <!--          <pre>{{result[i] |json}}</pre>-->
+            <!--          {{result |json}}-->
+
+          </div>
+          <div *ngIf="filterChartToggle" class="d-none d-sm-none d-md-none d-lg-block" title="Download Chart">
+            <a class="btn btn-outline-dark btn-sm" (click)="onSaveChartClicked()"><i class="bi bi-cloud-download"></i></a>{{downloading}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--  <ul>-->
+    <!--    <li>which: {{ which }}</li>-->
+    <!--    <li>keyCode: {{ keyCode }}</li>-->
+    <!--  </ul>-->
+    <div *ngIf="filterChartToggle">
+      <pagination-controls (pageChange)="p = $event" id="reports" class="float-right owl-drag"></pagination-controls>
+    </div>
+    <!-- Button trigger modal -->
+
+      <br/><br/><br/>
+      <!--       {{item[0]['other']|json}}-->
+      <div *ngIf="item[0].other && filterChartToggle && showHideComments">
+        <app-question-other [otherInfo]="item" [studyType]="studyInfo.study.type_of_survey"></app-question-other>
+      </div>
+
+  </div>
+</div>
+
+
+<!--<div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true"-->
+<!--     style="display: none;">-->
+
+<!--  <div class="modal-dialog" role="document">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <div class="modal-title"> </div>-->
+
+<!--<div class="modal-body">-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="modal-footer">-->
+<!--    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--    &lt;!&ndash;            <button type="button" class="btn btn-primary">Save changes</button>&ndash;&gt;-->
+<!--  </div>-->
+
+<!--</div>-->
+<!--</div>-->

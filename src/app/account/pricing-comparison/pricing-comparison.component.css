@@ -1,0 +1,17 @@
+.purchase , p{
+  color:#236591 !important;
+}
+
+.purchase span{
+  color: #8f8f8f;
+}
+.price-amount{
+  font-size: 18px !important;
+}
+.packageActive{
+  color: #9bef0a;
+}
+
+.closeBtn{
+  cursor: pointer;
+}

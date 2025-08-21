@@ -1,0 +1,37 @@
+
+<!--<p>If left  blank this participant will be placed in the unallocated list</p>-->
+
+  <div (mouseleave)="showDropDown = false">
+
+    <a class="drop-toggle btn btn-outline-secondary flat mb-3" (click)="showDropDown=!showDropDown">
+      <i class="fa fa-angle-down"></i> Manage Categories
+<!--      <span *ngIf="checkedList.length<=0">Allocated Categories</span>-->
+<!--      <span *ngIf="checkedList.length>0">{{checkedList.join(', ')}}</span>-->
+    </a>
+
+    <div class="drop-show" *ngIf="showDropDown" >
+      <p>Tick box to allocate</p>
+<!--      {{newDetails |json}}-->
+      <div *ngFor="let a of newDetails; index as i">
+        <input type="checkbox" [disabled]="a.is_read"   [(ngModel)]="a.checked"
+               (change)="getSelectedValue(a.checked,a.name,a.id,i,a )" />
+        <span> {{a.name}}</span>
+      </div>
+    </div>
+    <div *ngIf="!showDropDown" class="mb-3">
+      <a  [className]="category.completed? 'badge bg-success text-bg-dark' : 'badge bg-dark text-bg-dark' "
+          *ngFor="let category of list; index as i" (click)="showDropDown=!showDropDown">
+
+        {{category.name }}
+      </a>
+    </div>
+<!--    <button class="btn btn-outline-success">Update</button>-->
+    <div *ngIf="showDropDown" class="mt-5 mb-3">
+      <p>Initial study invites are delivered via email</p>
+   <div>
+    <button  class="btn btn-outline-success text-right" data-dismiss="modal" (click)="addToSurvey()" >Click To Send Invite</button>
+   </div>
+  </div>
+  </div>
+
+<!--{{list |json}}-->

@@ -1,0 +1,23 @@
+.invalid-feedback-already-registered{
+  color: red;
+}
+.filter-list{
+  text-decoration: none;
+  position: absolute;
+  z-index: 44;
+  background: white;
+  padding: 12px;
+  list-style-type: none;
+  border: solid grey thin;
+  border-radius: 0px 5px 0px 5px;
+  width: 100%;
+
+}
+.filter-list a:hover{
+  cursor: pointer;
+  background:#f6f6f6;
+  border: solid grey thin;
+  border-radius: 0px 5px 0px 5px;
+}
+
+

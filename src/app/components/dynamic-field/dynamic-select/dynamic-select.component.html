@@ -1,0 +1,18 @@
+<form [formGroup]="formName">
+  <label>{{ field.label }}:</label>
+
+
+  <select
+    [class]="classCtrl"
+
+    #dynamicSelect
+    [formControlName]="field.fieldName"
+    (change)="changedValue(dynamicSelect.value)"
+  >
+    <option *ngFor="let option of field.options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+</form>
+
+<!--{{formName.value |json}}-->

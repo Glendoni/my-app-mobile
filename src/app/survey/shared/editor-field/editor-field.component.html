@@ -1,0 +1,54 @@
+
+<div class="separator mb-4">Editor</div>
+<div class="answers mb-3">
+  <div *ngIf="showDetails">
+    <div class="container" >
+      <form [formGroup]="orderForm">
+        <!--        {{optionListItems[0].options |json}}-->
+<!--        <textarea formControlName="editor"  placeholder="editor" id="editor"  required></textarea>-->
+
+        <angular-editor formControlName="editor" [config]="config"></angular-editor>
+<!--        <h5 class="html-header">HTML Output</h5>-->
+<!--        <div class="html">-->
+<!--          {{ htmlContent }}-->
+<!--        </div>-->
+        <br/>
+        <br/>
+        <div *ngIf="!orderForm.invalid" class="text-center" >
+          <!--          {{orderForm.touched}}-->
+          <button (click)="onUpdate()" type="button"
+                  class="btn btn-outline-primary btn-sm mb-2">
+            <i class="simple-icon-plus btn-group-icon"></i>
+            Save and Update
+            <i class="simple-icon-plus btn-group-icon"></i>
+          </button>
+
+
+
+          <button *ngIf="!action" (click)="onDismiss()" type="button"
+                  class="btn btn-outline-primary btn-sm mb-2">
+            <i class="simple-icon-plus btn-group-icon"></i>
+            Dismiss
+            <i class="simple-icon-plus btn-group-icon"></i>
+          </button>
+
+        </div>
+
+<div>
+
+
+  <div *ngIf="f.editor.errors" class="text-center" >
+    <button (click)="onDelete()" type="button"
+            class="btn btn-outline-danger btn-sm mb-2">
+      <i class="simple-icon-plus btn-group-icon"></i>
+      Delete Question
+      <i class="simple-icon-plus btn-group-icon"></i>
+    </button>
+  </div>
+
+</div>
+
+      </form>
+    </div>
+  </div>
+</div>

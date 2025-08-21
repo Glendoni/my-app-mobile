@@ -1,0 +1,45 @@
+<div class="answers mb-3">
+  <div *ngIf="showDetails">
+      <form [formGroup]="orderForm">
+        <div class="input-group num-range">
+          <span class="input-group-text">Insert Number Range</span>
+          <input formControlName="minNumber" type="number" aria-label="First name" placeholder="minimum" min="1" class="form-control">
+          <input formControlName="maxNumber" type="number" aria-label="Last name" placeholder="maximum"  min="1" required class="form-control">
+        </div>
+        <div
+          *ngIf="orderForm.invalid && (orderForm.dirty || orderForm.touched)"
+          class="alert alert-danger"
+        >
+            <div *ngIf="orderForm.errors?.['required']">Min Number be a number.</div>
+        </div>
+      </form>
+      <br/>
+      <form [formGroup]="orderForm" >
+        <div class="mb-2 mt-2">
+          <div class="form-floating">
+            <select  *ngIf="chartFillOptions" formControlName="chartType" (change)="setChartType()" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+              <option selected>Open this select menu</option>
+              <option *ngFor=" let chartFillOption of chartFillOptions" [value]="chartFillOption.value" [disabled]="chartFillOption.disabled">
+                {{chartFillOption.name}}
+              </option>
+            </select>
+            <label for="floatingSelect">Selected Chart Type</label>
+          </div>
+    </div>
+        <div  class="text-center mt-5" >
+          <button (click)="onUpdate()" type="button"
+                  class="btn btn-outline-primary btn-sm mb-2">
+            <i class="simple-icon-plus btn-group-icon"></i>
+            Save and Update
+            <i class="simple-icon-plus btn-group-icon"></i>
+          </button>
+<!--          <button *ngIf="!this.action" (click)="onDismiss()" type="button"-->
+<!--                  class="btn btn-outline-primary btn-sm mb-2">-->
+<!--            <i class="simple-icon-plus btn-group-icon"></i>-->
+<!--            Dismiss-->
+<!--            <i class="simple-icon-plus btn-group-icon"></i>-->
+<!--          </button>-->
+        </div>
+      </form>
+  </div>
+</div>

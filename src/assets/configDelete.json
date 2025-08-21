@@ -1,0 +1,4 @@
+{
+  "loginUrl": "api/signin",
+  "textfile": "assets/textfile.txt"
+}

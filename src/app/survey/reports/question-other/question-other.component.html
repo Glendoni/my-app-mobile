@@ -1,0 +1,21 @@
+<div class="card mb-4" *ngIf="otherInfo[0].other.length">
+  <div class="card-body">
+    <h6 class="mb-4">Associated Comments ({{otherInfo[0].other.length}})</h6>
+    <div *ngIf="!otherInfo[0].other.length" class=" mb-3">
+..
+    </div>
+
+    <div *ngFor="let item of otherInfo[0].other | paginate: { itemsPerPage: 10, currentPage: 0, id:'reportstext'}  index as i ">
+      <div class=" mb-3 feedback-text">
+        <p class="feedback-date">
+          <span *ngIf="studyType !=2"><strong>Category: </strong> </span>
+          <span *ngIf="studyType !=2"> {{item['get_category']['name']}} | </span>
+        {{item['created_at'] | date}} </p>
+        <div style="font-weight: 300;">{{item['answer'] }}</div>
+        <br/>
+      </div>
+    </div>
+<pagination-controls *ngIf="otherInfo[0].other.length" (pageChange)="p = $event" id="reportstext"
+                     class="float-right owl-drag"></pagination-controls>
+  </div>
+</div>

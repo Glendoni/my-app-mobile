@@ -1,0 +1,45 @@
+<!--<pre>{{studyInfo |json}}</pre>-->
+<div class="card mb-4">
+
+  <div class="position-absolute card-top-buttons">
+    <button class="btn btn-header-light icon-button">
+      <i class="simple-icon-pencil"></i>
+    </button>
+  </div>
+  <div class="card-body">
+    <p class="list-item-heading mb-4 fw-bold">Study Details</p>
+    <p class="text-muted text-small mb-2"></p>
+    <p class="mb-3">
+      {{studyInfo.study.name}}
+    </p>
+    <p class="text-muted text-small mb-2">Info</p>
+    <p>{{studyInfo.settings.description}}</p>
+
+    <p class="text-muted text-small mb-2 mt-3">Date</p>
+    <p class="mb-1">
+      {{studyInfo.settings.start_date |date}} -  {{studyInfo.settings.end_date |date}}
+    </p>
+
+
+
+<!--      <p class="d-sm-inline-block  mb-1">-->
+<!--        <a href="#">-->
+<!--                                                        <span-->
+<!--                                                          class="badge badge-pill badge-outline-secondary mb-1">PERSONAL</span>-->
+<!--        </a>-->
+<!--      </p>-->
+
+  </div>
+
+  <div class="card-body">
+    <p class="text-muted text-small mb-2">Categories</p>
+    <p *ngFor="let item of categories; index as i" class="d-sm-inline-block mb-1">
+      <a href="#" style="
+    background: black;
+">
+                                                        <span
+                                                          class="badge badge-pill badge-outline-theme-3 mb-1">{{item.name}}</span>
+      </a>
+    </p>
+  </div>
+</div>

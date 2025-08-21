@@ -1,0 +1,103 @@
+<!--<pre>{{studyInfo['study_categories']|json}}</pre>-->
+<div class="row">
+  <div class="col-4  d-none d-sm-none d-md-none d-lg-block mt-4">
+    <div class="card drop-area">
+      <div class="card-body">
+
+        <app-q-left-summary [studyInfo]="studyInfo"></app-q-left-summary>
+        <app-q-result-matrix [studyInfo]="studyInfo"></app-q-result-matrix>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-12 col-lg-8 mt-4">
+    <div *ngIf="showUpgradeNotification">
+      <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+    </div>
+    <form [formGroup]="inviteForm" (ngSubmit)="onUpdate()">
+
+      <div class="card drop-area mb-2">
+        <div class="card-body">
+          <h5 class="mb-3">Send Participant Invite<span *ngIf="inviteForm.value.email"> To: <i> {{ inviteForm.value.email }}</i></span></h5>
+          <p>Invite participant to answer questions linked to categories of this study </p>
+          <!--        <h6>Add Participant Email</h6>-->
+          <div class="form-floating mb-2">
+            <input formControlName="name" [disabled]=true #ti type="text" class="form-control" id="name" autocomplete="false"
+                   placeholder="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                   (ngModelChange)="userQuestionUpdate.next($event)"
+                   (click)="showListReset()"
+                   (focus)="showList()"
+                   (blur)="hideList()">
+            <div class="filter-list"
+                *ngIf="isVisible && filterSet.length > 0"
+                (mouseover)="cursorOverSet()">
+              <a
+                *ngFor="let item of filterSet; index as i;"
+                (click)="setValue(item)">
+                <span *ngIf="item.name.length">
+                {{ item.name  }} - {{item.email }}
+                  </span>
+                <br/>
+              </a>
+            </div>
+            <label for="email">Enter  Name</label>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors['required']">name is required</div>
+            </div>
+            <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
+              registered for this study.
+            </div>
+          </div>
+          <div class="form-floating">
+            <input formControlName="email" [disabled]=true #ti type="email" class="form-control" id="email"
+                   placeholder="name@example.com" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" (click)="showListReset()">
+            <label for="email">Enter Email</label>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors['required']">email is required</div>
+              <div *ngIf="f.email.errors['email']">check email format</div>
+            </div>
+            <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
+              registered for this study.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card drop-area">
+        <div class="card-body ">
+          <div *ngIf="!alreadyInvitedValidation">
+            <h6 class="mb-4">Assign Category <i>(optional)</i></h6>
+          </div>
+          <div *ngIf="alreadyInvitedValidation">
+            <h6 class="mb-4"><i>Would you like to send a reminder?</i></h6>
+            <p class="mb-4"><i>The provided email is already registered to this study </i></p>
+          </div>
+          <div class="card drop-area mb-5">
+            <div class="card-body">
+              <div *ngIf="alreadyInvitedValidation">
+                <a class="btn btn-outline-dark" (click)="onSendReminder(dataLink)">Yes</a>
+                <a class="btn btn-outline-dark" (click)="onSendReminderNo()">No</a>
+              </div>
+              <div *ngIf="!alreadyInvitedValidation">
+                <app-edit-multiple-select-dropdown-participant
+                  [list]="study_categories"
+                  [editDetails]="study_categories"
+                  (removeIndividualCheckedList)="removeIndividualCheckedList($event)"
+                  (updateUserCategories)="addToSurvey($event)"
+                  (shareCheckedList)="shareCheckedList($event)"
+                  (shareIndividualCheckedList)="shareIndividualCheckedList($event)">
+                </app-edit-multiple-select-dropdown-participant>
+              </div>
+              <!--      <div *ngIf="submitted && f.categories.errors" class="invalid-feedback">-->
+              <!--        <div >email is required</div>-->
+              <!--      </div>-->
+
+            </div>
+          </div>
+          <div *ngIf="!alreadyInvitedValidation">
+            <input type="submit" class="form-control btn btn-outline-success" value="Send Invite">
+          </div>
+          <!--       <input type="submit" class="form-control btn btn-outline-warning" value="Send Invite and Add Another">-->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

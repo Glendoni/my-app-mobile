@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adjust the value as needed for the spacing between stacked elements */
+}
+
+.container .item {
+  background-color: #f6f6f6;
+  color: #6d5c41;
+  display: contents;
+  justify-content: start;
+  align-items: end;
+  cursor: move;
+  padding: 0em;
+  transition: transform 0.2s ease-in-out; /* Add a transition for smooth animation */
+}
+
+.container .item.cdk-drag-preview {
+  opacity: 0.8; /* Adjust the opacity of the dragged element preview */
+  background-color: #FFA500; /* Customize the background color of the dragged element preview */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow to the dragged element preview */
+}
+.optionField{
+  background: white;
+}
+li .disabled{
+  opacity: 0.5;
+  background: #0606061f;
+  cursor: crosshair;
+}
+
+li .disabled a:hover{
+  cursor: crosshair;
+}
+
+.disabled a:not([href]):not([tabindex]) {
+  /* color: inherit; */
+  cursor: crosshair;
+}

@@ -1,0 +1,5 @@
+<form [formGroup]="formName">
+    <label>{{field.label}} : </label>
+    <input [class]="classCtrl" [type]="field.type" [placeholder]="field.placeholder?? ''" [formControlName]="field.fieldName" />
+</form>
+

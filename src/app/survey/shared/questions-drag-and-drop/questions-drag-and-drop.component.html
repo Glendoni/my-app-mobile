@@ -1,0 +1,29 @@
+<div class="container">
+  <div *ngIf="!createQuestion && paginationPages" class="text-right pr-2 pb-0 pr-3 pageNumInfo"> {{' Page: ' + p + ' of ' + paginationPages}}</div>
+  <p *ngIf="!createQuestion" class="pb-0 mb-1">Click <i class="bi bi-chevron-down"></i> to edit element | Drag <i
+    class="simple-icon-cursor-move"></i> to sort order</p>
+  <div *ngIf="todo.length" cdkDropList [cdkDropListConnectedTo]="['done']"
+       [cdkDropListData]="todo"
+       (cdkDropListDropped)="drop($event)">
+    <div cdkDrag [cdkDragDisabled]="togglemove"
+         *ngFor="let item of todo | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'first'} index as i">
+
+      <app-edit-question [question]="item"
+                         [studyInfo]="studyInfo"
+                         [idx]="i"
+                         (toggleDragMove)="onToggleMove($event)">
+      </app-edit-question>
+    </div>
+    <pagination-controls (pageChange)="p = $event" id="first" class="float-right"></pagination-controls>
+  </div>
+  <div *ngIf="createQuestion">
+
+    <app-add-question [question]="[]"
+                      [studyInfo]="studyInfo"
+                      (triggerMenuRefresh)="getStudyQuestions($event)"
+                      (toggleList)="onToggle($event)">
+    </app-add-question>
+
+  </div>
+</div>
+

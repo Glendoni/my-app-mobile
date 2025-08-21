@@ -1,0 +1,16 @@
+a{
+  text-decoration: none;color: #555555;
+}
+.modal .modal-content {
+  background: white;
+}
+.filterIcon{
+  color: red;
+}
+.inviteStatus{
+  text-align: center;
+}
+.spinner-border{
+  width: auto;
+  margin: auto;
+}

@@ -1,0 +1,78 @@
+.list-unstyled li{
+  font-weight: 300;
+  text-align: center;
+}
+.purchase  p{
+  color:#236591 !important;
+}
+.closeBtn{
+  text-align: right;
+  margin-top: 20px;
+  position: absolute;
+  width: auto;
+  left: 86%;
+  top: 29px;
+}
+.modal-content{
+  background: white;
+}
+.toggleLink a{
+  cursor: pointer;
+}
+
+.paymentHeading{
+  color: #4b4b4b;
+}
+.form-control{
+  border: none;
+}
+.unsubscribeBtn{
+  float: right;
+}
+.verbiage h5 p li{
+  text-align: center;
+
+}
+
+.active{
+  color: #24d224
+}
+.pending{
+  color: #d29b24
+}
+.list-unstyled li{
+  font-weight: 300;
+  text-align: center;
+}
+.purchase  p{
+  color:#236591 !important;
+}
+.modal-title{
+  color:white;
+}
+.closeBtn{
+  text-align: right;
+  margin-top: 20px;
+  position: absolute;
+  width: auto;
+  left: 86%;
+  top: 29px;
+}
+.modal-content{
+  background: #727272;
+}
+.toggleLink a{
+  cursor: pointer;
+}
+.formStyle{
+  background:#ffffff;
+}
+.paymentHeading{
+  color: #236591;
+}
+.packageActive{
+  color: #9bef0a;
+}
+.closeBtn{
+  cursor: pointer;
+}

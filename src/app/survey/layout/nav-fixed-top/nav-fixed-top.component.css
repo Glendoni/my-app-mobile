@@ -1,0 +1,47 @@
+.active-mode{
+  text-align: center;
+  /*background: #ffa50042*/
+}
+.menu-nav{
+  cursor: pointer;
+}
+.in-production{
+  background-color: rgb(123 255 0 / 10%);
+}
+.in-development{
+  background-color: #ffa50042;
+}
+.is-archived{
+  background-color: #ff000069;
+}
+.is-archived, .in-development, .in-production{
+  color:inherit;
+}
+
+.navbar .user .name {
+  color: #828282;
+}
+.maintenance-mode{
+  background-color: red;
+  color: white;
+}
+.archive-mode{
+  text-align: center;
+  background: #bbff00;
+  color: black;
+}
+.appName{
+  color: #858484;
+  font-size: 21px;
+}
+.fixed-top{
+  top:0px;
+}
+@media (max-width: 450px) {
+  .fixed-top{
+    top:47px;
+  }
+  .appName{
+    font-size: 14px;
+  }
+}

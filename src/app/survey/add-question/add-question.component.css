@@ -1,0 +1,13 @@
+.alert{
+  color:red;
+}
+.d-inline-block{
+  font-weight: 600;
+}
+.dismissQuestion{
+  position: absolute;
+  left: 85%;
+  top: 30px;
+  cursor: pointer;
+  font-size: 19px;
+}
