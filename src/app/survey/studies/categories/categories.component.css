@@ -1,0 +1,16 @@
+.catForm{
+  margin: auto;
+}
+.onNav{
+  cursor: pointer;
+}
+.spinner-border{
+  width: auto;
+  margin: auto;
+}
+
+.truncate{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}

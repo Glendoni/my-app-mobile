@@ -1,0 +1,36 @@
+.form-label{
+  color: #838383;
+}
+.modalText,modal-title{
+  color:white;
+}
+.modalText p{
+  font-size: 1em;;
+}
+.archiveUpdateStatus{
+  /*text-align: end;*/
+}
+
+.archiveUpdateStatus a{
+ margin-left:3px;
+}
+
+#description{
+  height: 150px;
+}
+.archiveUpdateStatus a:hover{
+  color:white;
+}
+
+@media (max-width: 1199px) {
+
+ .full-width{width:100%}
+}
+
+.accessTypeIsRequired{
+  font-size: 0.875em;
+  color: var(--bs-form-invalid-color);
+}
+.actionBtn a{
+  border: solid thin #d7d7d7;
+}

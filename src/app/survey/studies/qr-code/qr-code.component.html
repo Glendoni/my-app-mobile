@@ -1,0 +1,52 @@
+
+<div >
+  <div class="card mb-4">
+    <h4 class="mt-5 text-center offset-2 offset-md-0 text-center">Access Study Via QR Code</h4>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-5 offset-2 offset-md-0 mb-3 right-border-line">
+            <div #downloadEl class="text-center">
+              <qrcode [qrdata]="url" [width]="250" [errorCorrectionLevel]="'M'" ></qrcode>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 offset-2 offset-md-1 mb-3 ">
+            <div class="button-row text-center">
+              <a href="{{url}}" target="_blank" class="btn btn-outline-dark btn-sm d-sm-block mb-5 mt-5">Click
+                To Open</a>
+
+              <a class="btn btn-outline-dark btn-sm d-none d-xs-block d-sm-block" (click)="onSaveChartClicked()">
+                Download Qr Code Image
+              </a>
+                <p class="text-center d-none d-xs-block d-sm-block mt-5 shareLink" style="cursor: pointer"
+                   (click)="copyText(url)" >Share Link:<br>
+                  <span>{{copyShareLink?'Copied To Clipboard!' : url}} </span>
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  <div class="col-xs-7 col-md-5 mb-5 full-width">-->
+<!--    <div class="card mb-4">-->
+<!--&lt;!&ndash;      <h4 class="pl-4 mt-5 text-center">Open Access QR Code</h4>&ndash;&gt;-->
+<!--      <div class="card-body">-->
+<!--        <div class="row">-->
+<!--          <div class="col-12 mb-3">-->
+<!--            <div class="button-row text-center">-->
+<!--              <a href="{{url}}" target="_blank" class="btn btn-outline-dark btn-sm ">Click-->
+<!--                To Open</a>-->
+<!--              <a class="btn btn-outline-dark btn-sm d-none d-xs-block d-sm-block" (click)="onSaveChartClicked()">Download Image</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-xs-12 col-md-6 mb-3">-->
+<!--            <h5 class="text-center">Share Link: {{url}} </h5>-->
+<!--            <p><span></span></p>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+

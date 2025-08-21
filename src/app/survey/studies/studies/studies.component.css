@@ -1,0 +1,100 @@
+#stcont{
+  margin-left: -198px;
+}
+.study-title-period{
+  color: black;
+  font-size: 0.9em;
+  font-style: italic;
+}
+.appName span .study-title-period{
+  color: black;
+  font-size: 0.9em;
+  font-style: italic;
+}
+.study-title-initial{
+  color: #919191;
+  font-size: 2rem;
+
+  font-weight: 400;
+}
+.study-title{
+  color: grey;
+}
+main{
+  margin-top: 67px;
+}
+.appName{
+  color: #dbdada;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.onNav{
+  cursor: pointer;
+}
+.study-title-initial{
+  font-style: italic;
+}
+
+.s-header__logo-img-default{
+  color: rgba(128, 128, 128, 0.74) !important;
+}
+.s-header__logo-img-shrink span{
+  color: rgba(8, 9, 9, 0.78);
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+}
+.s-header__logo-img-default span{
+  color: rgba(22, 177, 205, 0.29);
+}
+
+.s-header__logo-img-default .study-title-initial, .s-header__logo-img-shrink .study-title-initial{
+  color: rgba(128, 128, 128, 0.67);
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+}
+@media (max-width: 1199px) {
+.ipadAdjustment{
+  margin-right: 20px;
+ }
+}
+
+/*// Extra small devices (portrait phones, less than 576px)*/
+/*// No media query since this is the default in Bootstrap*/
+
+
+
+@media (max-width: 450px) {
+  /*main{*/
+  /*  margin-top: 149px !important;*/
+  /*}*/
+
+  .studyNameTitle{
+    font-size: 14px;
+  }
+}
+
+
+/*.statusBar1 select{*/
+/*  background-color: rgb(123 255 0 / 10%);*/
+/*}*/
+
+/*.statusBar2 select{*/
+/*  background-color: #ffa50042;*/
+/*}*/
+
+/*.statusBar3 select{*/
+/*  background-color: #ff000069;*/
+/*}*/
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {  }
+
+/*// Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {  }
+
+/*// Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {  }

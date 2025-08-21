@@ -1,0 +1,337 @@
+<div id="stcont">
+  <app-nav-fixed-top></app-nav-fixed-top>
+
+  <!--<app-menu></app-menu>-->
+  <div>
+    <app-alerts></app-alerts>
+  </div>
+  <div class="menu">
+    <div class="main-menu d-none d-sm-block">
+      <div class="scroll">
+        <ul *ngIf="dashboard" class="list-unstyled d-sm-none d-md-none d-lg-block">
+          <li>
+            <a (click)="onAddStudy()">
+              <i class="iconsminds-shop-4"></i>
+              <span>Add Study</span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+        <ul *ngIf="createStudy" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+          <li>
+            <a (click)="showDashboard()">
+              <i class="bi bi-house-gear-fill"></i>
+              <span></span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+
+        <ul *ngIf="subMenu" class="list-unstyled">
+          <li>
+            <a (click)="onToggle()">
+              <i class="bi bi-house-gear-fill"></i>
+              <span></span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+        <ul *ngIf="showParticipants" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+          <li>
+            <a (click)="onInvite()">
+              <i class="iconsminds-shop-4"></i>
+              <span>Invite</span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+        <ul *ngIf="showParticipants && showQrCodeMenu" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+          <li>
+            <a (click)="onQrCode()">
+              <i class="bi bi-qr-code"></i>
+              <span>QR-Code</span>
+            </a>
+          </li>
+        </ul>
+        <ul *ngIf="showDetails" class="list-unstyled">
+          <li *ngIf="!type_of_survey" class="d-none d-sm-none d-md-none d-lg-block">
+            <a (click)="categoryVisibility()">
+              <i class="bi bi-layers"></i>
+              <span>{{navi[1]}}</span>
+            </a>
+          </li>
+          <li class="d-none d-sm-none d-md-none d-lg-block">
+            <a (click)="questionsVisibility()">
+              <i class="bi bi-question-diamond"></i> {{navi[2]}}
+            </a>
+          </li>
+          <!--        <li>-->
+          <!--          <a (click)="communityVisibility()">-->
+          <!--            <i class="iconsminds-air-balloon-1"></i> {{navi[3]}}-->
+          <!--          </a>-->
+          <!--        </li>-->
+        </ul>
+        <ul *ngIf="showDetails" class="list-unstyled">
+          <li>
+            <a (click)="participantsVisibility()">
+              <i class="bi bi-people-fill"></i> {{navi[4]}}
+            </a>
+          </li>
+          <li class="">
+            <a (click)="reporter()">
+              <i class="bi bi-bar-chart"></i> {{navi[5]}}
+            </a>
+          </li>
+          <li class="d-none d-sm-none d-md-none d-lg-block">
+            <a (click)="settingsVisibility()">
+              <i class="bi bi-gear-wide-connected"></i> {{navi[0]}}
+            </a>
+          </li>
+
+          <!--        <li>-->
+          <!--          <a href="https://dore-jquery-docs.coloredstrategies.com" target="_blank">-->
+          <!--            <i class="iconsminds-library"></i> Docs-->
+          <!--          </a>-->
+          <!--        </li>-->
+        </ul>
+<ul *ngIf="showQuestions && showAddQuestionButton" class="list-unstyled">
+  <li class="d-none d-sm-none d-md-none d-lg-block">
+    <a (click)="showAddQuestion()">
+      <i class="bi bi-question-diamond"></i> Add Question
+    </a>
+  </li>
+</ul>
+        <ul *ngIf="showDetails" class="list-unstyled" >
+
+        </ul>
+        <ul *ngIf="showCreateCategoryToggle" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+          <li>
+            <a (click)="onAddCategory()">
+              <i class="iconsminds-shop-4"></i>
+              <span>Add Category</span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-1">
+<!--          <h3 class="mb-1 mt-1 s-header__logo-img s-header__logo-img-shrink appName"><span>Peeker</span>-->
+<!--            <span-->
+<!--              class="study-title-initial">Pro</span><span-->
+<!--              class="study-title"></span> ~ admin<span class="study-title-period"></span>-->
+<!--          </h3>-->
+<!--          <div *ngIf="!showQuestions" class="separator mb-2"></div>-->
+          <h5 *ngIf="study" class=" studyNameTitle" style="font-weight: 400; color: #7a7a7a; text-align: center; margin-top: 59px;"><span
+            *ngIf="showstudytitle">{{updatedStudyName ? updatedStudyName : study['study'].name}}</span></h5>
+          <div *ngIf="dashboard" class="">
+<!--            <div class="modal fade modal-right" id="exampleModal" tabindex="-1" role="dialog"-->
+<!--                 aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--              <div class="modal-dialog" role="document">-->
+<!--                <div class="modal-content">-->
+<!--                  <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalLabel">Add News</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                      <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                  </div>-->
+<!--                  <div class="modal-body">-->
+<!--                    <form>-->
+<!--                      <div class="form-group">-->
+<!--                        <label>Title</label>-->
+<!--                        <input type="text" class="form-control" placeholder="">-->
+<!--                      </div>-->
+<!--                      <div class="form-group">-->
+<!--                        <label>Details</label>-->
+<!--                        <textarea class="form-control" rows="2"></textarea>-->
+<!--                      </div>-->
+<!--                      <div class="form-group">-->
+<!--                        <label>Category</label>-->
+<!--                        <select class="form-control select2-single" data-width="100%">-->
+<!--                          <option label="&nbsp;">&nbsp;</option>-->
+<!--                          <option value="Flexbox">Flexbox</option>-->
+<!--                          <option value="Sass">Sass</option>-->
+<!--                          <option value="React">React</option>-->
+<!--                        </select>-->
+<!--                      </div>-->
+<!--                      <div class="form-group">-->
+<!--                        <label>Labels</label>-->
+<!--                        <select class="form-control select2-multiple" multiple="multiple" data-width="100%">-->
+<!--                          <option value="New Framework">New Framework</option>-->
+<!--                          <option value="Education">Education</option>-->
+<!--                          <option value="Personal">Personal</option>-->
+<!--                        </select>-->
+<!--                      </div>-->
+<!--                      <div class="form-group">-->
+<!--                        <label>StatusP</label>-->
+<!--                        <div class="custom-control custom-checkbox">-->
+<!--                          <input type="checkbox" class="custom-control-input"-->
+<!--                                 id="customCheck1">-->
+<!--                          <label class="custom-control-label"-->
+<!--                                 for="customCheck1">Completed</label>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </form>-->
+<!--                  </div>-->
+<!--                  <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-outline-primary"-->
+<!--                            data-dismiss="modal">Cancel-->
+<!--                    </button>-->
+<!--                    <button type="button" class="btn btn-primary">Submit</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+
+          <div *ngIf="dashboard" class="mb-1 mt-5">
+<!--            <a class="btn pt-0 pl-0 d-inline-block d-sm-none d-md-none d-lg-none" data-toggle="collapse" href="#displayOptions"-->
+<!--               role="button" aria-expanded="true" aria-controls="displayOptions">-->
+<!--              Display Options-->
+<!--              <i class="simple-icon-arrow-down align-middle"></i>-->
+<!--            </a>-->
+            <div *ngIf="true" class=" d-md-block offset-4 offset-md-0" id="">
+
+              <h4 *ngIf="noMatchFound" class="text-center">{{statusValue}} Studies Found: (0)</h4>
+
+              <h4 *ngIf="!noMatchFound" class="text-center">Studies</h4>
+
+              <div class="d-block d-md-inline-block">
+                <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top d-none d-sm-block d-md-block d-lg-block">
+                  <input placeholder="Search..." id="study-searcher" (keyup)="search(getValue($event))">
+                </div>
+
+                <div class="d-inline-block float-md-left mr-1 mb-1 align-top d-none d-sm-block d-md-block d-lg-block  statusBar{{status}}" >
+                  <select (ngModelChange)="onSearchStatus($event)" [(ngModel)]="status" class="form-select-sm" id="study-type-selector">
+                    <option></option>
+                    <option [value]="99">All</option>
+                    <option [value]="1">Production</option>
+                    <option [value]="2">Development</option>
+                    <option [value]="3">Archived In-Active</option>
+                    <!--                  <option [value]="3">Archive</option>-->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="list disable-text-selection mt-4" data-check-all="checkAll" *ngIf="dashboard">
+            <div *ngIf="upgradeNotification" class="pl-3 pr-3">
+              <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+            </div>
+            <h3 *ngIf="!studies" class="text-center">Please Add Study </h3>
+            <div *ngIf="studies" class="col-8 offset-4 col-md-12 offset-md-0 col-xs-12 col-lg-12 offset-lg-0">
+              <div class="card d-flex flex-row mb-3"
+                   *ngFor="let study of studies | paginate: { itemsPerPage: 5, currentPage: p} index as i ">
+                <div class="d-flex flex-grow-1 min-width-zero">
+                  <div
+                    class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                    <p class="list-item-heading mb-0 truncate w-80  w-sm-80  w-xs-100 mt-0">
+                      <i class="simple-icon-refresh heading-icon"></i>
+                      <span class="align-middle d-inline-block onNav" (click)="onNav(study)">{{study['study'].name}}</span>
+                    </p>
+                    <p *ngIf="study['study'].type_of_survey"></p>
+                    <div *ngIf="study['study'].type_of_survey ==2; then qrBlock else studyBlock"></div>
+                    <ng-template #qrBlock><p class="mb-0 text-muted text-small w-15 w-xs-100 d-none d-md-block d-lg-block">Private / Public</p></ng-template>
+                    <ng-template #studyBlock><p class="mb-0 text-muted text-small w-15 w-xs-100 d-none d-md-block d-lg-block">Private</p></ng-template>
+                    <!--                <p class="mb-0 text-muted text-small w-15 w-xs-100">Study {{study['study'].type_of_survey}}</p>-->
+                    <p class="mb-0 text-muted text-small w-15 w-xs-100 d-none d-sm-none d-md-block d-lg-block">Opens: {{studies[i].settings.start_date | date}}
+                      <br/> Closes: {{studies[i].settings.end_date | date}}</p>
+                    <div class="w-15 w-xs-100 badge ipadAdjustment d-none d-sm-none d-md-block d-lg-block">
+                      <container-element [ngSwitch]="study['study'].active">
+                        <span *ngSwitchCase="1" class="badge badge-pill badge-secondary">ACTIVE</span>
+                        <span *ngSwitchCase="2" class="badge badge-pill badge-secondary">IN DEVELOPMENT</span>
+                        <span *ngSwitchCase="3" class="badge badge-pill badge-secondary">ARCHIVED</span>
+                        <span *ngSwitchDefault class="badge badge-pill badge-secondary">ACTIVE</span>
+                      </container-element>
+                    </div>
+                  </div>
+                  <!--              <label class="custom-control custom-checkbox mb-1 align-self-center mr-4">-->
+                  <!--                <input type="checkbox" class="custom-control-input">-->
+                  <!--                <span class="custom-control-label">&nbsp;</span>-->
+                  <!--              </label>-->
+                </div>
+              </div>
+              <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
+            </div>
+
+          </div>
+
+          <app-questions *ngIf="showQuestions" [studyInfo]="study"></app-questions>
+          <app-categories *ngIf="showCategory" [studyInfo]="study"
+                          (showAddMenu)="onShowAddCategoryMenu($event)"></app-categories>
+
+          <div class="col-8 offset-4 col-xs-12 col-sm-6 col-md-12 offset-xs-5 offset-sm-5 offset-md-0">
+          <app-participant-invite *ngIf="showInvite" [studyInfo]="study"></app-participant-invite>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showllastration" class="d-none d-sm-none d-md-none d-lg-block">
+      <app-setup-illustration></app-setup-illustration>
+    </div>
+    <div *ngIf="showDetails">
+
+
+      <div *ngIf="showAddStudyMenu" class="item">
+        <div>{{addStudyButtonValue}}</div>
+
+      </div>
+
+    </div>
+
+
+    <div class="container">
+      <div class="containerOuter">
+        <div [style.width]="activeLinkStyle">
+          <div *ngIf="false">
+            <p>{{listHeader}}</p>
+            <div class="container" cdkDropList id="todo">
+              <div class="item" *ngFor="let study of studies index as i">
+                <div>
+                  <p (click)="onNav(study)">{{study['study'].name}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <app-settings *ngIf="createStudy" [new_study]="createStudy" [studyInfo]="study"
+                      (toggleSettingsCr)="onToggleStudyUpdate($event)"
+                      (addStudyRestriction)="setRestrictionStatus($event)"></app-settings>
+        <div *ngIf="showSettings" class="detail">
+          <div>
+            <app-settings *ngIf="showSettings" [new_study]="createStudy" [studyInfo]="study"
+                          (addStudyRestriction)="setRestrictionStatus($event)"></app-settings>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row"><!--        app-row-->
+        <div class="col-12 col-xs-12 col-sm-6 col-md-12 offset-xs-5 offset-sm-5 offset-md-0">
+          <app-participants *ngIf="showParticipants" [studyInfo]="study" (toggleQrCode)="onToggleQrCode($event)"
+                            (toggleInvite)="onToggleInvite($event)"></app-participants>
+          <app-qr-code *ngIf="showQrCode" [studyInfo]="study"></app-qr-code>
+
+        </div>
+        <div class="col-8 offset-4 col-xs-10 col-sm-6 col-md-12 col-lg-10 col-xl-8 offset-xs-5 offset-sm-5 offset-md-0 offset-xl-2">
+          <app-reports *ngIf="showReports" [studyInfo]="study"></app-reports>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+

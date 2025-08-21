@@ -1,0 +1,130 @@
+<div class="card question d-flex mb-4 edit-question">
+  <div class="d-flex flex-grow-1 min-width-zero">
+    <div
+      class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+      <div class="list-item-heading mb-0 truncate w-70 mb-1 mt-1">
+          <span class="heading-number d-inline-block">
+          {{idx + 1}}
+          </span>
+        {{question.label}}
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox pl-1 align-self-center pr-4">
+      <button *ngIf="question['type']=='select'" class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="bi bi-menu-up"></i>
+      </button>
+      <button *ngIf="question['type']=='radio'" class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="bi bi-check2-circle"></i>
+      </button>
+      <button *ngIf="question['type']=='number'" class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="bi bi-123"></i>
+      </button>
+      <button *ngIf="question['type']=='textarea'" class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="bi bi-textarea-t"></i>
+      </button>
+      <button *ngIf="question['type']=='multivalued'" class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="bi bi-check2-square"></i>
+      </button>
+      <button *ngIf="orderForm.value.pagebreak" class="btn btn-outline-theme-3 icon-button view-button pageBreakBackgroundColor">
+        <i class="bi bi-file-earmark-break"></i>
+      </button>
+      <button *ngIf="question['otherField'] && question['type'] !='textarea'"
+              class="btn btn-outline-theme-3 icon-button view-button">
+        <i class="simple-icon-eye"></i>
+      </button>
+
+      <!--      <button *ngIf="question['type']" class="btn btn-outline-theme-3 icon-button view-button">-->
+      <!--&lt;!&ndash;        <i class="simple-icon-eye"></i>&ndash;&gt;-->
+
+      <!--        <i  *ngIf="orderForm.value.pagebreak" class="bi bi-file-break"></i>-->
+      <!--&lt;!&ndash;        <i  *ngIf="question['otherField']" class="simple-icon-eye"></i>&ndash;&gt;-->
+      <!--        <i  *ngIf="question['type']=='select'" class="bi bi-menu-up"></i>-->
+      <!--        <i  *ngIf="question['type']=='radio'" class="bi bi-check2-circle"></i>-->
+      <!--        <i  *ngIf="question['type']=='number'" class="bi bi-list-ol"></i>-->
+      <!--      </button>-->
+      <button (mousedown)="onToggleMoveCh()" (mouseleave)="onToggleStopCh()" (mouseup)="onToggleStopCh()"
+              (click)="onToggleMoveCh()" class="btn btn-outline-theme-3 icon-button view-button">
+        <!--        <i class="simple-icon-eye"></i>-->
+        <i class="simple-icon-cursor-move"></i>
+      </button>
+      <button
+        class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate"
+        type="button" data-toggle="collapse" [attr.data-target]="'#q' + question.id"
+        aria-expanded="true" aria-controls="q1">
+        <i class="simple-icon-arrow-down with-rotate-icon"></i>
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="orderForm" (ngSubmit)="onUpdate()">
+    <div class="question-collapse collapse" id="q{{question.id}}">
+      <div class="card-body pt-0">
+        <div class="edit-mode">
+          <p>Note: To remove question delete question options or inserted values from field </p>
+          <div>
+            <div class="form-check mb-4">
+              <input formControlName="pagebreak" class="form-check-input" type="checkbox" value=""
+                     id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                 Insert Page-Break
+              </label>
+            </div>
+            <div class="form-floating form-group mb-4">
+<!--              <label>Question</label>-->
+              <textarea formControlName="question" class="form-control" id="question" aria-label="Question"></textarea>
+              <label for="question">Question</label>
+              <div *ngIf="f.question.invalid && (f.question.dirty || f.question.touched)"
+                   class="alert">
+                <!--      <div *ngIf="f.name.errors?.['minLength']" >Min is Required</div>-->
+                <div *ngIf="f.question.errors?.['required']">
+                  * Question is Required
+                </div>
+                <div *ngIf="f.question.errors?.['minlength']">
+                  Question must be at least 6 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="display:none">
+              <label class="d-block">Answer Type</label>
+              <div class="separator mb-4"></div>
+              <select formControlName="type" #type class="form-control select2-single" data-width="100%"
+                      (change)="onSelect(type.value)">
+                <option selected>Select form field type</option>
+                <option *ngFor="let filedTypeMenu of filedTypeMenus" [ngValue]="filedTypeMenu.id">
+                  {{filedTypeMenu.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <div [ngSwitch]="question.type">
+                <ng-template [ngSwitchCase]="'select'">
+                  <app-options-dragand-drop [optionListItems]="question"
+                                            (toggleEdit)="onUpdateTest($event)"></app-options-dragand-drop>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'radio'">
+                  <app-options-dragand-drop [optionListItems]="question"
+                                            (toggleEdit)="onUpdateTest($event)"></app-options-dragand-drop>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'checkbox'">
+                  <app-options-dragand-drop [optionListItems]="question"
+                                            (toggleEdit)="onUpdateTest($event)"></app-options-dragand-drop>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'multivalued'">
+                  <app-options-dragand-drop [optionListItems]="question"
+                                            (toggleEdit)="onUpdateTest($event)"></app-options-dragand-drop>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'number'">
+                  <app-option-number-field [optionListItems]="question" [action]="true"
+                                           (toggleEdit)="onUpdateTest($event)"></app-option-number-field>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'textarea'">
+                  <app-editor-field [optionListItems]="question" [action]="true"
+                                    (toggleEdit)="onUpdateEditor($event)"></app-editor-field>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

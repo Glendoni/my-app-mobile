@@ -1,0 +1,11 @@
+<div *ngIf="resultr">
+
+  <canvas  style="width: 500px;" baseChart
+           [data]="barChartData"
+           [options]="barChartOptions"
+           [plugins]="barChartPlugins"
+           [legend]="barChartLegend"
+           [type]="'pie'">
+  </canvas>
+
+</div>

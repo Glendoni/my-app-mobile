@@ -1,0 +1,301 @@
+<!--{{ surveyForm.value |json}}-->
+<div *ngIf="new_study" class="mt-5"></div>
+<div *ngIf="!hideUI" class="d-none d-sm-block mt-2 mt-lg-2">
+  <form [formGroup]="surveyForm" (ngSubmit)="onUpdate()">
+    <div class="row">
+      <!--  <h4 class="mb-4 text-center mt-5 d-none d-sm-none d-md-none d-lg-none d-xl-block">{{new_study? 'Create New Study' :  'Edit Study Settings'}}</h4>-->
+      <div  class="col-sm-7 offset-xs-4 col-md-7 offset-md-0 mb-1 full-width ">
+        <div *ngIf="showUpgradeNotification">
+          <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+        </div>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4
+              class="mb-4 d-block d-md-block text-center">{{new_study ? 'Create New Study' : 'Edit Study Settings'}}</h4>
+            <div class="mb-3 col-12">
+              <div class="form-floating mb-2 mt-2">
+                <input type="survey_name" formControlName="name" class="form-control" id="name" maxlength="80"
+                       [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                <label for="name" class="form-label">Study Title</label>
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors['required']">Name is required</div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="surveyTypes" class="mb-3 col-6">
+              <div class="form-floating mb-2">
+                <select formControlName="type_of_survey"
+                        [(ngModel)]='nrSelectType'
+                        class="form-select"
+                        id="type_of_survey"
+                        aria-label="type_of_survey">
+                  <option *ngFor="let SurveyType of surveyTypes; index as i "
+                          [ngValue]="i+1" [disabled]="disabled">{{SurveyType}}</option>
+                </select>
+                <label for="type_of_survey" class="form-label">Access Type</label>
+                <div *ngIf="submitted && f.type_of_survey.errors" class="accessTypeIsRequired">
+                  <div *ngIf="f.type_of_survey.errors['required']">Access type is required</div>
+                </div>
+              </div>
+              <p *ngIf="f.type_of_survey.value ===1">Invited Participants Only</p>
+              <p *ngIf="f.type_of_survey.value ===2">Public via QR Code and Invited Participants</p>
+            </div>
+            <div class="mb-3 col-6">
+              <div class="form-floating mb-2">
+
+
+                <select formControlName="study_sectors" [(ngModel)]='nrSelect' class="form-select" id="sectors"
+                        aria-label="sectors">
+                  <option *ngFor="let city of City; index as i  " [ngValue]="i">{{city}}</option>
+                </select>
+                <label for="sectors" class="form-label">Study Focus</label>
+                <div *ngIf="submitted && f.study_sectors.errors" class="accessTypeIsRequired">
+                  <div *ngIf="f.study_sectors.errors['required']">Study Focus is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-5 col-12">
+              {{surveyForm.value.description.errors|json}}
+              <div class="form-floating mb-2">
+
+                <textarea formControlName="description" class="form-control" id="description" maxlength="5000" rows="60"
+                          [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                <label for="description" class="form-label">Study Description</label>
+                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                  <div *ngIf="f.description.errors['required']">Description is required</div>
+
+                  <div *ngIf="f.description.errors['maxlength']">Maximum character length is 5000</div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--          <div *ngIf="showCancelButton" class="mb-3">-->
+
+            <!--            <button (click)="dismissAddStudy()" type="submit" class="form-control btn btn-outline-dark">Cancel-->
+            <!--            </button>-->
+            <!--          </div>-->
+
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-7 offset-xs-4 col-md-5 offset-md-0 full-width mt-0">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 mb-3 mt-2 ">
+                <div class="form-floating mb-2">
+                  <input formControlName="start_date" type="date" class="form-control" placeholder="start date"
+                         id="start_date"
+                         [ngClass]="{ 'is-invalid': submitted && f.start_date.errors }">
+                  <label for="start_date" class="form-label">Study Start Date</label>
+                  <div *ngIf="submitted && f.start_date.errors" class="invalid-feedback">
+                    <div *ngIf="f.start_date.errors['required']">Start date is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3 mt-2">
+                <div class="form-floating mb-2">
+                  <input formControlName="end_date" type="date" class="form-control" id="end_date"
+                         placeholder="end date"
+                         [ngClass]="{ 'is-invalid': submitted && f.end_date.errors }">
+                  <label for="end_date" class="form-label">Study End Date</label>
+                  <div *ngIf="submitted && f.end_date.errors" class="invalid-feedback">
+                    <div *ngIf="f.end_date.errors['required']">End date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-6">
+                <div class="form-floating mb-2">
+                  <input formControlName="min_number_of_participants" type="number" class="form-control"
+                         id="min_number_of_participants" placeholder="Min"
+                         [ngClass]="{ 'is-invalid': submitted && f.min_number_of_participants.errors }">
+                  <label for="min_number_of_participants" class="form-label">Minimum Participants</label>
+                  <div *ngIf="submitted && f.min_number_of_participants.errors" class="invalid-feedback">
+                    <div *ngIf="f.min_number_of_participants.errors['required']">Minimum number of participants is
+                      required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3 col-6">
+                <div class="form-floating mb-2">
+                  <input formControlName="max_number_of_participants" type="number" class="form-control"
+                         id="max_number_of_participants" placeholder="Max"
+                         [ngClass]="{ 'is-invalid': submitted && f.max_number_of_participants.errors }">
+                  <label for="max_number_of_participants" class="form-label">Maximum Participants</label>
+                  <div *ngIf="submitted && f.min_number_of_participants.errors" class="invalid-feedback">
+                    <div *ngIf="f.max_number_of_participants.errors['required']">Maximum number of participants is
+                      required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="surveyForm.value.type_of_survey" class="form-check mb-3  col-12">
+              <input formControlName="active" class="form-check-input" type="checkbox" id="active">
+              <label class="form-check-label" for="active">
+                {{surveyForm.value.active ? 'Production-Mode (on)' : 'Production-Mode (off)'}}
+              </label>
+              <p *ngIf="surveyForm.value.active">Only select when configuration and testing is completed</p>
+              <p *ngIf="!surveyForm.value.active"><strong>Strongly Recommended during configuration and
+                testing</strong></p>
+            </div>
+            <div *ngIf="surveyForm.value.type_of_survey==1 && !disabled && safeForLater && studyInfo['saveForLaterVisibility']" class="form-check mb-3 mt-2 col-12">
+              <input formControlName="save_for_later" class="form-check-input" type="checkbox" id="save_for_later">
+              <label class="form-check-label" for="save_for_later">
+                Enable Save For Later {{surveyForm.value.save_for_later ? '(on)' : '(off)'}}
+              </label>
+              <p *ngIf="surveyForm.value.save_for_later && studyInfo['saveForLaterVisibility']">
+                Allows participants to save answers intermittently before final submission
+              </p>
+            </div>
+            <div>
+
+              <div *ngIf="surveyForm.value.type_of_survey">
+                <div *ngIf="surveyForm.value.type_of_survey ==2" class="form-check mb-3  col-12">
+                  <input formControlName="showQrCodeOnFrontEnd" class="form-check-input" type="checkbox"
+                         id="showQrCodeOnFrontEnd">
+                  <label class="form-check-label" for="showQrCodeOnFrontEnd">
+                    {{surveyForm.value.showQrCodeOnFrontEnd ? 'Share QR-Code (on)' : 'Share QR-Code (off)'}}
+                  </label>
+                  <p><span *ngIf="surveyForm.value.showQrCodeOnFrontEnd">
+                    Participants can show & share QR-Code link to this study
+                  </span></p>
+
+                  <input formControlName="qrCodeParticipantSingleComplete" class="form-check-input" type="checkbox"
+                         id="qrCodeParticipantSingleComplete">
+                  <label class="form-check-label" for="qrCodeParticipantSingleComplete">
+                    {{surveyForm.value.qrCodeParticipantSingleComplete ? 'QR-Code Single Session Complete (on)' : ' QR-Code Single Session Complete (off)'}}
+                  </label>
+
+                  <p *ngIf="surveyForm.value.qrCodeParticipantSingleComplete">
+                    Restricts participant to complete Q&A session once
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="!new_study" class="mb-3 mt-3 col-12 archiveUpdateStatus">
+                <hr class="mt-4"/>
+                <h6 class="mb-3 mt 3 text-center">Actions</h6>
+
+
+                <div *ngIf="studyInfo['study'].active == 3">
+                  <a href="javascript:void[0]" class="btn btn-warning" (click)="restoreStudyModal()"
+                     data-bs-toggle="modal" data-bs-target="#exampleModal">Restore Study</a>
+                  <a class="btn btn-danger" (click)="removeStudyModal()" data-bs-toggle="modal"
+                     data-bs-target="#exampleModal">Delete Study</a>
+                </div>
+                <div *ngIf="studyInfo['study'].active == 2" class="actionBtn">
+                  <a class="btn btn-outline-dark btn-sm" (click)="purgeStudyModal()" data-bs-toggle="modal"
+                     data-bs-target="#exampleModal">Purge Test Data</a>
+                  <a class="btn btn-outline-dark btn-sm" (click)="archiveStudyModal()" data-bs-toggle="modal"
+                     data-bs-target="#exampleModal">Archive Study</a>
+                  <a class="btn btn-outline-dark btn-sm" (click)="replicateStudyModal()" data-bs-toggle="modal"
+                     data-bs-target="#replicateModal">Replicate Study</a>
+                </div>
+                <div *ngIf="!new_study" class="mt-7 mb-4 mt-5 mb-5">
+                  <div *ngIf="studyInfo['study'].active != 3">
+                    <input type="submit" class="form-control btn btn-outline-success"
+                           value="{{new_study? 'Create' : 'Save Study Settings'}}">
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="new_study" class="mt-5 mb-5 ">
+                <input type="submit" class="form-control btn btn-outline-success"
+                       value="{{new_study? 'Create' : 'Save Study Settings'}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div *ngIf="modelBtn" class="modal fade modalText" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="exampleModalLabel">{{modelHeader}}: </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{studyInfo['study']['name']}}</p>
+        <p>{{modelBody}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Ignore and Close</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="modelAction()">{{modelBtn}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div *ngIf="modelBtn && surveyTypes" class="modal fade modalText" id="replicateModal" tabindex="-1"
+     aria-labelledby="replicateModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="replicateModalLabel">{{modelHeader}}</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+      <div class="modal-body">
+        <div *ngIf="showUpgradeNotification">
+          <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+        </div>
+        <!--        <p>Copy Study: {{studyInfo['study']['name']}} To: </p>-->
+        <form [formGroup]="replicateForm">
+
+          <div class="form-floating mb-3 ">
+            <input type="text" formControlName="studyName" class="form-control"
+                   [ngClass]="{ 'is-invalid': replicateSubmitted && r.studyName.errors }" id="studyName">
+            <label for="studyName" class="form-label">Insert Study Name</label>
+
+            <div *ngIf="replicateSubmitted && r.studyName.errors" class="invalid-feedback">
+              <div *ngIf="r.studyName.errors['required']">study name is required</div>
+            </div>
+          </div>
+          <div class="form-floating mb-2">
+            <select formControlName="typeOfSurvey"
+                    class="form-select"
+                    id="typeOfSurvey"
+                    aria-label="typeOfSurvey">
+              <option value=""></option>
+              <option *ngFor="let SurveyType of surveyTypes; index as i "
+                      [ngValue]="i+1">{{SurveyType}}</option>
+            </select>
+            <label for="typeOfSurvey" class="form-label">Select Type of Study</label>
+            <div *ngIf="replicateSubmitted && r.typeOfSurvey.invalid">
+              <div *ngIf="r.typeOfSurvey.errors['required']"
+                   style="color: var(--bs-form-invalid-color); font-size: 0.875em;">type of study is required
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+        <p><br/>{{modelBody}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Ignore and Close</button>
+        <button type="button" class="btn btn-danger btn-sm" [disabled]="clear"
+                (click)="modelAction()">{{modelBtn}}</button>
+      </div>
+    </div>
+  </div>
+</div>

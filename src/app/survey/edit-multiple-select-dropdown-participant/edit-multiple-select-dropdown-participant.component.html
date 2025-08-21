@@ -1,0 +1,54 @@
+<p>Select categories you would like to auto assign to participant</p>
+
+<!--<p>If left  blank this participant will be placed in the unallocated list</p>-->
+
+<div>
+<!--  <i class="fa fa-angle-down"></i>-->
+<!--  <a class="drop-toggle btn btn-outline-secondary flat mb-3" (click)="showDropDown=!showDropDown">-->
+<!--    Manage Assigned Categories-->
+<!--    &lt;!&ndash;      <span *ngIf="checkedList.length<=0">Allocated Categories</span>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <span *ngIf="checkedList.length>0">{{checkedList.join(', ')}}</span>&ndash;&gt;-->
+
+<!--  </a>-->
+  <div class="drop-show" *ngIf="!showDropDown">
+<!--    <label *ngFor="let a of list; index as i">-->
+<!--      <input type="checkbox" [(ngModel)]="a.checked"-->
+<!--             (change)="getSelectedValue(a.checked,a.name,a.id,i,a )" />-->
+<!--      <span>{{a.name}}</span>-->
+<!--    </label>-->
+<div class="container">
+  <div class="row-cols-auto">
+<!--{{list|json}}-->
+    <div *ngIf="list.length <1" class="">No categories have been added</div>
+    <div class="form-check-inline " *ngFor="let a of list; index as i">
+
+      <div class="form-check form-switch">
+<!--        <pre>{{a|json}}</pre>-->
+        <input class="form-check-input" (change)="getSelectedValue(a.checked,a.name,a.id,i,a )"  [(ngModel)]="a.checked"
+               type="checkbox"
+               role="switch"
+               id="flexSwitchCheckChecked{{i}}"
+               checked>
+        <label class="form-check-label" for="flexSwitchCheckChecked{{i}}">{{a.name}}</label>
+      </div>
+<!--      <input class="form-check form-switch" type="checkbox" [(ngModel)]="a.checked"-->
+<!--             (change)="getSelectedValue(a.checked,a.name,a.id,i,a )"  role="switch" id="flexSwitchCheckChecked"  data-toggle="switch" checked>-->
+<!--      <label class="form-check-label" for="flexSwitchCheckChecked">{{a.name}}</label>-->
+      </div>
+
+  </div>
+</div>
+  </div>
+  <div *ngIf="false">
+    <a  class="badge bg-dark text-bg-dark" *ngFor="let category of editDetails; index as i">
+
+      {{category.name }}
+    </a>
+  </div>
+  <!--    <button class="btn btn-outline-success">Update</button>-->
+  <div *ngIf="showDropDown">
+<!--    <button  class="btn btn-outline-success" (click)="addToSurvey({editDetails})" >Save and Update</button>-->
+  </div>
+</div>
+
+<!--{{list |json}}-->

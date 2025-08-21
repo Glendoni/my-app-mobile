@@ -1,0 +1,155 @@
+
+<!--<pre>{{  allJoinRequests | json }} </pre>;-->
+<!--<div *ngIf="allJoinRequests">-->
+
+<!--&lt;!&ndash;  mark&ndash;&gt;-->
+<!--<div *ngFor="let arj of allJoinRequests; index as i">-->
+<!--  <pre> {{arj.user_details[0].user_profile[0].username |json }}</pre>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<h3>User Requests</h3>-->
+<!--&lt;!&ndash;<pre>{{allJoinRequests |json}}</pre>&ndash;&gt;-->
+<!--&lt;!&ndash;<h3>Study Details</h3>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<p>{{allJoinRequests.study_id}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<pre>{{studyInfo| json}}</pre>&ndash;&gt;-->
+
+
+
+<h3>Request to Join </h3>
+<!--<pre>{{allJoinRequests | json}}</pre>-->
+<div *ngIf="allJoinRequests">
+<div class="container" >
+  <div  class="image-container "  *ngFor="let arj of allJoinRequests; index as i" >
+      <div>
+        <img src="{{ arj.user_details[0].user_profile[0].profile_img}}" class="rss opacity"/>
+        <div class="after">
+        <div class="overview_badge_right">
+          <a class="badge bg-dark text-bg-dark" (click)="removeCurrentUser(arj.id,i)">Reject</a>
+        </div>
+<!--          {{arj.id}}-->
+        <p *ngIf="arj.user_details[0].user_profile[0].age_group">Age: {{ arj.user_details[0].user_profile[0].age_group }}</p>
+        <p *ngIf="arj.user_details[0].user_profile[0].ethnicity_group">Ethnicity: {{ arj.user_details[0].user_profile[0].ethnicity_group }}</p>
+        <p *ngIf="arj.user_details[0].user_profile[0].country">Location: {{ arj.user_details[0].user_profile[0].country }}</p>
+
+<!--          <p>User Profile: {{arj.user_details[0].user_profile[0].user_id}}</p>-->
+<!--        <p>Occupation: Writer</p>-->
+<!--        <p>Bio: I would like to change the world with my knowledge and skills</p>-->
+
+        <div class="overview_badge_right">
+          <a class="badge bg-info text-dark" data-bs-toggle="modal"  (click)="setCurrentUser(arj.user_details[0].user_profile[0],i)" data-bs-target="#shortlistModal">Add To Survey</a>
+          <a class="badge bg-body text-dark" (click)="addToShortlist(arj.user_details[0].user_profile[0])">Add To Shortlist</a>
+
+          <a class="badge bg-gradient text-bg-dark" data-bs-toggle="modal" (click)="displayStudyDetailsModal(arj.user_details[0].user_profile[0])" data-bs-target="#exampleModal">More Info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Join Study Request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="studyDetails">
+
+
+        <div class="subHeader">
+          <div>
+            <img class="modalImg"
+                 src="{{studyDetails.profile_img}}"
+                 class="rss opacity"/>
+          </div>
+          <div class="modal-details">
+            <p> {{studyDetails.username }}</p>
+            <p>Age: {{userProfile.age_group }}</p>
+
+            <p>Gender: {{studyDetails.gender_group}}</p>
+            <p>Ethnicity: {{studyDetails.ethnicity_group}}</p>
+            <p>Location: {{studyDetails.country}}</p>
+<!--            <p>Occupation: Writer</p>-->
+          </div>
+        </div>
+        </div>
+        <p>{{studyDetails.bio}}</p>
+        <button class="btn btn-outline-dark" data-bs-dismiss="modal">Add To Shortlist</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--          <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="shortlistModal" tabindex="-1" aria-labelledby="shortlistModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shortlistModalLabel">Add Participant To Study</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="studyDetails">
+
+
+          <div class="subHeader">
+
+            <div>
+
+            </div>
+            <div class="modal-details" *ngIf="categoryArray">
+              <br/>
+            <form [formGroup]="categoryForm" (ngSubmit)="addToShortlist_(studyDetails)" >
+              <label  class="form-label">Select Study Category</label>
+             <pre> {{categoryArray |json}} </pre>
+              <app-multi-select-dropdown
+                [list]="categoryArray"
+                (removeIndividualCheckedList)="removeIndividualCheckedList($event)"
+                (shareCheckedList)="shareCheckedList($event)"
+                (shareIndividualCheckedList)="shareIndividualCheckedList($event)"
+              >
+              </app-multi-select-dropdown>
+<!--              <div *ngIf="submitted && f.category_id.errors" class="invalid-feedback">-->
+<!--                <div *ngIf="f.category_id.errors['required']">category is required</div>-->
+<!--              </div>-->
+            </form>
+
+              <br/><br/>
+              <!--            <p>Occupation: Writer</p>-->
+            </div>
+          </div>
+        </div>
+        <p>User:{{currentuser}}</p>
+        <button  class="btn btn-outline-success" data-bs-dismiss="modal" (click)="addToSurvey({currentuser})" >Add To Survey</button>
+
+        {{categoryForm.value |json}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--          <button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="
+    categoryForm.errors?.['identityRevealed'] &&
+    (categoryForm.touched || categoryForm.dirty)
+  "
+  class="cross-validation-error-message alert alert-danger"
+>
+  Name cannot match alter ego.
+</div>

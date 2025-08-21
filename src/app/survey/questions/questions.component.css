@@ -1,0 +1,81 @@
+.containerOuter {
+  display: flex;
+background: white;
+padding-top: 5px;
+  flex-direction: row;
+  gap: 10px; /* Adjust the value as needed for the spacing between stacked elements */
+}
+
+.containerOuter .detail{
+  border-left: lightgray solid thin;
+  background: white;
+  min-height: 673px;
+  width: 50%;
+  padding:0px 10px ;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px; /* Adjust the value as needed for the spacing between stacked elements */
+}
+.breadTitle{
+  color: darkgoldenrod;
+  font-weight: 100;
+}
+.container .item {
+
+  background-color: lightgray;
+  color: #6d5c41;
+  display: flex;
+  /*justify-content: start;*/
+  /*align-items: end;*/
+  cursor: move;
+  padding: 1em;
+  transition: transform 0.2s ease-in-out; /* Add a transition for smooth animation */
+}
+
+.app-menu{
+  width: 145px;
+}
+
+.app-row {
+  /*padding-right: 105px;*/
+}
+/*@media (min-width: 1200px) {*/
+/*  .app-row {*/
+/*    padding-right: 135px;*/
+/*  }*/
+/*}*/
+
+/*@media (min-width: 1200px) {*/
+/*  .app-row {*/
+/*    padding-right: 135px;*/
+/*  }*/
+/*}*/
+
+
+/*  @media (min-width: 1337px) {*/
+/*    .app-row {*/
+/*      padding-right: 154px;*/
+/*    }*/
+/*  }*/
+
+/*@media (min-width: 1117px) {*/
+/*  .app-row {*/
+/*    padding-right: 140px;*/
+/*  }*/
+/*}*/
+
+/*@media (max-width: 1199px) {*/
+/*  .app-row {*/
+/*    padding-right: 0px;*/
+/*  }*/
+
+/*  .right-side{*/
+/*    width:100% !important;*/
+/*  }*/
+/*  .mobile-device{*/
+/*    width:auto;*/
+/*  }*/
+/*}*/

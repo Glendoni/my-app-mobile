@@ -1,0 +1,60 @@
+
+<div class="col-auto  col-md-8 offset-md-2 offset-0">
+  <div class="card mb-4">
+    <div class="card-body">
+      <h4 class="mb-5">Change Account Password</h4>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onResetPassword()">
+        <div class="mb-3">
+        <label>Enter Old Password</label>
+          <app-base></app-base>
+        <input type="text" formControlName="old_password" class="form-control s-form-v4__input g-radius--50"
+               placeholder="* old password" [ngClass]="{ 'is-invalid': submitted && f.old_password.errors }"/>
+          <div *ngIf="submitted && f.old_password.errors" class="invalid-feedback">
+            <div *ngIf="f.old_password.errors['required']">Old password is required</div>
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+        <label>Enter New Password</label>
+        <input type="text" formControlName="password" class="form-control s-form-v4__input g-radius--50"
+               placeholder="* password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+        <div *ngIf="f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors['required']">New password is required</div>
+          <div *ngIf="password.errors?.['pattern']">
+            Password must contain at least one number, one uppercase and a
+            lowercase letter and at least 8 characters<br/>Password cannot
+            contain whitespace
+          </div>
+        </div>
+        </div>
+        <div class="mb-5">
+
+        <label>Confirm New Password</label>
+        <input type="text" formControlName="confirmPassword" class="form-control s-form-v4__input g-radius--50"
+               placeholder="* confirm password"
+               [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"/>
+        <div *ngIf=" f.confirmPassword.errors" class="invalid-feedback">
+
+          <div *ngIf="confirmPassword.errors?.['pattern']">
+            Password must contain at least one number, one uppercase and a
+            lowercase letter and at least 8 characters<br/>Password cannot
+            contain whitespace
+          </div>
+          <div *ngIf="f.confirmPassword.errors['required']">confirm new password is required</div>
+
+          <div *ngIf="f.confirmPassword.errors['confirmedValidator']">password do not match</div>
+        </div>
+        </div>
+        <div class="mb-5">
+        <button type="submit"
+                class="text-uppercase btn btn-dark s-btn s-btn--md s-btn--primary-bg g-radius--50 g-padding-x-80--xs">Change password
+        </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+

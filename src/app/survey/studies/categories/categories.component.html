@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <div class="row app-row">
+    <div class="col-12">
+<!--<div class="card mb-5">-->
+<!--  <div class="card-body">-->
+<!--    <h5>{{studyInfo['study'].name}}</h5>-->
+
+<!--  </div>-->
+<!--</div>-->
+    </div></div></div>
+
+
+<div>
+  <div *ngIf="categotyList">
+    <div class="container-fluid">
+      <div class="row app-row">
+        <div class="col-12 offset-0 offset-xl-2">
+
+<!--          <div  *ngIf="categotyNewBtn" class="mb-5">-->
+<!--            <button (click)="create()" class="btn btn-secondary btn-lg new-category-btn " style="-->
+<!--    float: inline-end;-->
+<!--"> <i class="bi bi-plus-square"></i></button>-->
+
+<!--          </div>-->
+          <h4 class="ml-1 mb-4 text-center mt-4">Categories</h4>
+
+          <p *ngIf="studyInfo['study']['type_of_survey']==2"><strong>{{categotyList.length?'QR-Code study type only supports a single category':null}}</strong></p>
+          <div *ngIf="showUpgradeNotification">
+            <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+          </div>
+          <div *ngIf="categotyList && categotyList.length <1 && !upgradeNotification || showSpinner" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="card d-flex flex-row mb-3" *ngFor="let category of categotyList | paginate: { itemsPerPage: pageItems, currentPage: p} ">
+            <div class="d-flex flex-grow-1 min-width-zero">
+              <div
+                class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                <a class="list-item-heading mb-0 truncate w-40 w-lg-60 w-xs-100 mt-0 onNav"
+                   (click)="details(category)">
+                  <i class="simple-icon-refresh heading-icon"></i>
+                  <span class="align-middle d-inline-block">{{ category.name}}</span>
+                </a>
+                <p class="mb-0 text-muted text-small w-15 w-xs-100">&nbsp;</p>
+                <p class="mb-0 text-muted text-small w-15 w-xs-100">&nbsp;</p>
+                <!--                  <div class="w-15 w-xs-100">-->
+                <!--                    <span class="badge badge-pill badge-secondary">ON HOLD</span>-->
+                <!--                  </div>-->
+              </div>
+              <!--                <label class="custom-control custom-checkbox mb-1 align-self-center mr-4">-->
+              <!--                  <input type="checkbox" class="custom-control-input">-->
+              <!--                  <span class="custom-control-label">&nbsp;</span>-->
+              <!--                </label>-->
+            </div>
+          </div>
+          <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
+
+        </div>
+
+        <!--      <div class="item">-->
+        <!--        <div (click)="details(category)"></div>-->
+        <!--      </div>-->
+        <br/>
+      </div>
+    </div>
+    <br/>
+  </div>
+
+
+      <div *ngIf="showCreate">
+        <div class="card mb-2">
+          <div class="card-body">
+        <h4 class="breadTitle text-center">Create Study Sub Category</h4>
+        <div class="mb-3 col-lg-6 catForm mt-3">
+          <form [formGroup]="categoryForm" (ngSubmit)="save()">
+            <label for="name" class="form-label"></label>
+            <input type="text" formControlName="name" class="form-control" id="name"
+                   placeholder="eg:Red Leicester Cheese" [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"/>
+            <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors">Category name is required</div>
+            </div>
+
+          </form>
+          <div class="text-right mt-5">
+          <input type="submit" (click)="save(true)" class="btn btn-outline-success catbtn" value="Create"/>
+          <button (click)="showList()" class="btn btn-dark catbtn ml-1">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+
+
+
+        </div>
+      </div>
+      <div *ngIf="showDetails">
+        <div class="card mt-2">
+          <div class="card-body">
+        <h4 class="breadTitle text-center">Edit Study Sub Category</h4>
+            <div class="mb-3 col-lg-6 catForm mt-3">
+        <form [formGroup]="categoryForm">
+          <div class="mb-3 col-lg-12">
+            <label for="exampleFormControlInput1" class="form-label"></label>
+            <input type="name" formControlName="name" class="form-control" id="exampleFormControlInput1"
+                   placeholder="eg:Cheddar Cheese">
+            <div *ngIf="updateFailier" class="error">{{updateFailier}}</div>
+          </div>
+
+        </form>
+            <div class="mb-3 col-lg-12 text-right mt-5">
+              <button (click)="updateCategory(false)" class="btn btn-outline-success">Update</button>
+              <button (click)="showList()" class="btn btn-dark ml-1">Cancel</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+

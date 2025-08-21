@@ -1,0 +1,82 @@
+<section class="bg-light p-3 p-md-4 p-xl-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xxl-11">
+        <div class="card border-light-subtle shadow-sm">
+          <div class="row g-0">
+            <!--            <div class="col-12 col-md-12">-->
+            <!--              <img class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" src="./assets/img/logo-img-1.webp" alt="Welcome back you've been missed!">-->
+            <!--            </div>-->
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+              <div class="col-12 col-lg-11 col-xl-10">
+                <div class="card-body p-3 p-md-4 p-xl-5">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="mb-5">
+                        <h2>Admin Peaker Pro</h2>
+                        <!--                        <div class="text-center mb-4">-->
+                        <!--                          <a href="#!">-->
+                        <!--                            <img src="./assets/img/bsb-logo.svg" alt="BootstrapBrain Logo" width="175" height="57">-->
+                        <!--                          </a>-->
+                        <!--                        </div>-->
+                        <!--                        <h4 class="text-center">SurveyTell</h4>-->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="showForm">
+                      <h5 class="mb-3">Enter New Account Password</h5>
+                      <form [formGroup]="paymentLoginForm" (ngSubmit)="onSubmit()">
+                        <div class="g-margin-b-5-md mb-3">
+                          <label>Password</label>
+                          <input type="text" formControlName="password"
+                                 class="form-control s-form-v4__input g-radius--50"
+                                 placeholder="* password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                          <div *ngIf="f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors['required']">password is required</div>
+                            <div *ngIf="password.errors?.['pattern']">
+                              Password must contain at least one number, one uppercase and a
+                              lowercase letter and at least 8 characters<br/>Password cannot
+                              contain whitespace
+                            </div>
+                          </div>
+                        </div>
+                        <div class="g-margin-b-20--xs mb-5">
+                          <label>Confirm Password</label>
+                          <input type="email" formControlName="confirmPassword"
+                                 class="form-control s-form-v4__input g-radius--50"
+                                 placeholder="* confirm password"
+                                 [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"/>
+                          <div *ngIf=" f.confirmPassword.errors" class="invalid-feedback">
+
+                            <div *ngIf="confirmPassword.errors?.['pattern']">
+                            </div>
+                            <div *ngIf="f.confirmPassword.errors['required']">confirmation password is required</div>
+
+                              <div *ngIf="f.confirmPassword.errors['confirmedValidator']">passwords do not match</div>
+                          </div>
+                        </div>
+
+                        <div class="g-text-center--xs g-margin-t-100--xs">
+                          <button type="submit"
+                                  class="text-uppercase btn btn-outline-dark g-radius--50 g-padding-x-100--xs">Confirm
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div *ngIf="showFormSuccess">
+                      <h4>Your Account is now active</h4>
+                      <div>
+                        <button (click)="onNavToAuth()">Go To Login</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

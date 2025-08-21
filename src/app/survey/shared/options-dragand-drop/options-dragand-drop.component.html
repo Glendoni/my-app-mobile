@@ -1,0 +1,85 @@
+<label class="d-block">Edit ({{optionListItems.type.toUpperCase()}}) Options</label>
+<div class="separator mb-4"></div>
+<div class="answers mb-3">
+  <div *ngIf="showDetails">
+    <div class="container" cdkDropList id="todo" [cdkDropListConnectedTo]="['done']" [cdkDropListData]="optionList"
+         (cdkDropListDropped)="drop($event)">
+      <form [formGroup]="orderForm">
+        <!--        {{optionListItems[0].options |json}}-->
+        <div class="item" *ngFor="let item of optionList; index as i ">
+          <div class="mb-1 position-relative" cdkDrag>
+            <input type="text" readonly class="form-control" id="inputGroupFileAddon{{i}}" value="{{item.label}}"
+                   [attr.aria-describedby]="'inputGroupFileAddon{{i}}'">
+            <div class="input-icons">
+              <span
+                class="badge badge-pill handle pr-0 mr-0">
+                <i class="simple-icon-cursor-move"></i>
+              </span>
+              <span class="badge badge-pill" (click)="onDelete(item)">
+                <i class="simple-icon-ban"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <br/>
+        <div *ngIf="optionListItems.type=='select'" class="input-group mb-3">
+
+          <label>
+            <input formControlName="inputOptionBox" (click)="optionBox()" id="inputOptionBox" type="checkbox"/>
+            Show other input box</label>
+        </div>
+      </form>
+
+      <form [formGroup]="orderForm" (ngSubmit)="addToArr()">
+        <!--    <input formControlName="name" name="opt" type="text" placeholder="Insert Option">-->
+        <div class="input-group">
+          <input formControlName="name" type="text" class="form-control optionField"
+                 aria-label="Text input with segmented dropdown buttons" style="background: white;"
+                 placeholder="Insert Label">
+          <input type="submit" class="btn btn-outline-primary" value="Add Option"/>
+          <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul *ngIf="fieldPreFillOptions" class="dropdown-menu dropdown-menu-end">
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li  *ngFor="let fieldPreFillOption of fieldPreFillOptions; index as i ">
+
+              <a [className]="fieldPreFillOption.disabled?'dropdown-item disabled': 'dropdown-item'"  href="#" (click)="onOptions( fieldPreFillOption.value)" > {{fieldPreFillOption.name}}</a>
+            </li>
+            <li><a class="dropdown-item" (click)="onClearOptions()">Clear Options</a></li>
+          </ul>
+        </div>
+        <br/>
+<!--        <div class=" mt-3 mb-1">Chart Type</div>-->
+<!--        <div class="separator mb-2"></div>-->
+        <div class="input-group  mb-3  mt-3 ">
+          <div class="form-floating">
+            <select  *ngIf="chartFillOptions" formControlName="chartType" (change)="setChartType()" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+              <option selected>Open this select menu</option>
+             <option *ngFor=" let chartFillOption of chartFillOptions" [value]="chartFillOption.value" [disabled]="chartFillOption.disabled">
+               {{chartFillOption.name}}
+             </option>
+            </select>
+            <label for="floatingSelect">Selected Chart Type</label>
+          </div>
+        </div>
+        <br/>
+        <div class="text-center">
+          <!--          {{orderForm.touched}}-->
+          <button (click)="onUpdate()" type="button"
+                  class="btn btn-outline-primary btn-sm mb-2">
+            <i class="simple-icon-plus btn-group-icon"></i>
+            Save and Update
+            <i class="simple-icon-plus btn-group-icon"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

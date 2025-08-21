@@ -1,0 +1,356 @@
+<nav class="noprint navbar fixed-top">
+  <div class="d-flex align-items-center navbar-left offset-1">
+
+    <h3 class="ml-2 pl-xs-0 mb-xs-1 mt-xs-0    s-header__logo-img s-header__logo-img-shrink appName"><span>Peeker</span>
+      <span
+        class="study-title-initial">Pro</span><span
+        class="study-title"></span> ~ admin<span class="study-title-period"></span>
+    </h3>
+<!--    <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none">-->
+<!--      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">-->
+<!--        <rect x="0.5" y="0.5" width="25" height="1"/>-->
+<!--        <rect x="0.5" y="7.5" width="25" height="1"/>-->
+<!--        <rect x="0.5" y="15.5" width="25" height="1"/>-->
+<!--      </svg>-->
+<!--    </a>-->
+  </div>
+
+  <a class="navbar-logo" href="Dashboard.Default.html">
+    <span class="logo d-none d-xs-block"></span>
+    <span class="logo-mobile d-block d-xs-none"></span>
+  </a>
+
+  <div class="navbar-right">
+    <div class="header-icons d-inline-block align-middle">
+      <div class="d-none d-md-inline-block align-text-bottom mr-3">
+      </div>
+
+      <div class="position-relative d-none d-sm-inline-block">
+
+        <div class="dropdown-menu dropdown-menu-right mt-3  position-absolute" id="iconMenuDropdown">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="user d-inline-block">
+      <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+        <span class="name">{{userDetails}}  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+      </svg></span>
+        <span>
+<!--                        <img alt="Profile Picture" src="assets/img/profiles/l-1.jpg"/>-->
+                    </span>
+      </button>
+
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" [routerLink]="['/survey']">Dashboard</a>
+        <a class="dropdown-item" [routerLink]="['/account']">Account</a>
+        <a class="dropdown-item mt-3" [routerLink]="['/auth']">Sign out</a>
+        <a>-</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div [class]="status" [class.visible]="isVisible">
+  {{notificationMessage}}
+
+</div>
+
+<div class="col-4 d-none d-sm-block">
+  <div class="menu">
+    <div class="main-menu">
+      <div class="scroll">
+        <ul *ngIf="!showNewUserWelcomeMgs" class="list-unstyled">
+          <li class="d-none d-sm-none d-md-none d-lg-block">
+            <a (click)="onGlobalShow()">
+              <i class="bi bi-gear-wide-connected"></i>
+              <span>Global Preferences</span>
+            </a>
+          </li>
+
+          <li *ngIf="!create" (click)="onProfileShow()">
+            <a>
+              <i class="bi bi-person-bounding-box"></i>
+              <span>Password</span>
+            </a>
+          </li>
+          <li *ngIf="!create" (click)="on2Fa()" class="d-none d-sm-none d-md-none d-lg-block">
+            <a>
+              <i class="bi bi-person-fill-lock"></i>
+              <span>2F Authentication</span>
+            </a>
+          </li>
+          <li *ngIf="!showNewUserWelcomeMgs" (click)="onInvoice()">
+            <a>
+              <i class="bi bi-receipt-cutoff"></i>
+              <span>Invoices</span>
+            </a>
+          </li>
+          <li *ngIf="!create" (click)="onPricing()" class="d-none d-sm-none d-md-none d-lg-block">
+            <a>
+              <i class="bi bi-person-fill-lock"></i>
+              <span>Upgrades</span>
+            </a>
+          </li>
+          <li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--{{ surveyForm.value |json}}-->
+<div class="col-auto offset-0 offset-md-1 offset-lg-1 mt-5 pl-0 pl-md-5 show-spinner " style="top: 76px;">
+  <div class="container-fluid">
+    <div class="row">
+
+
+
+      <div class="col-sm-12">
+
+
+  <!--  <h1 class="mb-1 mt-1"><span class="study-title-initial">L</span><span class="study-title">ime</span><span-->
+  <!--    class="study-title-period">.</span></h1>-->
+  <div *ngIf="profileShow">
+    <app-profile></app-profile>
+  </div>
+
+        <div *ngIf="showNewUserWelcomeMgs" class="h3span">
+          <h3 class="text-center">Hi {{userFirstName}}, welcome to Peeker Pro Admin</h3>
+        </div>
+
+  <div *ngIf="globalShow">
+
+    <form [formGroup]="surveyForm" (ngSubmit)="onUpdate()">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-6 mb-0">
+
+          <div class="card mb-4">
+            <div *ngIf=edit class="card-body">
+              <h4 class="mb-4 ml-3">Edit Global Account Settings:</h4>
+
+              <div class="mb-3 col-12">
+                <div class="form-floating mb-2">
+
+                  <input type="text" formControlName="userName" class="form-control" id="userName"
+                         placeholder="Insert Display Name"
+                         [ngClass]="{ 'is-invalid': submitted && f['userName'].errors }"/>
+                  <label for="userName" class="form-label">Account Contact Name*</label>
+                  <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+                    <div *ngIf="f.userName.errors">Username is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3 col-12">
+                <div class="form-floating mb-2">
+
+                  <input type="text" formControlName="appName" class="form-control" id="appName"
+                         placeholder="Insert Name" [ngClass]="{ 'is-invalid': submitted && f['appName'].errors }"/>
+                  <label for="appName" class="form-label">Application or Company Name*</label>
+                  <div *ngIf="submitted && f['appName'].errors" class="invalid-feedback">
+                    <div *ngIf="f.appName.errors">This field is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3 col-12">
+                <div class="form-floating mb-2">
+
+                  <input type="number" formControlName="contactNumber" class="form-control" id="contactNumber"
+                         placeholder="Insert Phone Number"
+                         [ngClass]="{ 'is-invalid': submitted && f['contactNumber'].errors }"/>
+                  <label for="contactNumber" class="form-label">Contact Phone* </label>
+                  <div *ngIf="submitted && f['contactNumber'].errors" class="invalid-feedback">
+                    <div *ngIf="f.contactNumber.errors">Contact Phone Number is required</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="mb-3 col-6">
+
+
+              </div>
+
+              <!--          <div class="mb-5 col-12">-->
+              <!--            <label for="description" class="form-label">Description</label>-->
+              <!--            <textarea formControlName="description" class="form-control" id="description" maxlength="700" rows="6"-->
+              <!--                      placeholder="">-->
+              <!--                </textarea>-->
+              <!--          </div>-->
+              <div class="form-check mb-5   col-12">
+                <input formControlName="active" class="form-check-input" type="checkbox" id="active">
+                <label class="form-check-label" for="active">
+                  <strong>Account: {{f['active'].value ? 'Is Active (on)' : 'In Maintenance'}}</strong>
+                </label>
+                <p *ngIf="!f['active'].value">Participants will not be able gain entry into studies. A generic In Maintenance message will be shown</p>
+              </div>
+
+
+              <!--          <div *ngIf="showCancelButton" class="mb-3">-->
+
+              <!--            <button (click)="dismissAddStudy()" type="submit" class="form-control btn btn-outline-dark">Cancel-->
+              <!--            </button>-->
+              <!--          </div>-->
+
+
+            </div>
+
+
+            <div *ngIf=create class="card-body">
+
+
+              <h4 class="mb-4"> Global Account Settings:</h4>
+
+              <div class="mb-3 col-12">
+                <div class="mb-3 col-12">
+                <div class="form-floating mb-2">
+                  <input type="text" formControlName="userName" class="form-control" id="userName"
+                         placeholder="Insert Display Name"
+                         [ngClass]="{ 'is-invalid': submitted && f['userName'].errors }"/>
+                  <label for="userName" class="form-label">Contact Name* </label>
+                  <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+                    <div *ngIf="f.userName.errors">Account name is required</div>
+                  </div>
+                </div>
+                </div>
+                <div class="mb-3 col-12">
+                  <div class="form-floating mb-2">
+                    <input type="text" formControlName="appName" class="form-control" id="appName"
+                           placeholder="Insert Name" [ngClass]="{ 'is-invalid': submitted && f['appName'].errors }"/>
+                    <label for="appName" class="form-label">Account Name*</label>
+                    <div *ngIf="submitted && f['appName'].errors" class="invalid-feedback">
+                      <div *ngIf="f.appName.errors">This field is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3 col-12">
+                  <div class="form-floating mb-2">
+                    <input type="number" formControlName="contactNumber" class="form-control" id="contactNumber"
+                           placeholder="Insert Phone Number"
+                           [ngClass]="{ 'is-invalid': submitted && f['contactNumber'].errors }"/>
+                    <label for="contactNumber" class="form-label">Contact Phone* </label>
+                    <div *ngIf="submitted && f['contactNumber'].errors" class="invalid-feedback">
+                      <div *ngIf="f.contactNumber.errors">Contact Phone Number is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="mb-3 col-6">
+
+
+              </div>
+
+              <!--          <div class="mb-5 col-12">-->
+              <!--            <label for="description" class="form-label">Description</label>-->
+              <!--            <textarea formControlName="description" class="form-control" id="description" maxlength="700" rows="6"-->
+              <!--                      placeholder="">-->
+              <!--                </textarea>-->
+              <!--          </div>-->
+              <div class="form-check mb-5   col-12">
+                <input formControlName="active" class="form-check-input" type="checkbox" id="active">
+                <label class="form-check-label" for="active">
+                  <strong>Account: {{f['active'].value ? 'Is Active' : 'Is Not Active'}}</strong>
+                </label>
+              </div>
+
+
+              <!--          <div *ngIf="showCancelButton" class="mb-3">-->
+
+              <!--            <button (click)="dismissAddStudy()" type="submit" class="form-control btn btn-outline-dark">Cancel-->
+              <!--            </button>-->
+              <!--          </div>-->
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h4 class="mb-4">Send Email Notifications:</h4>
+              <div class="col-12 mb-3">
+                <input formControlName="part_joined" class="form-check-input" type="checkbox" id="part_joined">
+                <label class="form-check-label" for="part_joined">
+                  After New Participant Created
+                </label>
+              </div>
+              <div class="col-12 mb-3">
+                <input formControlName="study_created" class="form-check-input" type="checkbox" id="study_created">
+                <label class="form-check-label" for="study_created">
+                  After New Study Created
+                </label>
+              </div>
+              <div class="col-12 mb-4">
+                <input formControlName="study_updated" class="form-check-input" type="checkbox" id="study_updated">
+                <label class="form-check-label" for="study_updated">
+                  After Study Updated
+                </label>
+              </div>
+              <hr/>
+              <h6 class="pl-3 pl-lg-3">Recipients </h6>
+              <div class="col-12 mb-3">
+                <div class="form-floating mb-2">
+
+                  <input formControlName="to" type="text" class="form-control" id="main_notification_email"
+                         placeholder="insert Main Email" [ngClass]="{ 'is-invalid': submitted && f['to'].errors }"/>
+                  <label for="main_notification_email" class="form-label">Main Email* </label>
+                  <div *ngIf="submitted && f['to'].errors" class="invalid-feedback">
+                    <div *ngIf="f.to.errors">Email is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 mb-3">
+                <div class="form-floating mb-2">
+
+                  <input formControlName="cc" type="text" class="form-control" id="secondary_notification_email"
+                         placeholder="add secondary email">
+                  <label for="secondary_notification_email" class="form-label">Secondary Email</label>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="form-check  mb-5  col-12">
+                  <input formControlName="pause" class="form-check-input" type="checkbox" id="pause">
+                  <label class="form-check-label" for="active">
+                    Pause All Notifications <span>({{f['pause'].value ? 'On' : 'Off'}})</span>
+                  </label>
+                  <p *ngIf="f['pause'].value">All admin recipient email notifications will be stopped</p>
+                </div>
+
+
+                <input type="submit" class="form-control btn btn-outline-success"
+                       value="Save Global Settings">
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="twoFa">
+    <app-google-authenticator></app-google-authenticator>
+  </div>
+
+  <div *ngIf="pricing">
+    <app-pricing-comparison></app-pricing-comparison>
+  </div>
+
+  <div *ngIf="invoice">
+    <app-invoice></app-invoice>
+  </div>
+</div>
+
+</div>
+  </div>
+</div>

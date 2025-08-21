@@ -1,0 +1,9 @@
+.custom-checkbox{
+  min-width: 27%;
+}
+.pageBreakBackgroundColor{
+  background: #0d6efd;
+}
+.pageBreakBackgroundColor i{
+  color: white;
+}

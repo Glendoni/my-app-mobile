@@ -1,0 +1,12 @@
+{
+  "myAccount" : "My Account",
+  "general": {
+    "cancelParaOne": "After cancelling your current subscription your account will continue to operate as normal until the subscription has fully expired.",
+    "cancelParaTwo": "After cancelling your current subscription your account will continue to operate as normal until the subscription has fully expired.",
+    "dashboardTitle" : "",
+    "signIn" : "Sign In",
+    "signOut" : "Log Out",
+    "myAccount" : "My Account"
+  }
+}
+

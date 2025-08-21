@@ -1,0 +1,437 @@
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col-12">
+      <div *ngIf="showDetail">
+        <app-pricing-details [pkg]="packageItem" (backToList)="backToList()"></app-pricing-details>
+      </div>
+      <div *ngIf="showSubscriptionDetail">
+        <app-subscription-details [pkg]="packageItem" (backToList)="backToList()"></app-subscription-details>
+      </div>
+
+
+      <!--        <div class="mb-2">-->
+      <!--          <h1>Pricing</h1>-->
+      <!--          <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">-->
+      <!--            <ol class="breadcrumb pt-0">-->
+      <!--              <li class="breadcrumb-item">-->
+      <!--                <a href="#">Home</a>-->
+      <!--              </li>-->
+      <!--              <li class="breadcrumb-item">-->
+      <!--                <a href="#">Library</a>-->
+      <!--              </li>-->
+      <!--              <li class="breadcrumb-item active" aria-current="page">Data</li>-->
+      <!--            </ol>-->
+      <!--          </nav>-->
+      <!--          <div class="separator mb-5"></div>-->
+      <!--        </div>-->
+
+      <div *ngIf="!showDetail&&!showSubscriptionDetail" class="row equal-height-container">
+        <div class="col-12">
+          <h5 class="mb-4 text-center">Select Upgrade </h5>
+
+
+        </div>
+
+          <div *ngFor="let packageItem of packages['pricing']; index as i  " class="col-md-12 col-lg-4 mb-4 col-item">
+            <div class="card">
+              <div class="card-body pt-3 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
+                <div class="price-top-part">
+                  <i class="iconsminds-male large-icon"></i>
+
+                  <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">{{packageItem['name']}} <span *ngIf="packageItem['status'] =='active'" class="packageActive"> <i class="bi bi-check-circle packageActive"></i></span></h5>
+                        <p class="text-large mb-2 text-default price-amount">{{packageItem['price']}}</p>
+
+
+                  <p class="text-muted text-small">User/Month</p>
+                </div>
+                <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1">
+                  <ul class="list-unstyled">
+                    <li *ngFor="let package of packageItem['pkgDetails'] ">
+                      <p class="mb-0 " >
+                        {{package}}
+                      </p>
+                    </li>
+                  </ul>
+                  <div class="text-center">
+                      <div *ngIf="!packageItem['status']">
+                        <a (click)="showDetails(i)" class="btn btn-link btn-empty btn-lg purchase">
+                          Details
+                          <i class="simple-icon-arrow-right"></i>
+                        </a>
+                      </div>
+
+                      <div *ngIf="packageItem['status']=='pending'">
+                        <button (click)="showSubscriptionDetails(i)" class="btn btn-link btn-empty btn-lg purchase">
+                          <span>Pending <i class="simple-icon-arrow-right"></i></span>
+                        </button>
+                      </div>
+
+                      <div *ngIf="packageItem['status']=='active'">
+                        <button (click)="showSubscriptionDetails(i)" class="btn btn-link btn-empty btn-lg purchase">
+                          <span>Active <i class="simple-icon-arrow-right"></i></span>
+                        </button>
+                      </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!showDetail&& !showSubscriptionDetail" class="row">
+    <div class="col-12">
+      <h5>Feature Comparison</h5>
+    </div>
+
+    <div class="d-none d-md-block col-12">
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100"></p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center purchase">DEVELOPER</p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center purchase">TEAM</p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center purchase">ENTERPRISE</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3 ">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              Two factor authentication
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              Multiple Presentation Charts
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              24/5 Support
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              24/7 Support
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              Space
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              500MB
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              1GB
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              4GB
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div
+            class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+            <p class="list-item-heading mb-0 truncate w-40 w-xs-100">
+              User actions audit log
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+            </p>
+            <p class="mb-0 text-primary w-20 w-xs-100 text-center">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- For small screens -->
+    <div class="d-block d-md-none col-12">
+
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body pl-0 pb-0">
+            <p class="list-item-heading mb-0 text-primary">Two factor
+              authentication</p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              DEVELOPER
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              TEAM
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              ENTERPRISE
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body pl-0 pb-0">
+            <p class="list-item-heading mb-0 text-primary">Team permissions</p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              DEVELOPER
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              TEAM
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              ENTERPRISE
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body pl-0 pb-0">
+            <p class="list-item-heading mb-0 text-primary">24/5 Support</p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              DEVELOPER
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              TEAM
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              ENTERPRISE
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body pl-0 pb-0">
+            <p class="list-item-heading mb-0 text-primary">24/7 Support</p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              DEVELOPER
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              TEAM
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              ENTERPRISE
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card d-flex flex-row mb-3 table-heading">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body pl-0 pb-0">
+            <p class="list-item-heading mb-0 text-primary">User actions audit log</p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              DEVELOPER
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              TEAM
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card d-flex flex-row mb-3">
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="card-body align-self-center d-flex flex-row">
+            <p class="list-item-heading mb-0 truncate w-70">
+              ENTERPRISE
+            </p>
+            <p class="text-primary text-right mb-0 w-30 text-one">
+              <i class="simple-icon-check"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+

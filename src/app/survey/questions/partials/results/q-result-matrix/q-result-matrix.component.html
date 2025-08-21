@@ -1,0 +1,172 @@
+<!--<p>src/app/survey/questions/partials/results/q-result-quota/q-result-quota.component.html</p>-->
+
+
+<!--
+"start_date": "2024-06-26",
+"end_date": "2025-10-22",
+"min_number_of_participants": 1,
+"max_number_of_participants": 11,
+"study_sectors": "[\"music\",\"Theater\"]",
+
+-->
+<div class="card mb-4">
+  <div class="card-body">
+    <h6  class=" list-item-heading mb-4 fw-bold">Study Info</h6>
+    <div class="mb-4 offset-md-1">
+      <table class="table table-sm table-borderless">
+
+        <tbody *ngFor="let q of matrix; index as i">
+        <tr>
+          <td class="p-0 pb-1 w-10">
+            <span class="log-indicator border-theme-1 align-middle"></span>
+          </td>
+          <td class="p-0 pb-1">
+            <span class="font-weight-medium text-muted text-small link-question">
+              Categories - {{q.num_of_categories}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="p-0 pb-1 w-10">
+            <span class="log-indicator border-theme-1 align-middle"></span>
+          </td>
+          <td class="p-0 pb-1">
+            <span class="font-weight-medium text-muted text-small link-question">
+              Pending Invites - {{q.study_pending_invites}}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="studyInfo['study']['type_of_survey']!=3">
+          <td class="p-0 pb-1 w-10">
+            <span class="log-indicator border-theme-1 align-middle"></span>
+          </td>
+          <td class="p-0 pb-1">
+            <span class="font-weight-medium text-muted text-small link-question">
+              Active Participants - {{q.num_of_accepted}}
+            </span>
+          </td>
+        </tr> <tr *ngIf="studyInfo['study']['type_of_survey']!=3">
+          <td class="p-0 pb-1 w-10">
+            <span class="log-indicator border-theme-1 align-middle"></span>
+          </td>
+
+          <td  class="p-0 pb-1">
+            <span class="font-weight-medium text-muted text-small link-question">
+              Completed - {{q.num_of_completed}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="p-0 pb-1 w-10">
+            <span class="log-indicator border-theme-1 align-middle"></span>
+          </td>
+          <td class="p-0 pb-1">
+            <span class="font-weight-medium text-muted text-small link-question"
+                  >Distinct IP Addresses - {{q.distinct_ip_addr}}
+            </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="progress mb-0">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+             aria-valuemin="0" aria-valuemax="10"></div>
+        <div class="progress-bar bg-theme-2" role="progressbar"
+             aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>
+      </div>
+    </div>
+
+    <!--    <div class="mb-4">-->
+    <!--      <p class="mb-2">Study</p>-->
+    <!--      <div class="progress mb-3">-->
+    <!--        <div class="progress-bar" role="progressbar" aria-valuenow="80"-->
+    <!--             aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--        <div class="progress-bar bg-theme-2" role="progressbar"-->
+    <!--             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--      </div>-->
+
+    <!--      <table class="table table-sm table-borderless">-->
+    <!--        <tbody>-->
+    <!--        <tr>-->
+    <!--          <td class="p-0 pb-1 w-10">-->
+    <!--<span-->
+    <!--  class="log-indicator border-theme-1 align-middle"></span>-->
+    <!--          </td>-->
+    <!--          <td class="p-0 pb-1">-->
+    <!--<span-->
+    <!--  class="font-weight-medium text-muted text-small">139/125-->
+    <!--College</span>-->
+    <!--          </td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--          <td class="p-0 pb-1 w-10">-->
+    <!--<span-->
+    <!--  class="log-indicator border-theme-2 align-middle"></span>-->
+    <!--          </td>-->
+    <!--          <td class="p-0 pb-1">-->
+    <!--<span-->
+    <!--  class="font-weight-medium text-muted text-small">95/125-->
+    <!--High School</span>-->
+    <!--          </td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--      </table>-->
+    <!--    </div>-->
+
+    <!--    <div>-->
+    <!--      &lt;!&ndash;      {{studyInfo['study_categories'] |json}}&ndash;&gt;-->
+    <!--      <p class="mb-2">Categories</p>-->
+    <!--      <div class="progress mb-3">-->
+    <!--        <div class="progress-bar" role="progressbar" aria-valuenow="35"-->
+    <!--             aria-valuemin="0" aria-valuemax="50"></div>-->
+    <!--        <div class="progress-bar bg-theme-2" role="progressbar"-->
+    <!--             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--        <div class="progress-bar bg-theme-3" role="progressbar"-->
+    <!--             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
+    <!--      </div>-->
+
+    <!--      <table class="table table-sm table-borderless">-->
+    <!--        <tbody>-->
+
+    <!--        <tr *ngFor="let item of studyInfo['study_categories']">-->
+    <!--          <td class="p-0 pb-1 w-10">-->
+    <!--<span-->
+    <!--  class="log-indicator border-theme-1 align-middle"></span>-->
+    <!--          </td>-->
+    <!--          <td class="p-0 pb-1">-->
+    <!--<span-->
+    <!--  class="font-weight-medium text-muted text-small">{{item['name']}}-->
+    <!--</span>-->
+    <!--          </td>-->
+    <!--        </tr>-->
+    <!--        &lt;!&ndash;        <tr>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <td class="p-0 pb-1 w-10">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                  class="log-indicator border-theme-2 align-middle"></span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <td class="p-0 pb-1">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                  class="font-weight-medium text-muted text-small">40/75&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                    24-30</span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        <tr>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <td class="p-0 pb-1 w-10">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                  class="log-indicator border-theme-3 align-middle"></span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          <td class="p-0 pb-1">&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                  class="font-weight-medium text-muted text-small">60/75&ndash;&gt;-->
+    <!--        &lt;!&ndash;                                                                    30-40</span>&ndash;&gt;-->
+    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+    <!--        </tbody>-->
+    <!--      </table>-->
+    <!--    </div>-->
+
+  </div>
+</div>
+<!--<pre>{{studyInfo|json}}</pre>-->
+
+
