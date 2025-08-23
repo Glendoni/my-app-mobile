@@ -1,11 +1,11 @@
 
 <ul  class="nav nav-tabs separator-tabs ml-0 mb-3" role="tablist">
-  <li class="nav-item">
+  <li class="nav-item offset-4 offset-md-0">
     <a class="nav-link active" id="first-tab" data-toggle="tab" href="#first" role="tab"
        aria-controls="first" aria-selected="true" (click)="getReports(false)">QUESTIONS</a>
   </li>
 
-  <li *ngIf="showResultTab" class="nav-item">
+  <li *ngIf="showResultTab" class="nav-item d-none d-md-block">
     <a class="nav-link" id="third-tab" data-toggle="tab" href="#third" role="tab"
        aria-controls="third" aria-selected="false" (click)="getReports(true)">RESULTS</a>
   </li>

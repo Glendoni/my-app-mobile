@@ -77,7 +77,7 @@
               <span>Password</span>
             </a>
           </li>
-          <li *ngIf="!create" (click)="on2Fa()" class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!create" (click)="on2Fa()" class="d-none d-sm-none d-md-block d-lg-block">
             <a>
               <i class="bi bi-person-fill-lock"></i>
               <span>2F Authentication</span>
@@ -87,12 +87,6 @@
             <a>
               <i class="bi bi-receipt-cutoff"></i>
               <span>Invoices</span>
-            </a>
-          </li>
-          <li *ngIf="!create" (click)="onPricing()" class="d-none d-sm-none d-md-none d-lg-block">
-            <a>
-              <i class="bi bi-person-fill-lock"></i>
-              <span>Upgrades</span>
             </a>
           </li>
           <li>
@@ -127,11 +121,13 @@
 
     <form [formGroup]="surveyForm" (ngSubmit)="onUpdate()">
       <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-6 mb-0">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-0">
 
           <div class="card mb-4">
+
             <div *ngIf=edit class="card-body">
-              <h4 class="mb-4 ml-3">Edit Global Account Settings:</h4>
+              <h2 class="text-center mb-4"> Global Edit</h2>
+              <h4 class="mb-4 ml-3">Account Settings:</h4>
 
               <div class="mb-3 col-12">
                 <div class="form-floating mb-2">
@@ -170,7 +166,7 @@
               </div>
 
 
-              <div class="mb-3 col-6">
+              <div class="mb-3 col-12">
 
 
               </div>
@@ -203,7 +199,7 @@
             <div *ngIf=create class="card-body">
 
 
-              <h4 class="mb-4"> Global Account Settings:</h4>
+              <h4 class="mb-4">Account Settings:</h4>
 
               <div class="mb-3 col-12">
                 <div class="mb-3 col-12">
@@ -270,10 +266,10 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-6">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <div class="card mb-4">
             <div class="card-body">
-              <h4 class="mb-4">Send Email Notifications:</h4>
+              <h4 class="mb-4">Email Notifications:</h4>
               <div class="col-12 mb-3">
                 <input formControlName="part_joined" class="form-check-input" type="checkbox" id="part_joined">
                 <label class="form-check-label" for="part_joined">
@@ -341,11 +337,6 @@
   <div *ngIf="twoFa">
     <app-google-authenticator></app-google-authenticator>
   </div>
-
-  <div *ngIf="pricing">
-    <app-pricing-comparison></app-pricing-comparison>
-  </div>
-
   <div *ngIf="invoice">
     <app-invoice></app-invoice>
   </div>

@@ -65,7 +65,7 @@
 
 
             <div class="container item" *ngIf="model">
-              <h6 class="fw-bold mb-3">Filter Results</h6>
+              <h6 class="fw-bold mb-3 text-center">Filter Results</h6>
 
               <app-dynamic-form [model]="model" (profile)="submit($event)"
                                 (resetFilter)="refreshData()"></app-dynamic-form>
@@ -80,7 +80,7 @@
 
           </div>
           <div *ngIf="editDetails">
-            <div class="row col-12">
+            <div class="row ">
               <div class="row col-12">
 
                 <div *ngIf="editDetails.user_profile.username; then thenBlock else elseBlock"></div>

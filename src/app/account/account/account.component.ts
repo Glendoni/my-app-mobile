@@ -64,14 +64,6 @@ export class AccountComponent {
 this.userEmail = usr['email']
     this.userPhone = usr['phone']
 
-    this.activatedRoute.queryParams.subscribe(params => {
-      let date = params['pricing'];
-      if(date == 'table'){
-        this.onPricing()
-      }else{
-
-      }// Print the parameter to the console.
-    });
     this.userDetails = localStorage.getItem('username') ?? null
     this.userFirstName = this.userDetails.split(' ')[0]
     this.surveyForm = this.fb.group({
@@ -208,18 +200,6 @@ this.userEmail = usr['email']
     this.create =false
     this.twoFa= false
     this.invoice =true
-  }
-
-  onPricing() {
-
-    console.log('on pricing')
-    this.scrollToTop()
-    this.profileShow = false
-    this.globalShow = false
-    this.twoFa= false
-    this.pricing= true
-    this.create =false
-    this.invoice =false
   }
 
   scrollToTop() {

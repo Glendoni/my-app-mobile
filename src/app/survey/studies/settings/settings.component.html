@@ -11,7 +11,7 @@
         <div class="card mb-4">
           <div class="card-body">
             <h4
-              class="mb-4 d-block d-md-block text-center">{{new_study ? 'Create New Study' : 'Edit Study Settings'}}</h4>
+              class="mb-4 text-center">{{new_study ? 'Create New Study' : 'Edit Study Info & Settings'}}</h4>
             <div class="mb-3 col-12">
               <div class="form-floating mb-2 mt-2">
                 <input type="survey_name" formControlName="name" class="form-control" id="name" maxlength="80"
@@ -89,7 +89,7 @@
                   <input formControlName="start_date" type="date" class="form-control" placeholder="start date"
                          id="start_date"
                          [ngClass]="{ 'is-invalid': submitted && f.start_date.errors }">
-                  <label for="start_date" class="form-label">Study Start Date</label>
+                  <label for="start_date" class="form-label">Start Date</label>
                   <div *ngIf="submitted && f.start_date.errors" class="invalid-feedback">
                     <div *ngIf="f.start_date.errors['required']">Start date is required</div>
                   </div>
@@ -100,7 +100,7 @@
                   <input formControlName="end_date" type="date" class="form-control" id="end_date"
                          placeholder="end date"
                          [ngClass]="{ 'is-invalid': submitted && f.end_date.errors }">
-                  <label for="end_date" class="form-label">Study End Date</label>
+                  <label for="end_date" class="form-label">End Date</label>
                   <div *ngIf="submitted && f.end_date.errors" class="invalid-feedback">
                     <div *ngIf="f.end_date.errors['required']">End date is required</div>
                   </div>
@@ -180,34 +180,34 @@
 
               <div *ngIf="!new_study" class="mb-3 mt-3 col-12 archiveUpdateStatus">
                 <hr class="mt-4"/>
-                <h6 class="mb-3 mt 3 text-center">Actions</h6>
+                <h6 class="mb-3 mt 3 text-center">Study Actions</h6>
 
 
                 <div *ngIf="studyInfo['study'].active == 3">
                   <a href="javascript:void[0]" class="btn btn-warning" (click)="restoreStudyModal()"
                      data-bs-toggle="modal" data-bs-target="#exampleModal">Restore Study</a>
                   <a class="btn btn-danger" (click)="removeStudyModal()" data-bs-toggle="modal"
-                     data-bs-target="#exampleModal">Delete Study</a>
+                     data-bs-target="#exampleModal">Delete</a>
                 </div>
-                <div *ngIf="studyInfo['study'].active == 2" class="actionBtn">
+                <div *ngIf="studyInfo['study'].active == 2" class="actionBtn text-center">
                   <a class="btn btn-outline-dark btn-sm" (click)="purgeStudyModal()" data-bs-toggle="modal"
                      data-bs-target="#exampleModal">Purge Test Data</a>
                   <a class="btn btn-outline-dark btn-sm" (click)="archiveStudyModal()" data-bs-toggle="modal"
-                     data-bs-target="#exampleModal">Archive Study</a>
+                     data-bs-target="#exampleModal">Archive</a>
                   <a class="btn btn-outline-dark btn-sm" (click)="replicateStudyModal()" data-bs-toggle="modal"
-                     data-bs-target="#replicateModal">Replicate Study</a>
+                     data-bs-target="#replicateModal">Replicate</a>
                 </div>
                 <div *ngIf="!new_study" class="mt-7 mb-4 mt-5 mb-5">
                   <div *ngIf="studyInfo['study'].active != 3">
                     <input type="submit" class="form-control btn btn-outline-success"
-                           value="{{new_study? 'Create' : 'Save Study Settings'}}">
+                           value="{{new_study? 'Create' : 'Click To Save Study Settings'}}">
                   </div>
                 </div>
               </div>
 
               <div *ngIf="new_study" class="mt-5 mb-5 ">
                 <input type="submit" class="form-control btn btn-outline-success"
-                       value="{{new_study? 'Create' : 'Save Study Settings'}}">
+                       value="{{new_study? 'Create' : 'Click To Save Study Settings'}}">
               </div>
             </div>
           </div>

@@ -11,5 +11,5 @@ export const httpInterceptorProviders = [
     useClass: JwtInterceptor,
     multi: true
   },
-  {provide: HTTP_INTERCEPTORS, useClass: EnsureHttpsInterceptor, multi: true},
+ // {provide: HTTP_INTERCEPTORS, useClass: EnsureHttpsInterceptor, multi: true},
 ];

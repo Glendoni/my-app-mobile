@@ -1,6 +1,7 @@
 <div id="stcont">
+  <div class="mt-2">
   <app-nav-fixed-top></app-nav-fixed-top>
-
+  </div>
   <!--<app-menu></app-menu>-->
   <div>
     <app-alerts></app-alerts>
@@ -8,7 +9,7 @@
   <div class="menu">
     <div class="main-menu d-none d-sm-block">
       <div class="scroll">
-        <ul *ngIf="dashboard" class="list-unstyled d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="dashboard" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
           <li>
             <a (click)="onAddStudy()">
               <i class="iconsminds-shop-4"></i>
@@ -49,7 +50,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="showParticipants && showQrCodeMenu" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showParticipants && showQrCodeMenu" class="list-unstyled">
           <li>
             <a (click)="onQrCode()">
               <i class="bi bi-qr-code"></i>
@@ -81,7 +82,7 @@
               <i class="bi bi-people-fill"></i> {{navi[4]}}
             </a>
           </li>
-          <li class="">
+          <li class="d-none d-sm-none d-md-none d-lg-block">
             <a (click)="reporter()">
               <i class="bi bi-bar-chart"></i> {{navi[5]}}
             </a>
@@ -131,7 +132,7 @@
 <!--              class="study-title"></span> ~ admin<span class="study-title-period"></span>-->
 <!--          </h3>-->
 <!--          <div *ngIf="!showQuestions" class="separator mb-2"></div>-->
-          <h5 *ngIf="study" class=" studyNameTitle" style="font-weight: 400; color: #7a7a7a; text-align: center; margin-top: 59px;"><span
+          <h5 *ngIf="study" class=" studyNameTitle offset-4 offset-md-0" style="font-weight: 400; color: #7a7a7a; text-align: center; margin-top: 59px;"><span
             *ngIf="showstudytitle">{{updatedStudyName ? updatedStudyName : study['study'].name}}</span></h5>
           <div *ngIf="dashboard" class="">
 <!--            <div class="modal fade modal-right" id="exampleModal" tabindex="-1" role="dialog"-->
@@ -234,7 +235,7 @@
                 <div class="d-flex flex-grow-1 min-width-zero">
                   <div
                     class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                    <p class="list-item-heading mb-0 truncate w-80  w-sm-80  w-xs-100 mt-0">
+                    <p class="list-item-heading mb-0  w-80  w-sm-80  w-xs-100 mt-0">
                       <i class="simple-icon-refresh heading-icon"></i>
                       <span class="align-middle d-inline-block onNav" (click)="onNav(study)">{{study['study'].name}}</span>
                     </p>
@@ -303,9 +304,7 @@
 
             </div>
           </div>
-
         </div>
-
         <app-settings *ngIf="createStudy" [new_study]="createStudy" [studyInfo]="study"
                       (toggleSettingsCr)="onToggleStudyUpdate($event)"
                       (addStudyRestriction)="setRestrictionStatus($event)"></app-settings>
@@ -325,7 +324,7 @@
           <app-qr-code *ngIf="showQrCode" [studyInfo]="study"></app-qr-code>
 
         </div>
-        <div class="col-8 offset-4 col-xs-10 col-sm-6 col-md-12 col-lg-10 col-xl-8 offset-xs-5 offset-sm-5 offset-md-0 offset-xl-2">
+        <div class="col-9 offset-4 col-xs-10 col-sm-6 col-md-12 col-lg-10 col-xl-10 offset-xs-5 offset-sm-5 offset-md-0 offset-xl-1">
           <app-reports *ngIf="showReports" [studyInfo]="study"></app-reports>
         </div>
 
