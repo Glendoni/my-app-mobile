@@ -1,5 +1,5 @@
 <div id="stcont">
-  <div class="mt-2">
+  <div>
   <app-nav-fixed-top></app-nav-fixed-top>
   </div>
   <!--<app-menu></app-menu>-->
@@ -9,7 +9,7 @@
   <div class="menu">
     <div class="main-menu d-none d-sm-block">
       <div class="scroll">
-        <ul *ngIf="dashboard" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="dashboard && !deviceIsMobile" class="list-unstyled">
           <li>
             <a (click)="onAddStudy()">
               <i class="iconsminds-shop-4"></i>
@@ -19,7 +19,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="createStudy" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="createStudy" class="list-unstyled">
           <li>
             <a (click)="showDashboard()">
               <i class="bi bi-house-gear-fill"></i>
@@ -40,7 +40,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="showParticipants" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showParticipants" class="list-unstyled ">
           <li>
             <a (click)="onInvite()">
               <i class="iconsminds-shop-4"></i>
@@ -51,7 +51,7 @@
           </li>
         </ul>
         <ul *ngIf="showParticipants && showQrCodeMenu" class="list-unstyled">
-          <li>
+          <li *ngIf="!deviceIsMobile">
             <a (click)="onQrCode()">
               <i class="bi bi-qr-code"></i>
               <span>QR-Code</span>
@@ -59,13 +59,13 @@
           </li>
         </ul>
         <ul *ngIf="showDetails" class="list-unstyled">
-          <li *ngIf="!type_of_survey" class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!type_of_survey && !deviceIsMobile" class="list-unstyled">
             <a (click)="categoryVisibility()">
               <i class="bi bi-layers"></i>
               <span>{{navi[1]}}</span>
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!deviceIsMobile" class="list-unstyled">
             <a (click)="questionsVisibility()">
               <i class="bi bi-question-diamond"></i> {{navi[2]}}
             </a>
@@ -82,12 +82,12 @@
               <i class="bi bi-people-fill"></i> {{navi[4]}}
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!deviceIsMobile">
             <a (click)="reporter()">
               <i class="bi bi-bar-chart"></i> {{navi[5]}}
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!deviceIsMobile">
             <a (click)="settingsVisibility()">
               <i class="bi bi-gear-wide-connected"></i> {{navi[0]}}
             </a>
@@ -99,8 +99,8 @@
           <!--          </a>-->
           <!--        </li>-->
         </ul>
-<ul *ngIf="showQuestions && showAddQuestionButton" class="list-unstyled">
-  <li class="d-none d-sm-none d-md-block d-lg-block">
+<ul *ngIf="showQuestions && showAddQuestionButton && !deviceIsMobile" class="list-unstyled">
+  <li class="">
     <a (click)="showAddQuestion()">
       <i class="bi bi-question-diamond"></i> Add Question
     </a>
@@ -109,7 +109,7 @@
         <ul *ngIf="showDetails" class="list-unstyled" >
 
         </ul>
-        <ul *ngIf="showCreateCategoryToggle" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showCreateCategoryToggle && !deviceIsMobile" class="list-unstyled">
           <li>
             <a (click)="onAddCategory()">
               <i class="iconsminds-shop-4"></i>
@@ -230,12 +230,13 @@
             </div>
             <h3 *ngIf="!studies" class="text-center">Please Add Study </h3>
             <div *ngIf="studies" class="col-8 offset-4 col-md-12 offset-md-0 col-xs-12 col-lg-12 offset-lg-0">
+
               <div class="card d-flex flex-row mb-3"
                    *ngFor="let study of studies | paginate: { itemsPerPage: 5, currentPage: p} index as i ">
                 <div class="d-flex flex-grow-1 min-width-zero">
                   <div
                     class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                    <p class="list-item-heading mb-0  w-80  w-sm-80  w-xs-100 mt-0">
+                    <p class="list-item-heading mb-0 truncate w-80  w-sm-80  w-xs-100 mt-0">
                       <i class="simple-icon-refresh heading-icon"></i>
                       <span class="align-middle d-inline-block onNav" (click)="onNav(study)">{{study['study'].name}}</span>
                     </p>
@@ -296,6 +297,7 @@
           <div *ngIf="false">
             <p>{{listHeader}}</p>
             <div class="container" cdkDropList id="todo">
+
               <div class="item" *ngFor="let study of studies index as i">
                 <div>
                   <p (click)="onNav(study)">{{study['study'].name}}</p>

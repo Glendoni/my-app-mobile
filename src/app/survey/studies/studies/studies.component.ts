@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Observable, of, interval, Subject, distinctUntilChanged, debounceTime} from 'rxjs'
 import {switchMap} from 'rxjs/operators'
 import {FormControl} from "@angular/forms";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -77,8 +78,10 @@ export class StudiesComponent implements OnInit, OnDestroy {
   public showSettingsBtn: boolean = true;
   private listingFilter: boolean = false;
   private getAddQuestionStatusCheck: boolean = false;
+  public deviceIsMobile: boolean = false;
 
-  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService) {
+  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService,
+              private deviceService: DeviceDetectorService) {
     this.qs.redirectToDashboard().subscribe((data) => {
       this.showDashboard();
 
@@ -112,6 +115,9 @@ export class StudiesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+ if(this.deviceService.getDeviceInfo().deviceType == 'mobile'){
+   this.deviceIsMobile = true;
+ }
     this.showAddQuestionBtnEval()
     this.studyService.getCreateCategoryToggleClose().subscribe((data) => {
       if (data) {
