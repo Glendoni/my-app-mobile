@@ -1,8 +1,8 @@
 <div class="container-fluid library-app">
   <div class="row">
     <div class="col-12">
-      <div class="text-right d-block d-md-none d-lg-none">
-      <a (click)="onShowInvite()">INVITE</a> | <a  (click)="onShowQrCode()" >QR-CODE</a>
+      <div class="text-center d-block d-md-none d-lg-none">
+      <span><a (click)="onShowInvite()">Invite Participant</a></span><span *ngIf="studyInfo.study.type_of_survey ==2 && deviceIsMobile" > |   <a   (click)="onShowQrCode()" >QR-CODE</a></span>
       </div>
       <div class="d-none  d-md-none d-lg-block mb-0">
         <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"

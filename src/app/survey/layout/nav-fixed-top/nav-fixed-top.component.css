@@ -35,7 +35,7 @@
   font-size: 21px;
 }
 .fixed-top{
-  top:0px;
+  top:0px !important;
 }
 @media (max-width: 450px) {
   .fixed-top{

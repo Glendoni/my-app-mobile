@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BaseCommunity} from "../../interfaces/BaseCommunity";
 import {debounceTime, distinctUntilChanged, Observable, Subject, Subscription} from "rxjs";
 import {switchMap} from "rxjs/operators";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -64,9 +65,11 @@ export class ParticipantsComponent implements OnInit, OnDestroy {
   public filterGroup: any = null;
   private searchEvent: any;
   showSpinner: boolean = false;
+  public deviceIsMobile: boolean =false;
 
   constructor(private participantsService: ParticipantsService, private studyService: StudyService, private us: UserService, private fb: FormBuilder, private communityService: CommunityService, private route: ActivatedRoute,
-              private router: Router, private authenticationService: AuthenticationService) {
+              private router: Router, private authenticationService: AuthenticationService,
+              private deviceService: DeviceDetectorService) {
     this.showUpdatePackageMsg = false
   }
 
@@ -127,6 +130,12 @@ export class ParticipantsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+
+    if(this.deviceService.getDeviceInfo().deviceType == 'mobile'){
+      this.deviceIsMobile = true;
+    }
+
     this.showUpdatePackageMsg = false
 
     this.participantsService.getConfirmInviteLimitStatus().subscribe((data: any) => {
