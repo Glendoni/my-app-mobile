@@ -1,0 +1,50 @@
+.purchase , p{
+  color:#236591 !important;
+  font-size: 0.9em;
+  font-weight: 600;
+
+}
+.list-unstyled  p{
+  text-align: center !important;
+
+  padding: 5px;
+}
+.purchase span{
+  color: #16b1cd;
+}
+ .title{
+  font-weight: 600;
+}
+.price-amount{
+  font-size: 18px !important;
+}
+.packageActive{
+  color: #16b1cd;
+}
+
+.closeBtn{
+  cursor: pointer;
+}
+.activePkg{
+  background:#a4efa4;
+  background: linear-gradient(225deg, rgba(42, 155, 125, 0.86) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+  font-weight: 900;
+}
+.paymentHeading{
+  color: #236490;
+}
+
+.header {
+  height: 48px;
+  background: white;
+}
+
+.sticky {
+  position: fixed;
+  top: 97px;
+  width: 84%;
+  z-index: 99;
+  background: #fbfbfbe8;
+}
+
+
