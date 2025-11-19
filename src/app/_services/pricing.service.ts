@@ -3,6 +3,7 @@ import { Observable, Subject} from 'rxjs';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AlertService} from "./alert.service";
 import {AuthenticationService} from "./authentication.service";
+import {map} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class PricingService {
@@ -42,5 +43,11 @@ export class PricingService {
   // getStudyParticipants(studyId:string){
   //   return this.http.get(this.url + '/api/pricing/'+ studyId);
   // }
+  getUserWebLink() {
+    return this.http.get(this.url + '/api/redirectToWebUpgrade')
+      .pipe(map((result: any) => {
 
+        return result
+      }));
+  }
 }

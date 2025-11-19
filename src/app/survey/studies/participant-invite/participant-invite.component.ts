@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ParticipantsService, StudyService} from "../../../_services";
 import {data} from "autoprefixer";
 import {BehaviorSubject, debounceTime, distinctUntilChanged, Subject} from "rxjs";
+import {HttpEventType} from "@angular/common/http";
 
 @Component({
   selector: 'app-participant-invite',
@@ -25,7 +26,14 @@ export class ParticipantInviteComponent implements OnInit {
   public isCursorOverFilterSet: boolean = false;
   public userQuestion: string = '';
   public userQuestionUpdate = new Subject<string>();
+  fileName: string='';
+  file: File|any;
 
+  selectedFile: File | null = null;
+  uploadProgress: number | null = null;
+  uploadResponse: string | null = null;
+  public message: any;
+  public onToggleBulkUploader: boolean=false;
 
   constructor(private fb: FormBuilder, private participantsService: ParticipantsService, private studyService:StudyService) {
 
@@ -195,4 +203,73 @@ export class ParticipantInviteComponent implements OnInit {
     this.filterSet = [];
     // this.isCursorOverFilterSet = false
   }
+
+
+
+
+  trigger() {
+    let element = document.getElementById('upload_filer') as HTMLInputElement;
+    element.click();
+  }
+
+  onChange(file:any) {
+    this.file = file.files[0];
+    this.fileName = file.files[0].name;
+  }
+
+  removeFile() {
+    this.file = null;
+    this.fileName = '';
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    if(Array.isArray(this.f['categories'].value)){
+    }else{
+      this.trigger()
+    }
+// this.f['categories'].value.length??this.trigger()
+//     console.log(this.f['categories'].value)
+
+  }
+
+  basicUpload(){
+
+
+
+    if (!this.selectedFile) return;
+    var formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('categories', this.f['categories'].value);
+    formData.append('study_id', this.studyInfo.study.id);
+
+    this.participantsService.uploadCSV(formData).subscribe( (data:any) =>{
+
+      console.log(data.message)
+      this.selectedFile = null
+      this.message = 'File uploaded successfully!';
+      //setTimeout(()=> this.message = null,4500)
+      // next: (event) => {
+      //   if (event.type === HttpEventType.Response) {
+      //     this.message = 'File uploaded successfully!';
+      //   }
+      // },
+
+      // if (event.type === HttpEventType.UploadProgress) {
+      //   this.percentDone = Math.round(100 * event.loaded / event.total);
+      // } else if (event instanceof HttpResponse) {
+      //   this.uploadSuccess = true;
+      // }
+    },  (error:any) => {
+      this.showUpgradeNotification =true
+      setTimeout(()=> this.showUpgradeNotification = false,4500)
+      this.upgradeNotification = error.error.data;
+      console.info(error.error.data.file);
+    })
+  }
+
+onToggleBulkUpload(){
+    this.onToggleBulkUploader =!this.onToggleBulkUploader;
+}
 }

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, AfterContentInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, AfterContentInit, Output, AfterViewInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReportsService} from "../../../_services/reports.service";
 
 @Component({
@@ -7,68 +7,93 @@ import {ReportsService} from "../../../_services/reports.service";
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit, AfterContentInit {
+export class FilterComponent implements OnInit, AfterContentInit, AfterViewInit {
 
-  @Output() filtercat = new EventEmitter<string>();
+  @Output() filterCat = new EventEmitter<string>();
   @Output() storeFilterSelection = new EventEmitter<string>();
+  @Output() filterData = new EventEmitter<string>();
   @Output() showComments = new EventEmitter<boolean>();
-  @Input() studyInfo:any
-  @Input() filterInfo:any
- // @HostBinding('hostProperty') chk: string = '';
-  hostProperty:boolean = true
-  formFilter:any = FormGroup;
+  @Input() studyInfo: any
+  @Input() filterInfo: any
+  @Input() filterId: any
+  // @HostBinding('hostProperty') chk: string = '';
+  hostProperty: boolean = true
+  formFilter: any = FormGroup;
+  formModalFilter: any = FormGroup;
   items: any = [];
   missingSelectionNotice: boolean = false
-  showHideComments:boolean= false
-  filterByDate:boolean= false;
+  showHideComments: boolean = false
+  filterByDate: boolean = false;
   public showDateRangeBool: boolean = false;
-  constructor(private fb: FormBuilder, private rs: ReportsService) {
+  public disableFilterByDate: boolean = false;
+  static callFilterCounter = 0;
 
-    // this.form = this.fb.group({
-    //   checkboxes: new FormArray(this.items.map(() => new FormControl(true))),
-    //   startDateRange:[],
-    //   endDateRange:[],
-    //   showDateRange:[this.showDateRangeBool]
-    // });
+  public noQuestionsMsg: boolean = false;
+  public result: any = []
+  public resultOriginal: any = []
+  public categories: any = []
+  public storeFilterSelectionArr: any = []
+  public categoryList: any = []
+  public resultList: any = []
+  // public filterInfo: any = []
+  public resultCnt: number = 0
+  chartShow: boolean = false
+  barChart: boolean = false
+  showEdit: boolean = false;
+  categoryFilter: any
+  filterChartToggleIcon: boolean = false
+  public filteredDates: object = []
+  public setShowHistoryModal: boolean =false;
+
+  constructor(private fb: FormBuilder, private rs: ReportsService) {
   }
 
   ngOnInit() {
-  //  this.f['showDateRange'].patchValue(this.filterInfo['endDateRange']) ;
-   // this.rs.setShowComment(true)
-this.showDateRangeBool = true
+    if (this.studyInfo.study.type_of_survey != 2) {
+      this.disableFilterByDate = true
+    }
 
+    this.showDateRangeBool = true
     this.rs.getCategoryList().subscribe((data) => {
       this.items = data
     })
 
-    this.formFilter = this.fb.group({
-      checkboxes: new FormArray(this.items.map((item: any) => new FormControl(item.checked)
-      )),
-      startDateRange:[this.filterInfo['startDateRange']],
-      endDateRange:[this.filterInfo['endDateRange']],
-      showDateRange:[this.showDateRangeBool]
-    });
-  //  this.showDateRangeBool =this.filterInfo['startDateRange']?true:false ;
-    //this.f['showDateRange'].patchValue(this.showDateRangeBool) ;
-    this.rs.getShowComment().subscribe((data) =>{
+    this.formModalFilter = this.fb.group({
+      titleHistory: ['hit man'],
+    })
 
+      this.formFilter = this.fb.group({
+        checkboxes: new FormArray(this.items.map((item: any) => new FormControl(item.checked)
+        )),
+        startDateRange: [this.filterInfo['startDateRange']],
+        endDateRange: [this.filterInfo['endDateRange']],
+        showDateRange: [this.showDateRangeBool],
+        storeHistory: [false],
+        resetHistory: [false],
+
+        dateToFilterId: [this.filterId],
+      })
+
+    this.rs.getShowComment().subscribe((data) => {
       this.showHideComments = data
     })
   }
 
-  onDateRangeReset(){
- // this.showDateRangeBool = false
+  getFilterHistory(data: any) {
+  }
 
-    this.f['startDateRange'].patchValue(this.studyInfo['settings']['start_date']) ;
-    this.f['endDateRange'].patchValue(this.studyInfo['settings']['end_date']) ;
+  onDateRangeReset() {
+    this.f['startDateRange'].patchValue(this.studyInfo['settings']['start_date']);
+    this.f['endDateRange'].patchValue(this.studyInfo['settings']['end_date']);
+    this.f['dateToFilterId'].patchValue(null);
+    this.f['resetHistory'].patchValue(true);
   }
 
   ngAfterContentInit() {
     this.rs.getStoreFilterSelection().subscribe((data) => {
       this.f['checkboxes'].patchValue(data)
       this.showDateRangeBool = this.filterInfo['showDateRange']
-      this.f['showDateRange'].patchValue(this.filterInfo['showDateRange']) ;
-
+      this.f['showDateRange'].patchValue(this.filterInfo['showDateRange']);
     })
   }
 
@@ -77,7 +102,8 @@ this.showDateRangeBool = true
   }
 
   submit() {
-    this.rs.setFilterDates(this.formFilter.value);
+    this.rs.setFilterHistory([])
+    this.filteredDates = this.formFilter.value
     const selectedItems = this.formFilter.value.checkboxes
       .map((checked: any, index: number) => (checked ? this.items[index] : false))
       .filter((value: any) => value !== false);
@@ -89,30 +115,42 @@ this.showDateRangeBool = true
 
     this.rs.setStoreFilterSelectionArrSelection(this.formFilter.value.checkboxes);
     this.rs.setStoreFilterSelection(this.formFilter.value.checkboxes);
-    // this.storeFilterSelection.emit(this.formFilter.value.checkboxes);
-    this.rs.setFiltercat(selectedItems);
+    this.categoryFilter = selectedItems
 
-    this.filtercat.emit();
-
+    this.filterResults()
   }
-  onShowHideComments(){
-    this.showHideComments = this.showHideComments?false:true
+
+  onShowHideComments() {
+    this.showHideComments = this.showHideComments ? false : true
     this.rs.setShowComment(this.showHideComments)
-   // this.showComments.emit(this.showHideComments);
   }
 
   showDateRange() {
-    this.showDateRangeBool = this.showDateRangeBool?false:true
-  this.f['showDateRange'].setValue(this.showDateRangeBool) ;
-    // if(!this.showDateRangeBool){
-    //   this.OnDateRangeReset()
-    // }
-
-  // console.log(this.form.value)
-
+    this.showDateRangeBool = this.showDateRangeBool ? false : true
+    this.f['showDateRange'].setValue(this.showDateRangeBool);
+    if(!this.showDateRangeBool){
+      this.f['dateToFilterId'].patchValue(null);
+    }
   }
 
-  onReturnToChart(){
-    this.filtercat.emit();
+  filterResults() {
+    this.noQuestionsMsg = false;
+    this.rs.getQuestionReportFilter(this.studyInfo.settings.study_id, this.categoryFilter, this.filteredDates).subscribe((data: any) => {
+      this.filterData.emit(data)
+    })
+  }
+
+  onReturnToChart() {
+    this.filterCat.emit();
+  }
+
+  onStoreHistory(){
+     this.formFilter.value.storeHistory?this.f['storeHistory'].patchValue(false):this.f['storeHistory'].patchValue(true)
+  }
+
+  ngAfterViewInit() {
+    if (this.filterId) {
+      this.filterId = null
+    }
   }
 }

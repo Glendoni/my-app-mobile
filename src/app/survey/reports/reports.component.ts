@@ -1,25 +1,35 @@
-import {Component, Input, HostListener, Inject, ViewChild, ElementRef} from '@angular/core';
+import {
+  Component,
+  Input,
+  HostListener,
+  Inject,
+  ViewChild,
+  ElementRef,
+  ViewContainerRef,
+  OnInit,
+  Output, EventEmitter
+} from '@angular/core';
 import {QuestionService} from "../../_services/question.service";
 import {ReportsService} from "../../_services/reports.service";
-import {toArray} from "rxjs";
 import {DeviceDetectorService} from "ngx-device-detector";
-import {consolidateMessages} from "@angular/localize/tools/src/extract/translation_files/utils";
 import * as htmlToImage from "html-to-image";
 import {DOCUMENT} from "@angular/common";
-
-
-interface BigObject<T> {
-  [data: string]: T
-}
+import {FilterComponent} from "./filter/filter.component";
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent {
+export class ReportsComponent implements OnInit{
   @ViewChild("downloadEl") downloadEl!: ElementRef<HTMLBodyElement>
+  @ViewChild('dynamicFilterContainer', {read: ViewContainerRef}) containerFilter!: ViewContainerRef;
   @Input() studyInfo: any = [];
+  @Input() filterId: any
+  @Input() filterCat: any
+  @Input() newPageNumber: number = 1
+   @Output() pageNumber  = new EventEmitter<number>();
+   @Output()   filterCatReportFilter = new EventEmitter<boolean>(false);
   p: number = 1;
   pageItems: number = 1;
   showEdit: boolean = false;
@@ -27,6 +37,7 @@ export class ReportsComponent {
   showDetails: boolean = false;
   showDashboard: any;
   question: any;
+  static callCounter: number = 0
   showAddQuestion: boolean = false
   filterChartToggle: boolean = true
   filterChartToggleIcon: boolean = false
@@ -49,7 +60,6 @@ export class ReportsComponent {
   showInfoIcons: boolean = false
   showHideComments: boolean = true
   showHideCommentsDefault: boolean = true
-
   public which: any = '';
   public keyCode: any = '';
   public hideFilterIcon: boolean = false;
@@ -78,30 +88,22 @@ export class ReportsComponent {
   @HostListener('keydown', ['$event']) onKeyDown(event: any) {
     const e = <KeyboardEvent>event;
     const charCode = e.which ? e.which : e.keyCode;
-    if (
-      (charCode > 31 && (charCode < 48 || charCode > 57) && charCode < 96) ||
-      charCode > 105
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  constructor(private qs: QuestionService, private rs: ReportsService, private deviceService: DeviceDetectorService, @Inject(DOCUMENT) private coreDoc: Document) {
+    return !((charCode > 31 && (charCode < 48 || charCode > 57) && charCode < 96) ||
+      charCode > 105);
 
   }
+
+  constructor(private qs: QuestionService, private rs: ReportsService, private deviceService: DeviceDetectorService, @Inject(DOCUMENT) private coreDoc: Document) {}
 
   ngOnInit() {
-
-
-    this.p =1
     this.filterChartToggle = this.deviceService.isTablet() ?? false;
     if (localStorage.getItem(this.studyInfo.settings.study_id + 'InfoIcons')) {
       this.showInfoIcons = true;
     }
 
-    this.filterResults()
+    this.filterResults(this.filterId)
     this.study = this.studyInfo.study;
+
     this.qs.getShowDashboard().subscribe((value) => {
       if (value) {
         this.addQuestion = false
@@ -114,22 +116,8 @@ export class ReportsComponent {
       this.showAverages = false
       this.filterChartToggle = true
       this.p = data
+      this.pageNumber.emit(data)
     });
-
-    this.rs.getFiltercat().subscribe((data) => {
-     this.showAverages = false
-      if (!this.categoryList.length) {
-        this.filterChartToggleIcon = false
-      } else if (data.length < this.categoryList.length) {
-        this.filterChartToggleIcon = true
-      } else {
-        this.filterChartToggleIcon = false
-      }
-
-      if (data.length) {
-        this.categoryFilterChart(data)
-      }
-    })
 
     this.rs.getShowComment().subscribe((data) => {
       this.showHideComments = data
@@ -139,6 +127,26 @@ export class ReportsComponent {
     this.rs.getFilterDates().subscribe((data) => {
       this.filteredDates = data
     })
+
+    if(this.newPageNumber){ //default page number
+      this.p = this.newPageNumber??1
+    }
+  }
+
+  loadComponent() {
+       this.containerFilter.clear(); // optional: clears previous components
+      const componentRef = this.containerFilter.createComponent(FilterComponent);
+      componentRef.instance.studyInfo = this.studyInfo;
+      componentRef.instance.filterInfo = this.filterInfo;
+      componentRef.instance.filterId = this.filterId;
+      this.filterId =null
+      componentRef.instance.filterCat.subscribe((value) => {
+        this.toggleFilterReport() //return to chart
+      });
+      componentRef.instance.filterData.subscribe((value) => {
+        this.filterArr(value)
+        this.filterCatReportFilter.emit()
+      });
   }
 
   onToggle(item: any): any {
@@ -148,85 +156,81 @@ export class ReportsComponent {
     this.showAddQuestion = false
   }
 
-  filterResults() {
+  filterResults(filterId: any) {
     this.noQuestionsMsg = false;
-    this.rs.getQuestionReportFilter(this.studyInfo.settings.study_id, this.categoryFilter, this.filteredDates).subscribe((data: any) => {
-      this.rs.setCategoryList(data['allCategories'])
-
-      if(!data['report'].length){
-
-        this.noQuestionsMsg = true;
-      }
-
-
-      this.result = data['report']
-      this.resultCnt = data['reportCnt']
-      this.resultOriginal = data['report']
-      this.chartShow = true
-      this.barChart = true
-      this.showEdit = true
-      this.resultList = data['report']
-      const originalCategories = data['categories']
-      this.categories = originalCategories
-      this.categoryList = originalCategories
-      this.filterChartToggleIcon = data['filterIsSet']
-      this.filterInfo = data;
+    this.rs.getQuestionReportFilter(this.studyInfo.settings.study_id, this.categoryFilter, this.filteredDates, filterId).subscribe((data: any) => {
+      this.filterArr(data)
     })
   }
 
+  filterArr(data: any) {
+      this.rs.setCategoryList(data['allCategories'])
+    if (!data['report'].length) {
+      this.noQuestionsMsg = true;
+    }
 
+    this.result = data['report']
+    this.resultCnt = data['reportCnt']
+    this.resultOriginal = data['report']
+    this.chartShow = true
+    this.barChart = true
+    this.showEdit = true
+    this.resultList = data['report']
+    const originalCategories = data['categories']
+    this.categories = originalCategories
+    this.categoryList = originalCategories
+    this.filterChartToggleIcon = data['filterIsSet']
+    this.filterInfo = data;
+    this.toggleFilter();
+  }
 
 
   changed(value: any) {
     this.pageItems = value;
   }
 
-  storeFilterSelection($event: any) {
-    this.rs.getStoreFilterSelection().subscribe((data) => {
-      this.storeFilterSelectionArr = data
-    })
-  }
+  // storeFilterSelection($event: any) {
+  //   this.rs.getStoreFilterSelection().subscribe((data) => {
+  //     this.storeFilterSelectionArr = data
+  //   })
+  // }
 
   categoryFilterChart(category: any) {
     this.categoryFilter = []
     this.categoryFilter.push(category)
-    this.filterResults();
   }
 
-  filterSelection() {
-    if (this.categoryFilter.length) {
-    }
-  }
-
-  filterSelectionReset() {
-    this.categoryFilter = [];
-    if (!this.categoryFilter.length) {
-      this.categoryFilter = [];
-      this.result = this.resultList
-      this.categories = this.categoryList
-    }
-  }
-
-  uniqueArray3(a: any) {
-    function onlyUnique(value: any, index: any, self: any) {
-      return self.indexOf(value) === index;
-    }
-
-    var unique = a.filter(onlyUnique); // returns ['a', 1, 2, '1']
-    return unique;
-  }
 
   toggleFilter() {
+    if (this.studyInfo['study']['type_of_survey'] == 2) {
+      this.rs.setFilterHistory([])
+    }
     this.showAverages = false;
-    this.filterChartToggle = this.filterChartToggle ? false : true
+
+    this.filterChartToggle = true
+    // if (this.studyInfo['study']['type_of_survey'] == 2) {
+    //   //   this.rs.setToggleHistoryCard(this.filterChartToggle)
+    // }
+  }
+
+  toggleFilterReport() {
+
+    if (this.studyInfo['study']['type_of_survey'] == 2) {
+      this.rs.setFilterHistory([])
+    }
+    this.showAverages = false;
+    this.filterChartToggle = !this.filterChartToggle
+    this.loadComponent()
+    if (this.studyInfo['study']['type_of_survey'] == 2) {
+      this.rs.setToggleHistoryCard(this.filterChartToggle)
+    }
   }
 
   public openOrangeFullscreen() {
-    this.isFullScreen = this.isFullScreen ? false : true
-
+    this.isFullScreen = !this.isFullScreen
     this.hideShowInfoIcons()
     this.closeFullscreen()
-    var elem: any = document.getElementById("orange");
+    let elem: any = document.getElementById("orange");
 
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
@@ -244,58 +248,39 @@ export class ReportsComponent {
   }
 
   public closeFullscreen() {
-
     this.fullScreenPadding = ''
-
-
-    if (this.isFullScreen == true) {
-      // this.showHideComments =this.showHideCommentsDefault
+    if (this.isFullScreen) {
       this.fullScreenPadding = ''
       if (document.exitFullscreen) {
-
         document.exitFullscreen();
       }
     } else {
       this.showHideComments = false
       this.fullScreenPadding = 'fullScreenPaddingToggle'
-
       this.isFullScreen = false
     }
   }
-
-  // const code = event.keyCode || event.which;
-  // if(code === 51 || Number(code) === 55) {
-  // if (!e.shiftKey) {
-  //   return false;
-  // }
-  // } else {
-  //   return true;
-  // }
-  // e.preventDefault();
-  // e.stopPropagation();
   downloading: any;
 
-  enterHandler() {
-    alert('Enter pressed!');
-  }
-
-  escHandler() {
-    alert('ESC pressed!');
-  }
-
-  shiftFHandler() {
-    alert('Shift+F pressed!');
-  }
+  // enterHandler() {
+  //   alert('Enter pressed!');
+  // }
+  //
+  // escHandler() {
+  //   alert('ESC pressed!');
+  // }
+  //
+  // shiftFHandler() {
+  //   alert('Shift+F pressed!');
+  // }
 
   showQuestionRp(i: number) {
-    // this.pageQuestion.emit(i);
     if (this.resultCnt != this.p) {
       this.qs.setChartReportPagination(this.p + i)
     }
   }
 
   showQuestionRpMinus(i: number) {
-    // this.pageQuestion.emit(i);
     if (this.p != 0) {
       this.qs.setChartReportPagination(this.p + i)
     }
@@ -310,17 +295,12 @@ export class ReportsComponent {
     this.showInfoIcons = true;
   }
 
-  onShowHidecoments($event: boolean) {
-    //console.log(this.showHideComments?'I wont show':'I will show')
-    //this.showHideComments = this.showHideComments??false
-  }
+  // onShowHidecoments($event: boolean) {
+  //   //console.log(this.showHideComments?'I wont show':'I will show')
+  //   //this.showHideComments = this.showHideComments??false
+  // }
 
   downloadDataUrl(dataUrl: string, filename: string): void {
-    // if (typeof this?.coreDoc === 'undefined') {
-    //   throw new Error(
-    //     'A document must be specified. Are you avoiding namespace conflicts using fat arrow functions?'
-    //   );
-    // }
     var a = this.coreDoc.createElement("a");
     a.href = dataUrl;
     a.download = filename;
@@ -330,18 +310,14 @@ export class ReportsComponent {
   }
 
   onSaveChartClicked(): void {
-
     this.hideFilterIcon = true;
     this.downloading = 'copying...'
     setTimeout(() => this.downloadChart(), 3500)
-
   }
 
   downloadChart() {
-
     const theElement = this.downloadEl.nativeElement;
     // svg.saveSvgAsPng(theChart, "the-file.png", { scale: 4.0 });
-
     htmlToImage.toPng(theElement).then(chart => {
       this.downloadDataUrl(chart, "peeker-pro-chart.png");
     });
@@ -349,23 +325,28 @@ export class ReportsComponent {
     this.hideFilterIcon = false;
   }
 
-  dismiss() {
-
-  }
-
   onAverage() {
     this.filterChartToggleIcon = false
-    this.filterChartToggle = false
 
-    if(this.showAverages){
-      this.showAverages =false;
-      this.toggleFilter()
 
-    }else{
-      this.showAverages =true;
+    if (this.showAverages) {
+      this.showAverages = false;
+      this.filterChartToggle = true
+      this.showAverages = false;
+    } else {
+      this.showAverages = true;
     }
+  }
 
-
-
+  /**
+   * @todo try to centralize the reading of the current page number
+   * @param currentPageNumber
+   */
+  onPageNumberChange(currentPageNumber: any){
+   if(currentPageNumber){
+     this.qs.setChartReportPagination(currentPageNumber)
+    this.p =  currentPageNumber;
+   this.pageNumber.emit(this.p)
+   }
   }
 }

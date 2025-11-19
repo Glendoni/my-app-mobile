@@ -1,20 +1,12 @@
-<!--  <div class="container shadow min-vh-100 py-2">-->
-<h6 class="mb-3">Chart Filter</h6>
-
-<!--{{items|json}}-->
-<!--  </div>-->
-<!--<p>Filter Chart Columns</p>-->
-<div class="row">
-
+<div class="row text-center">
   <div class="form-check form-switch col-sm-6">
     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
            (click)="onShowHideComments()" [checked]="showHideComments">
     <label class="form-check-label" for="flexSwitchCheckChecked">Comments: {{showHideComments?' On': 'Off'}} </label>
   </div>
-
-  <div class="col-sm-5 ">
+  <div *ngIf="!disableFilterByDate" class="col-sm-5 " >
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox"   role="switch" (click)="showDateRange()"
+      <input class="form-check-input" type="checkbox"   role="switch" (click)="showDateRange()" [disabled]="disableFilterByDate"
              id="flexSwitchCheckDefault" [checked]="showDateRangeBool" />
       <label class="form-check-label" for="flexSwitchCheckDefault" >Filter By Date</label>
     </div>
@@ -23,7 +15,7 @@
 
 <div *ngIf="items">
 <form [formGroup]="formFilter" (ngSubmit)="submit()">
-  <div *ngIf="showDateRangeBool">
+  <div *ngIf="showDateRangeBool && !disableFilterByDate">
     <div class="row justify-content-center mt-4">
 
       <div class="col-lg-3 col-sm-3">
@@ -37,15 +29,25 @@
         <span id="endDateSelected"></span>
       </div>
           <div class="col-lg-3 col-sm-3 resetBtn">
-            <p  (click)="onDateRangeReset()">Reset<i class="bi bi-arrow-return-left"></i></p>
+            <p (click)="onStoreHistory()" title="Click to also save snapshot of dates">
+                <span [class.snapIcon]="this.formFilter.value.storeHistory">
+                  <i class="bi bi-record-circle-fill snapshotIcon" ></i>
+                </span> Record Snapshot </p>
+            <p  (click)="onDateRangeReset()" title="Reset to config dates">Reset<i class="bi bi-arrow-return-left"></i></p>
 
-          </div>
+
+
+
+
+            </div>
+
     </div>
   </div>
-  <div class="row">
-    <h6 class="mb-4 mt-3">Categories</h6>
+  <div *ngIf="studyInfo.study.type_of_survey==1" class="row">
+    <p class="mb-2 mt-5 fw-medium fw-medium">CATEGORY LIST</p>
 <!--{{items |json}}-->
-    <div class="mb-3" formArrayName="checkboxes">
+
+    <div  class="mb-3" formArrayName="checkboxes">
       <div *ngFor="let checkbox of items; let i = index">
         <label>
           <input type="checkbox" [formControlName]="i"/>
@@ -54,10 +56,11 @@
       </div>
     </div>
   </div>
-  <div class="mt-4 mb-3">
+  <div class="mt-5 mb-3 text-center">
     <p *ngIf="missingSelectionNotice"><strong>Filter must contain at least one checked category!</strong></p>
-  <button type="submit" class="btn btn-secondary btn-sm">Filter Columns </button> or
+  <button type="submit" class="btn btn-secondary btn-sm">Save Filter </button> or
   <button type="button" class="btn btn-secondary btn-sm" (click)="onReturnToChart()"> Return to Chart </button>
   </div>
 </form>
 </div>
+

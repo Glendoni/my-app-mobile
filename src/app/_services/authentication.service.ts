@@ -201,7 +201,7 @@ export class AuthenticationService {
       const domainAndApp = url.replace(angularRoute, '');
       let text = domainAndApp
       if (!text.search("localhost")) {
-        urlHost = 'https://b2c-connect-5389da581818.herokuapp.com'
+        urlHost = 'http://locahost'
       }
     } else {
       urlHost = 'https://b2c-connect-5389da581818.herokuapp.com'

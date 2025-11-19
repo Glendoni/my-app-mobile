@@ -19,5 +19,29 @@
   border: solid grey thin;
   border-radius: 0px 5px 0px 5px;
 }
+.custom-file-label{
+  background: #246390;
+  color:white;
+}
+.uploadBtn{
+  cursor: not-allowed;
+  color:lightgray;
+}
+.uploadBtnActive{
+  background: #4d994d;
+  cursor: pointer;
+  color:white;
+}
+.toggleBulk{
+  font-size: 1.5em;
+  margin-top: -10px;
+  color: grey;
+  cursor: pointer;
+}
 
-
+.toggleBulk:hover{
+  color: #246390;
+}
+.upload_filer{
+  color:white;
+}

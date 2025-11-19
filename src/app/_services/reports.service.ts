@@ -13,9 +13,11 @@ export class ReportsService {
   public storeFilterSelectionArrSelection: BehaviorSubject<[]>;
   public storeFilterSelection: BehaviorSubject<[]>;
   //public locallyStoredFilterSelection: BehaviorSubject<[]>;
-  public filtercat: BehaviorSubject<[]>;
+  // public filtercat: BehaviorSubject<[]>;
   public filterdates: BehaviorSubject<[]>;
+  public filterHistory: BehaviorSubject<[]>;
   public showComments: BehaviorSubject<boolean>;
+  public toggleHistoryCard: BehaviorSubject<boolean>;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,27 +25,40 @@ export class ReportsService {
   public url
   public  studyId: string = "9aad164a-d12d-4100-ac31-d38d3e5461da"
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
-   this.url = this.authenticationService.url;
+    this.url = this.authenticationService.url;
     this.resultList = new BehaviorSubject<[]>([]);
     this.categoryList = new BehaviorSubject<[]>([]);
     this.storeFilterSelection = new BehaviorSubject<[]>([]);
-   // this.locallyStoredFilterSelection = new BehaviorSubject<[]>([]);
+    // this.locallyStoredFilterSelection = new BehaviorSubject<[]>([]);
     this.storeFilterSelectionArrSelection = new BehaviorSubject<[]>([]);
-    this.filtercat = new BehaviorSubject<[]>([]);
+    //this.filtercat = new BehaviorSubject<[]>([]);
     this.filterdates = new BehaviorSubject<[]>([]);
+    this.filterHistory = new BehaviorSubject<[]>([]);
     this.showComments = new BehaviorSubject<boolean>(false);
+    this.toggleHistoryCard = new BehaviorSubject<boolean>(true);
   }
   getQuestionReport(study_id:string){
     return this.http.get(this.url + '/api/studyReport/'+ study_id);
   }
 
 
-  getQuestionReportFilter(study_id:string, filter:any, filterDates:any){
+  getQuestionReportFilter(study_id:string, filter:any, filterDates:any,filterId=''){
     return this.http.post(this.url + '/api/studyReportFilter/'+study_id, JSON.stringify(
-      {filter: filter, study_id:study_id, filterDates: filterDates }), this.httpOptions);
+      {filter: filter, study_id:study_id, filterDates: filterDates, filterId: filterId }), this.httpOptions);
+  }
+
+  setChartHistoryName(history_id:string,data:any){
+    return this.http.post(this.url + '/api/setChartHistoryName/'+history_id,data,this.httpOptions)
+  }
+  getQuestionReportDateHistory(study_id:string){
+    return this.http.get(this.url + '/api/getChartHistory/'+study_id,  this.httpOptions);
   }
   getStudyMatrix(study_id:string){
     return this.http.get(this.url + '/api/studyMatrix/'+ study_id);
+  }
+
+  removeChartHistory(history_id:string){
+    return this.http.get(this.url + '/api/removeChartHistory/'+ history_id);
   }
 
   setResultList(newValue: any): void {
@@ -78,13 +93,13 @@ export class ReportsService {
     return this.storeFilterSelection.asObservable();
   }
 
-  setFiltercat(newValue: any): void {
-    this.filtercat.next(newValue);
-  }
-
-  getFiltercat(): Observable<any> {
-    return this.filtercat.asObservable();
-  }
+  // setFiltercat(newValue: any): void {
+  //   this.filtercat.next(newValue);
+  // }
+  //
+  // getFiltercat(): Observable<any> {
+  //   return this.filtercat.asObservable();
+  // }
 
   setFilterDates(newValue: any): void {
     this.filterdates.next(newValue);
@@ -94,9 +109,9 @@ export class ReportsService {
     return this.filterdates.asObservable();
   }
 
-  setLocallyStoredFilterSelection(newValue: any): void {
-
-  }
+  // setLocallyStoredFilterSelection(newValue: any): void {
+  //
+  // }
 
   getLocallyStoredFilterSelection(): Observable<any> {
     return this.storeFilterSelection.asObservable();
@@ -108,6 +123,22 @@ export class ReportsService {
 
   getShowComment(): Observable<any> {
     return this.showComments.asObservable();
+  }
+
+  setFilterHistory(newValue: any): void {
+    this.filterHistory.next(newValue);
+  }
+
+  getFilterHistory(): Observable<any> {
+    return this.filterHistory.asObservable();
+  }
+
+  setToggleHistoryCard(newValue: any): void {
+    this.toggleHistoryCard.next(newValue);
+  }
+
+  getToggleHistoryCard(): Observable<any> {
+    return this.toggleHistoryCard.asObservable();
   }
 
 }

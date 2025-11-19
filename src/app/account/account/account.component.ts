@@ -64,6 +64,15 @@ export class AccountComponent {
 this.userEmail = usr['email']
     this.userPhone = usr['phone']
 
+    this.activatedRoute.queryParams.subscribe(params => {
+      let date = params['pricing'];
+      if(date == 'table'){
+        this.onPricing()
+      }else{
+
+      }// Print the parameter to the console.
+    });
+
     this.userDetails = localStorage.getItem('username') ?? null
     this.userFirstName = this.userDetails.split(' ')[0]
     this.surveyForm = this.fb.group({
@@ -79,7 +88,6 @@ this.userEmail = usr['email']
       pause: [false],
     });
 
-    console.log(this.userPhone)
     if (this.deviceService.isMobile()) {
 
       this.onProfileShow()
@@ -92,6 +100,16 @@ this.userEmail = usr['email']
 
   }
 
+  onPricing() {
+    this.scrollToTop()
+    this.profileShow = false
+    this.globalShow = false
+    this.twoFa= false
+    this.pricing= true
+    this.create =false
+    this.invoice =false
+
+  }
 
   onGlobalShow() {
     console.log('I am ')

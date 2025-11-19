@@ -9,10 +9,8 @@ import {ProfileComponent} from './profile/profile.component';
 import {ShareModule} from "../share/share.module";
 import {GoogleAuthenticatorComponent} from './google-authenticator/google-authenticator.component';
 import {SvgImgComponent} from './google-authenticator/svg-img/svg-img.component';
-
+import {PricingComparisonComponent} from './pricing-comparison/pricing-comparison.component';
 import {InvoiceComponent} from './invoice/invoice.component';
-import { CustomerTermsComponent } from './pricing-comparison/customer-terms/customer-terms.component';
-import { CustomerPrivacyPolicyComponent } from './pricing-comparison/customer-privacy-policy/customer-privacy-policy.component';
 
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
@@ -28,8 +26,7 @@ import {HttpLoaderFactory} from "../app.module";
     GoogleAuthenticatorComponent,
     SvgImgComponent,
     InvoiceComponent,
-    CustomerTermsComponent,
-    CustomerPrivacyPolicyComponent
+    PricingComparisonComponent
   ],
   imports: [
     CommonModule,

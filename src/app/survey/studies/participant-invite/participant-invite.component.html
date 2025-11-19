@@ -1,6 +1,6 @@
 <!--<pre>{{studyInfo['study_categories']|json}}</pre>-->
 <div class="row">
-  <div class="col-4  d-none d-sm-none d-md-none d-lg-none d-xl-block mt-4">
+  <div class="col-4  d-none d-sm-none d-md-none d-lg-block mt-4">
     <div class="card drop-area">
       <div class="card-body">
 
@@ -9,15 +9,52 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-md-12 col-lg-11 col-xl-8 mt-4">
+  <div class="col-12 col-md-12 col-lg-8 mt-4">
     <div *ngIf="showUpgradeNotification">
       <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
     </div>
-    <form [formGroup]="inviteForm" (ngSubmit)="onUpdate()">
+    <form [formGroup]="inviteForm" (ngSubmit)="onUpdate()" enctype="multipart/form-data">
 
       <div class="card drop-area mb-2">
         <div class="card-body">
-          <h5 class="mb-3 text-center">Send Participant Invite<span *ngIf="inviteForm.value.email"> To: <i> {{ inviteForm.value.email }}</i></span></h5>
+<p (click)="onToggleBulkUpload()" class=" toggleBulk text-right">
+  <i *ngIf="!onToggleBulkUploader" class="bi bi-filetype-csv"></i>
+
+  <i *ngIf="onToggleBulkUploader" class="bi bi-x-circle"></i></p>
+          <div *ngIf="onToggleBulkUploader">
+            <h5 class="mb-3 text-center blueHeading" title="Send Bulk Invites">CSV Bulk Invite Via Email</h5>
+            <p *ngIf="!message" class="text-center mb-4">CSV <strong>name</strong> and <strong>email</strong> column headers are required</p>
+
+
+            <button [hidden]="true"  data-toggle="modal" data-target="#exampleModalPopovers" id="upload_filer"></button>
+            <div *ngIf="message" class="text-center mb-4">
+              <p>Use the  filter pending option on the participant  page  to view new participants and allocate categories</p>
+              <h6>{{message}}</h6>
+            </div>
+
+
+            <div  class="input-group mb-3">
+
+              <div class="custom-file">
+
+                <input type="file"  class="custom-file-input" id="inputGroupFile02" readonly="true"  (change)="onFileSelected($event)">
+                <label class="custom-file-label" for="inputGroupFile02">
+                  <span *ngIf="!selectedFile">Choose file</span>
+                  <span *ngIf="selectedFile">{{selectedFile.name}}</span>
+                </label>
+              </div>
+              <div class="input-group-append ">
+                <span [class.uploadBtnActive]="selectedFile" class="input-group-text uploadBtn" (click)="basicUpload()" disabled="true">Upload</span>
+              </div>
+            </div>
+
+            <div>
+            </div>
+<!--            <button type="button" (click)="removeFile()">Remove File</button>-->
+<!--            <button type="button" (click)="basicUpload()">Send</button>-->
+          </div>
+          <div *ngIf="!onToggleBulkUploader">
+          <h5 class="mb-3 blueHeading text-center">Send Participant Invite<span *ngIf="inviteForm.value.email"> To: <i> {{ inviteForm.value.email }}</i></span></h5>
           <p class="text-center">Invite participant to answer questions linked to categories of this study </p>
           <!--        <h6>Add Participant Email</h6>-->
           <div class="form-floating mb-2">
@@ -61,10 +98,13 @@
           </div>
         </div>
       </div>
+      </div>
       <div class="card drop-area">
         <div class="card-body ">
+
           <div *ngIf="!alreadyInvitedValidation">
-            <h6 class="mb-4">Assign Category <i>(optional)</i></h6>
+            <h6 class="mb-4">Category Participant Allocation   <i>(optional)</i></h6>
+            <p>Automatically allocates category to participant</p>
           </div>
           <div *ngIf="alreadyInvitedValidation">
             <h6 class="mb-4"><i>Would you like to send a reminder?</i></h6>
@@ -92,12 +132,54 @@
 
             </div>
           </div>
-          <div *ngIf="!alreadyInvitedValidation">
+          <div *ngIf="!alreadyInvitedValidation && !onToggleBulkUploader">
             <input type="submit" class="form-control btn btn-outline-success" value="Send Invite">
           </div>
           <!--       <input type="submit" class="form-control btn btn-outline-warning" value="Send Invite and Add Another">-->
         </div>
       </div>
     </form>
+<!--    {{inviteForm.value |json}}-->
+  </div>
+</div>
+
+
+
+<div class="card mb-4 upload_filer">
+    <div id="exampleModalPopovers" class="modal fade show" tabindex="-1" role="dialog"
+         aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalPopoversLabel">No Category Allocated (optional)</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  <h6>This is <strong>optional</strong></h6>
+            <p class="mt-4">Categories can be attached to participants after CSV file has uploaded.</p>
+            <p> After upload simply return to the participant listing section and filter by <strong>Pending</strong> to view all unregistered study participants </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm"
+                    data-dismiss="modal">Cancel</button>
+            <a href="javascript" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="basicUpload()">Continue CSV Upload</a>
+          </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 </div>

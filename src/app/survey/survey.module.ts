@@ -66,6 +66,7 @@ import { BarChartHorizontalProcessorComponent } from './charts/bar-chart-horizon
 import { UpgradeNotificationComponent } from './studies/upgrade-notification/upgrade-notification.component';
 import { QrCodeComponent } from './studies/qr-code/qr-code.component';
 import { AveragesComponent } from './reports/averages/averages.component';
+import {RoundValuePipe} from "./round-value.pipe";
 
 
 @NgModule({
@@ -125,7 +126,8 @@ import { AveragesComponent } from './reports/averages/averages.component';
     BarChartHorizontalProcessorComponent,
     UpgradeNotificationComponent,
     QrCodeComponent,
-    AveragesComponent
+    AveragesComponent,
+    RoundValuePipe
   ],
   imports: [
     CommonModule,

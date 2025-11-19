@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEventType, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Subject, Observable} from "rxjs";
 import { map } from 'rxjs/operators';
 import {AlertService} from "./alert.service";
@@ -20,6 +20,7 @@ export class ParticipantsService {
   };
 
   public url
+  // private percentDone: number;
   constructor(private http: HttpClient, private alertService: AlertService, private authenticationService: AuthenticationService) {
 
     this.url =this.authenticationService.url
@@ -32,34 +33,34 @@ export class ParticipantsService {
   getStudyParticipants(studyId:string){
     return this.http.get(this.url + '/api/participants/'+ studyId)
       .pipe(map((result: any) => {
-     //   this.inviteLimitStatus.next(result['allowAddInvite']);
-      return result
-    }));;
+        //   this.inviteLimitStatus.next(result['allowAddInvite']);
+        return result
+      }));;
   }
 
   studyUserSearch(search:string, studyId:string){
     return this.http.get(this.url + '/api/studyUserSearch/'+ search+'/'+studyId)
       .pipe(map((result: any) => {
-     //   this.inviteLimitStatus.next(result['allowAddInvite']);
-      return result
-    }));;
+        //   this.inviteLimitStatus.next(result['allowAddInvite']);
+        return result
+      }));;
   }
 
   inviteParticipants(participant:any){
     return this.http.post(this.url + '/api/invite', participant)
       .pipe(map((result: any) => {
-      this.alertService.setAlert(result);
-      return result
-    }));;
+        this.alertService.setAlert(result);
+        return result
+      }));;
   }
 
   inviteParticipantsReminder(reminderLinkId:string){
     return this.http.get(this.url + '/api/inviteResend/'+ reminderLinkId)
       .pipe(map((result: any) => {
-       // console.log(result)
-      this.alertService.setAlert(result);
-      return result
-    }));;
+        // console.log(result)
+        this.alertService.setAlert(result);
+        return result
+      }));;
   }
 
   getParticipantsFormArray(studyId:string) {
@@ -71,11 +72,11 @@ export class ParticipantsService {
   }
 
   searchParticipants(studyId:string,filter:string){
-  return this.http.post(this.url + '/api/searchParticipant/'+studyId, filter);
-}
-removeInvite(inviteId:string){
-  return this.http.get(this.url + '/api/removeInvite/'+inviteId);
-}
+    return this.http.post(this.url + '/api/searchParticipant/'+studyId, filter);
+  }
+  removeInvite(inviteId:string){
+    return this.http.get(this.url + '/api/removeInvite/'+inviteId);
+  }
 
   setUserEditCategories(newValue: any): void {
     this.userCategories.next(newValue);
@@ -120,5 +121,15 @@ removeInvite(inviteId:string){
       })
     };
     return this.http.post(this.url + '/api/participantSearch/'+studyId, JSON.stringify({"name": filter}), httpOptions);
+  }
+
+  uploadCSV(formData:any){
+
+    return  this.http.post('http://localhost/api/upload-csv/?file', formData)
+      .pipe(map((result: any) => {
+        this.alertService.setAlert(result);
+        //   this.inviteLimitStatus.next(result['allowAddInvite']);
+        return result
+      }));
   }
 }

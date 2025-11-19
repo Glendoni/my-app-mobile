@@ -1,3 +1,17 @@
 .resetBtn{
   cursor: pointer;
 }
+
+.history-modal{
+  color: white;
+}
+.bi-camera{
+  font-size: large;
+}
+.snapshotIcon{
+  color: #7e7d7d;
+  font-size: large;
+}
+.snapIcon .snapshotIcon{
+  color:#cc4242!important;
+}

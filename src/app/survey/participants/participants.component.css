@@ -14,3 +14,9 @@ a{
   width: auto;
   margin: auto;
 }
+.not-allowed{
+  cursor: not-allowed;
+}
+.showCursor{
+  cursor: not-allowed;
+}

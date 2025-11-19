@@ -285,6 +285,4 @@ export class StudyService {
         return result
       }));
   }
-
-
 }
