@@ -3,11 +3,13 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-xxl-11">
-        <h3 class="mb-1 mt-5 s-header__logo-img s-header__logo-img-shrink appName text-center"><span>Peeker</span>
+        <h4 class="ml-2 pl-xs-0 mb-xs-1 mt-xs-0    s-header__logo-img s-header__logo-img-shrink appName text-center">
+          <span>Peeker</span>
           <span
-            class="study-title-initial">Pro</span><span
-            class="study-title"></span> ~ admin<span class="study-title-period"></span>
-        </h3>
+            class="study-title-initial">Pro </span>
+          <span
+            class="study-title"> ~ admin</span>
+        </h4>
         <div class="card border-light-subtle shadow-sm mt-5">
           <div class="row g-0">
 <!--            <div class="col-12 col-md-12">-->
@@ -99,18 +101,18 @@
                       </div>
                     </div>
 
-                    <div *ngIf="otpRequired">
-
-                      <div *ngIf="!otpRecoveryCode">
+                    <div *ngIf="otpRequired"  class="col-12">
+                      <h4 *ngIf="otpRequired" class="mb-3 text-center">Sign In With Authenticator</h4>
+                      <div *ngIf="!otpRecoveryCode" class="col-12">
                       <div class="form-floating mb-3">
-                        <input type="password" formControlName="otp" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.otp.errors }" id="otp">
-                        <label for="otp" class="form-label">Enter Authenticator 6 Digit Pass Code</label>
+                        <input type="text" formControlName="otp" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.otp.errors }" id="otp">
+                        <label for="otp" class="form-label">Enter 6 Digit Pass Code</label>
                       </div>
                       <div class="d-grid mb-3">
-                        <button class="btn btn-dark btn-lg" type="button" (click)="onCheckOTPStatus()">Admin Login</button>
+                        <button class="btn btn-dark btn-lg" type="button" (click)="onCheckOTPStatus()">Use Pass Code</button>
                       </div>
 
-                      <p (click)="userRecoveryCode()">Use recovery Code</p>
+                        <p class="auth-links"><span  (click)="userRecoveryCode()">Use recovery Code</span> | <span (click)="redirectToLogin()">Return To Login</span></p>
                     </div>
                     </div>
                     <div *ngIf="otpRecoveryCode">

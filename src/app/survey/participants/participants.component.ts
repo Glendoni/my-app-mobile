@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService, ParticipantsService, StudyService, UserService} from "../../_services";
+import {AlertService, AuthenticationService, ParticipantsService, StudyService, UserService} from "../../_services";
 import {CommunityService} from "../../_services/community.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BaseCommunity} from "../../interfaces/BaseCommunity";
@@ -66,7 +66,7 @@ export class ParticipantsComponent implements OnInit, OnDestroy {
   showSpinner: boolean = false;
 
   constructor(private participantsService: ParticipantsService, private studyService: StudyService, private us: UserService, private fb: FormBuilder, private communityService: CommunityService, private route: ActivatedRoute,
-              private router: Router, private authenticationService: AuthenticationService) {
+              private router: Router, private authenticationService: AuthenticationService, public alert: AlertService) {
     this.showUpdatePackageMsg = false
   }
 

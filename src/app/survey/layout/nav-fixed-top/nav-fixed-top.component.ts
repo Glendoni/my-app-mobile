@@ -13,29 +13,33 @@ export class NavFixedTopComponent implements OnInit{
   public setActiveMode: number =1;
   public setActiveGlobalMode: boolean = false;
   constructor(public questionService: QuestionService, private auth:AuthenticationService, private studyService:StudyService) {
-   // this.userDetails = localStorage.getItem('currentUser')
+    // this.userDetails = localStorage.getItem('currentUser')
   }
 
-ngOnInit() {
+  ngOnInit() {
     // this.auth.getUserDetails().subscribe((data) =>{
     //   this.userDetails = data
     //   console.log(data)
     // })
 
 
-this.studyService.getGlobalActiveMode().subscribe((data:boolean) =>{
+    this.studyService.getGlobalActiveMode().subscribe((data:boolean) =>{
 
-  this.setActiveGlobalMode = data
-})
-  this.studyService.getActiveMode().subscribe((data:number) =>{
-  this.setActiveMode = data
-})
+      this.setActiveGlobalMode = data
+    })
+    this.studyService.getActiveMode().subscribe((data:number) =>{
+      this.setActiveMode = data
+    })
 
-  this.userDetails = localStorage.getItem('username')??null
+    this.userDetails = localStorage.getItem('username')??null
 
 
-}
-onStudyListing(){
-  this.questionService.setRedirectToDashboard()
-}
+  }
+  onStudyListing(){
+    this.questionService.setRedirectToDashboard()
+  }
+
+  onReload(){
+    window.location.reload();
+  }
 }

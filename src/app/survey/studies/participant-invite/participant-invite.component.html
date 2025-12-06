@@ -17,93 +17,103 @@
 
       <div class="card drop-area mb-2">
         <div class="card-body">
-<p (click)="onToggleBulkUpload()" class=" toggleBulk text-right">
-  <i *ngIf="!onToggleBulkUploader" class="bi bi-filetype-csv"></i>
-
-  <i *ngIf="onToggleBulkUploader" class="bi bi-x-circle"></i></p>
+          <p (click)="onToggleBulkUpload()" class="toggleBulk text-right d-none d-md-none d-lg-none d-xl-block">
+            <i *ngIf="!onToggleBulkUploader" class="bi bi-filetype-csv"></i>
+            <i *ngIf="onToggleBulkUploader" class="bi bi-x-circle"></i>
+          </p>
+          <p *ngIf="!onToggleBulkUploader" (click)="onReturnToParticipantList()" class="text-right d-none d-md-none d-lg-none d-xl-block">
+            <i class="bi bi-x-circle"></i>
+          </p>
           <div *ngIf="onToggleBulkUploader">
             <h5 class="mb-3 text-center blueHeading" title="Send Bulk Invites">CSV Bulk Invite Via Email</h5>
-            <p *ngIf="!message" class="text-center mb-4">CSV <strong>name</strong> and <strong>email</strong> column headers are required</p>
+            <p *ngIf="!message" class="text-center mb-4">CSV <strong>name</strong> and <strong>email</strong> column
+              headers are required</p>
 
 
-            <button [hidden]="true"  data-toggle="modal" data-target="#exampleModalPopovers" id="upload_filer"></button>
+            <button [hidden]="true" data-toggle="modal" data-target="#exampleModalPopovers" id="upload_filer"></button>
             <div *ngIf="message" class="text-center mb-4">
-              <p>Use the  filter pending option on the participant  page  to view new participants and allocate categories</p>
+              <p>Use the filter pending option on the participant page to view new participants and allocate
+                categories</p>
               <h6>{{message}}</h6>
             </div>
 
 
-            <div  class="input-group mb-3">
+            <div class="input-group mb-3">
 
               <div class="custom-file">
 
-                <input type="file"  class="custom-file-input" id="inputGroupFile02" readonly="true"  (change)="onFileSelected($event)">
+                <input type="file" class="custom-file-input" id="inputGroupFile02" readonly="true"
+                       (change)="onFileSelected($event)">
                 <label class="custom-file-label" for="inputGroupFile02">
                   <span *ngIf="!selectedFile">Choose file</span>
                   <span *ngIf="selectedFile">{{selectedFile.name}}</span>
                 </label>
               </div>
               <div class="input-group-append ">
-                <span [class.uploadBtnActive]="selectedFile" class="input-group-text uploadBtn" (click)="basicUpload()" disabled="true">Upload</span>
+                <span [class.uploadBtnActive]="selectedFile" class="input-group-text uploadBtn" (click)="basicUpload()"
+                      disabled="true">Upload</span>
               </div>
             </div>
 
             <div>
             </div>
-<!--            <button type="button" (click)="removeFile()">Remove File</button>-->
-<!--            <button type="button" (click)="basicUpload()">Send</button>-->
+            <!--            <button type="button" (click)="removeFile()">Remove File</button>-->
+            <!--            <button type="button" (click)="basicUpload()">Send</button>-->
           </div>
           <div *ngIf="!onToggleBulkUploader">
-          <h5 class="mb-3 blueHeading text-center">Send Participant Invite<span *ngIf="inviteForm.value.email"> To: <i> {{ inviteForm.value.email }}</i></span></h5>
-          <p class="text-center">Invite participant to answer questions linked to categories of this study </p>
-          <!--        <h6>Add Participant Email</h6>-->
-          <div class="form-floating mb-2">
-            <input formControlName="name" [disabled]=true #ti type="text" class="form-control" id="name" autocomplete="false"
-                   placeholder="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                   (ngModelChange)="userQuestionUpdate.next($event)"
-                   (click)="showListReset()"
-                   (focus)="showList()"
-                   (blur)="hideList()">
-            <div class="filter-list"
-                *ngIf="isVisible && filterSet.length > 0"
-                (mouseover)="cursorOverSet()">
-              <a
-                *ngFor="let item of filterSet; index as i;"
-                (click)="setValue(item)">
+            <h5 class="mb-3 blueHeading text-center">Send Participant Invite<span
+              *ngIf="inviteForm.value.email"> To: <i> {{ inviteForm.value.email }}</i></span></h5>
+            <p class="text-center">Invite participant to answer questions linked to categories of this study </p>
+            <!--        <h6>Add Participant Email</h6>-->
+            <div class="form-floating mb-2">
+              <input formControlName="name" [disabled]=true #ti type="text" class="form-control" id="name"
+                     autocomplete="false"
+                     placeholder="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                     (ngModelChange)="userQuestionUpdate.next($event)"
+                     (click)="showListReset()"
+                     (focus)="showList()"
+                     (blur)="hideList()">
+              <div class="filter-list"
+                   *ngIf="isVisible && filterSet.length > 0"
+                   (mouseover)="cursorOverSet()">
+                <a
+                  *ngFor="let item of filterSet; index as i;"
+                  (click)="setValue(item)">
                 <span *ngIf="item.name.length">
                 {{ item.name  }} - {{item.email }}
                   </span>
-                <br/>
-              </a>
+                  <br/>
+                </a>
+              </div>
+              <label for="email">Enter Name</label>
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors['required']">name is required</div>
+              </div>
+              <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
+                registered for this study.
+              </div>
             </div>
-            <label for="email">Enter  Name</label>
-            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-              <div *ngIf="f.name.errors['required']">name is required</div>
-            </div>
-            <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
-              registered for this study.
-            </div>
-          </div>
-          <div class="form-floating">
-            <input formControlName="email" [disabled]=true #ti type="email" class="form-control" id="email"
-                   placeholder="name@example.com" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" (click)="showListReset()">
-            <label for="email">Enter Email</label>
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-              <div *ngIf="f.email.errors['required']">email is required</div>
-              <div *ngIf="f.email.errors['email']">check email format</div>
-            </div>
-            <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
-              registered for this study.
+            <div class="form-floating">
+              <input formControlName="email" [disabled]=true #ti type="email" class="form-control" id="email"
+                     placeholder="name@example.com" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                     (click)="showListReset()">
+              <label for="email">Enter Email</label>
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors['required']">email is required</div>
+                <div *ngIf="f.email.errors['email']">check email format</div>
+              </div>
+              <div *ngIf="alreadyInvitedValidation" class="invalid-feedback-already-registered">email is already
+                registered for this study.
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="card drop-area">
         <div class="card-body ">
 
           <div *ngIf="!alreadyInvitedValidation">
-            <h6 class="mb-4">Category Participant Allocation   <i>(optional)</i></h6>
+            <h6 class="mb-4">Category Participant Allocation <i>(optional)</i></h6>
             <p>Automatically allocates category to participant</p>
           </div>
           <div *ngIf="alreadyInvitedValidation">
@@ -133,53 +143,53 @@
             </div>
           </div>
           <div *ngIf="!alreadyInvitedValidation && !onToggleBulkUploader">
-            <input type="submit" class="form-control btn btn-outline-success" value="Send Invite">
+            <input type="submit" class="form-control btn btn-outline-success" data-toggle="modal"
+                   data-target="#exampleModalPopovers" value="Send Invite">
+
           </div>
           <!--       <input type="submit" class="form-control btn btn-outline-warning" value="Send Invite and Add Another">-->
         </div>
       </div>
     </form>
-<!--    {{inviteForm.value |json}}-->
+    <!--    {{inviteForm.value |json}}-->
   </div>
 </div>
 
 
-
-<div class="card mb-4 upload_filer">
-    <div id="exampleModalPopovers" class="modal fade show" tabindex="-1" role="dialog"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalPopoversLabel">No Category Allocated (optional)</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-  <h6>This is <strong>optional</strong></h6>
-            <p class="mt-4">Categories can be attached to participants after CSV file has uploaded.</p>
-            <p> After upload simply return to the participant listing section and filter by <strong>Pending</strong> to view all unregistered study participants </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-sm"
-                    data-dismiss="modal">Cancel</button>
-            <a href="javascript" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="basicUpload()">Continue CSV Upload</a>
-          </div>
+<div *ngIf="f['categories'].value.length <1" class="card mb-4 upload_filer">
+  <div id="exampleModalPopovers" class="modal fade show" tabindex="-1" role="dialog"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalPopoversLabel">No Category Allocated (optional)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <h6>This is <strong>optional</strong></h6>
+
+          <p class="mt-4" *ngIf="onToggleBulkUploader">Categories can be attached to participants after CSV file has
+            uploaded.</p>
+
+          <p> If You decide to add a category later you can. Return to the participant listing section, filter by
+            <strong>Pending</strong> and follow instructions on the page
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm"
+                  data-dismiss="modal">Cancel
+          </button>
+          <a href="javascript" class="btn btn-primary btn-sm" data-dismiss="modal" (click)="onSave()">Continue Without
+            Categories
+          </a>
+        </div>
+      </div>
 
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
   </div>
 </div>
+

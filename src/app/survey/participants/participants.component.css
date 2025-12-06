@@ -20,3 +20,8 @@ a{
 .showCursor{
   cursor: not-allowed;
 }
+.mobileSubMenu li{
+  list-style-type: none;
+  display: inline-block;
+  margin-left: 5px;
+}

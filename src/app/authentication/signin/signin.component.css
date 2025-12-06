@@ -35,3 +35,51 @@
   background-color: #FFA500; /* Customize the background color of the dragged element preview */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow to the dragged element preview */
 }
+.download-img{
+
+
+}
+.download-app-title{
+  color:grey;
+  font-weight: 300;
+}
+.download-img img{
+  width:150px;
+  padding: 12px;
+
+  filter: brightness(3) saturate(100%);
+}
+.login-section{
+  border-left: solid thin grey;
+}
+
+.auth-links span{
+  cursor: pointer ;
+}
+.study-title-initial{
+  color: #919090;
+}
+
+.appName{
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(35 100 145);
+  transition: 0.3s;
+  padding: 12px;
+}
+
+.study-title{
+  color: grey;
+  text-transform: lowercase;
+  font-weight: 300;
+  font-style: italic;
+}
+.study-title-initial{
+  color:#fe3f408a;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* line-height: 100px; */
+  transition: 0.3s;
+}

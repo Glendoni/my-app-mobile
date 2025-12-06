@@ -30,7 +30,7 @@ export class AccountComponent {
   public twoFa: boolean = false;
   create: boolean = true;
   invoice: boolean = false;
-  public showNewUserWelcomeMgs: boolean =false;
+  public showNewUserWelcomeMgs: boolean = false;
   public userFirstName: string = '';
   private userEmail: any;
   public userPhone: number = 123;
@@ -61,18 +61,23 @@ export class AccountComponent {
 
     const locals = localStorage.getItem('currentUser') ?? ''
     const usr = JSON.parse(locals);
-this.userEmail = usr['email']
+    this.userEmail = usr['email']
     this.userPhone = usr['phone']
 
     this.activatedRoute.queryParams.subscribe(params => {
-      let date = params['pricing'];
-      if(date == 'table'){
+      const id = this.route.snapshot.paramMap.get('mobileLogin');
+      if (id == '9875-39287-3y75885993-488432774567-234') {
         this.onPricing()
-      }else{
+        return
+      }
+
+      let date = params['pricing'];
+      if (date == 'table') {
+        this.onPricing()
+      } else {
 
       }// Print the parameter to the console.
     });
-
     this.userDetails = localStorage.getItem('username') ?? null
     this.userFirstName = this.userDetails.split(' ')[0]
     this.surveyForm = this.fb.group({
@@ -83,49 +88,49 @@ this.userEmail = usr['email']
       part_joined: [false],
       study_created: [false],
       study_updated: [false],
-      to: [this.userEmail, [Validators.required,Validators.email]],
+      to: [this.userEmail, [Validators.required, Validators.email]],
       cc: ['', Validators.email],
       pause: [false],
     });
 
+    console.log(this.userPhone)
     if (this.deviceService.isMobile()) {
 
-      this.onProfileShow()
-    }else{
+      this.profileShower()
+    } else {
       this.getGlobalSettings()
     }
 
 
-   // this.onInvoice()
+    // this.onInvoice()
 
   }
 
-  onPricing() {
-    this.scrollToTop()
-    this.profileShow = false
-    this.globalShow = false
-    this.twoFa= false
-    this.pricing= true
-    this.create =false
-    this.invoice =false
 
-  }
-
-  onGlobalShow() {
-    console.log('I am ')
+  onGlobalShow(event: Event) {
     this.profileShow = false
     this.globalShow = true
-    this.pricing= false
+    this.pricing = false
     this.twoFa = false
-    this.invoice =false
+    this.invoice = false
+    this.highlight(event)
   }
 
-  onProfileShow() {
+  profileShower() {
     this.profileShow = true
     this.globalShow = false
-    this.pricing= false
+    this.pricing = false
     this.twoFa = false
-    this.invoice =false
+    this.invoice = false
+  }
+
+  onProfileShow(event: Event) {
+    this.profileShow = true
+    this.globalShow = false
+    this.pricing = false
+    this.twoFa = false
+    this.invoice = false
+    this.highlight(event)
   }
 
 
@@ -133,10 +138,10 @@ this.userEmail = usr['email']
     console.log('add study')
     this.studyService.getGlobalSettings().subscribe((data: any) => {
 
-      if(!data.length){
+      if (!data.length) {
         this.showNewUserWelcomeMgs = true;
 
-      }else{
+      } else {
         this.showNewUserWelcomeMgs = false;
       }
 
@@ -146,7 +151,7 @@ this.userEmail = usr['email']
         const globe = data[0]
         this.f.userName.setValue(globe['userName'])
         this.f.appName.setValue(globe.appName)
-         this.f.contactNumber.setValue(globe.contactNumber)
+        this.f.contactNumber.setValue(globe.contactNumber)
 
         this.f.active.setValue(globe.active)
         this.f.part_joined.setValue(globe.part_joined)
@@ -155,9 +160,9 @@ this.userEmail = usr['email']
         this.f.to.setValue(globe.to)
         this.f.cc.setValue(globe.cc)
         this.f.pause.setValue(globe.pause)
-        this.create =false
-      }else{
-        this.create =true
+        this.create = false
+      } else {
+        this.create = true
       }
     })
 
@@ -188,7 +193,7 @@ this.userEmail = usr['email']
     }
   }
 
- private navigateToDashboard() {
+  private navigateToDashboard() {
     this.router.navigate(['survey'])
   }
 
@@ -201,24 +206,49 @@ this.userEmail = usr['email']
     setTimeout(() => this.isVisible = false, 3500)
   }
 
-  on2Fa() {
+  on2Fa(event: Event) {
     this.profileShow = false
     this.globalShow = false
-    this.pricing= false
-    this.create =false
-      this.twoFa= true
-    this.invoice =false
+    this.pricing = false
+    this.create = false
+    this.twoFa = true
+    this.invoice = false
+    this.highlight(event)
+  }
+
+  onInvoice(event: Event) {
+    this.profileShow = false
+    this.globalShow = false
+    this.pricing = false
+    this.create = false
+    this.twoFa = false
+    this.invoice = true
+    this.highlight(event)
+  }
+
+  onPricing() {
+    this.scrollToTop()
+    this.profileShow = false
+    this.globalShow = false
+    this.twoFa = false
+    this.pricing = true
+    this.create = false
+    this.invoice = false
 
   }
 
-  onInvoice() {
+
+  upgrades(event: Event) {
+    this.scrollToTop()
     this.profileShow = false
     this.globalShow = false
-    this.pricing= false
-    this.create =false
-    this.twoFa= false
-    this.invoice =true
+    this.twoFa = false
+    this.pricing = true
+    this.create = false
+    this.invoice = false
+    this.highlight(event)
   }
+
 
   scrollToTop() {
     (function smoothscroll() {
@@ -228,5 +258,18 @@ this.userEmail = usr['email']
         window.scrollTo(0, currentScroll - (currentScroll / 1.02));
       }
     })();
+  }
+
+  removeAllHighlights() {
+    const elements = document.querySelectorAll('.highlightGreen');
+    elements.forEach(el => el.className = ''); // wipes all classes
+  }
+
+  highlight(event: Event) {
+    this.removeAllHighlights();
+
+    const element = event.target as HTMLElement;
+    element.classList.toggle('highlightGreen', false);
+    element.classList.toggle('highlightGreen');
   }
 }

@@ -28,26 +28,37 @@ p {
 
 
 .navbar .user .name {
-  color: #828282;
+  color: #8f8f8f;
 }
 
+.navbar .user .name:hover {
+  color: #c5ced7;
+}
 
 .study-title{
   color: grey;
-}
-/*.appName{*/
-/*  color: #dbdada;*/
-/*  -webkit-user-select: none;*/
-/*  -khtml-user-select: none;*/
-/*  -moz-user-select: none;*/
-/*  -ms-user-select: none;*/
-/*  -o-user-select: none;*/
-/*  user-select: none;*/
-
-/*}*/
-.study-title-initial{
+  text-transform: lowercase;
+  font-weight: 300;
   font-style: italic;
+}
+.study-title-initial{
+  color:#fe3f408a;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* line-height: 100px; */
+  transition: 0.3s;
+}
+.menu .main-menu ul li a:hover, .menu .main-menu ul li a:focus {
+  color:#c5ced7;
+}
 
+.highlightGreen {
+  color:#c5ced7;
+}
+
+.menu .main-menu ul li a span{
+  cursor: pointer;
 }
 
 /*.s-header__logo-img-default{*/
@@ -78,10 +89,16 @@ p {
 /*  margin-bottom: 20px;*/
 
 /*}*/
-
+.globalNavDisabled{
+  color: #b0b0b0 ;
+}
 .appName{
-  color: #858484;
-  font-size: 21px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(35 100 145);
+  transition: 0.3s;
+  padding: 12px;
 }
 .fixed-top{
   top:0px;
@@ -100,4 +117,22 @@ p {
   .noprint {
     visibility: hidden;
   }
+}
+.header-area .main-nav .logo h4 {
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #03a4ed;
+  line-height: 100px;
+  float: left;
+  -webkit-transition: all 0.3s
+  ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s
+  ease 0s;
+}
+
+.logo h4 span {
+  color: #fe3f40;
 }

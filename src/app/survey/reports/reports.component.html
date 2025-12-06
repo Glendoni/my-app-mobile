@@ -16,7 +16,7 @@
 <!--      <div *ngIf="!showEdit">-->
 <!--<app-matrix [studyInfo]="study"></app-matrix>-->
 <!--      </div>-->
-<div *ngIf="noQuestionsMsg || !result.length" id="orange" class="col-12  col-sm-0 offset-sm-0 text-center">
+<div *ngIf="noQuestionsMsg || !result.length" id="orange" class="col-12 offset-0 col-sm-0 offset-sm-0 offset-lg-1">
 
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>There is nothing to report!</strong><br>
@@ -27,7 +27,7 @@
   </div>
 
 </div>
-<div *ngIf="result.length" id="orange" class="col-12 offset-4 col-sm-0 offset-sm-0">
+<div *ngIf="result.length" id="orange" class="col-12 offset-0 col-sm-0 offset-sm-0  offset-md-0 offset-lg-1 offset-xl-0">
   <div *ngIf="!showInfoIcons" class="alert alert-info fade show mt-1" data-timeout="5000" role="alert">
     <p style="text-align: end;" (click)="hideShowInfoIcons()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 15px; ">

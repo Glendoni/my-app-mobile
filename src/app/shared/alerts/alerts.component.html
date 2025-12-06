@@ -1,6 +1,6 @@
 <!--<p>alerts works!</p>-->
 <!--<button (click)="showAlert()">show alert</button>-->
-<div [class]="status" [class.visible]="isVisible">
+<div [class.alertNoShow]="!isVisible" [class]="status" [class.visible]="isVisible">
    {{notificationMessage}}
 
 </div>

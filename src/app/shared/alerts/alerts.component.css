@@ -21,7 +21,9 @@ p {
 .alert-danger{
   color: red;
 }
-
+.alertNoShow{
+  display:none;
+}
 
 .visible {
   opacity: 1;

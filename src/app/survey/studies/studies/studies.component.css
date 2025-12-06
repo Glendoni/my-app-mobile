@@ -58,18 +58,37 @@ main{
   font-weight: 400;
 }
 
-.truncated{text-overflow:unset;white-space:nowrap;overflow:hidden}
+.menu .main-menu ul li a:hover, .menu .main-menu ul li a:focus {
+  color: #c5ced7;
+}
+
 
 @media (max-width: 1199px) {
-.ipadAdjustment{
-  margin-right: 20px;
- }
+  .ipadAdjustment{
+    margin-right: 20px;
+  }
+
+  .truncate {
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+    margin-right: 15px !important;
+  }
 }
 
 /*// Extra small devices (portrait phones, less than 576px)*/
 /*// No media query since this is the default in Bootstrap*/
 
+.logoutBtn{
+  background: #373a3e;;
+  margin:4px;
+}
 
+.logoutBtn a{
+  height: 30px;
+  text-decoration: none;
+  color: #8f8f8f;
+}
 
 @media (max-width: 450px) {
   /*main{*/
@@ -79,6 +98,9 @@ main{
   .studyNameTitle{
     font-size: 14px;
   }
+
+
+
 }
 
 

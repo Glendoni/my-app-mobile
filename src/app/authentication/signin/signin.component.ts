@@ -28,6 +28,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
   otpRecoveryCode: boolean = false;
   public recoveryCodeValue: any = [];
   chk = ''
+  private webLink: boolean = false;
 
   constructor(public alertS: AlertService, private fb: FormBuilder, private qs: QuestionService, private route: ActivatedRoute,
               private router: Router, private authenticationService: AuthenticationService) {
@@ -60,6 +61,11 @@ export class SigninComponent extends BaseComponent implements OnInit {
       if (params['link_id']) {
         this.id = params['link_id']
         this.checkPaymentLink()
+      }else if (params['webLink']) {
+        this.webLink = params['webLink']
+
+        this.showSignInBtn = true;
+        this.showEmail = true;
       } else {
         this.showSignInBtn = true;
         this.showEmail = true;
@@ -131,8 +137,15 @@ export class SigninComponent extends BaseComponent implements OnInit {
     if (!this.id) {
       this.authenticationService.login(this.f.email.value, this.f.password.value, this.f.otp.value, this.f.recovery_code.value).subscribe((data: any) => {
         this.otpRequired = false
-        const url_redirect = data; // e.g ../admin/data-analytics
+        let url_redirect = data; // e.g ../admin/data-analytics
         this.authenticationService.setTwoFactorRequired(false)
+
+        if(this.webLink){
+          url_redirect =  '../account/pricing/9875-39287-3y75885993-488432774567-234'
+          this.webLink = false
+        }
+
+
         this.router.navigate([url_redirect])
 
       });
@@ -178,5 +191,12 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
   userRecoveryCode() {
     this.otpRecoveryCode = true
+  }
+
+  redirectToLogin(){
+    this.otpRequired = false
+    this.otpRecoveryCode = false
+    this.showSignInBtn = true;
+    this.showEmail = true;
   }
 }

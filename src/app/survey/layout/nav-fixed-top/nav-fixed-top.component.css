@@ -17,9 +17,15 @@
 .is-archived, .in-development, .in-production{
   color:inherit;
 }
-
+.study-title-initial{
+  color:#16b1cd91;
+}
 .navbar .user .name {
   color: #828282;
+}
+
+.navbar .user .name:hover {
+  color: #c5ced7;
 }
 .maintenance-mode{
   background-color: red;
@@ -31,15 +37,36 @@
   color: black;
 }
 .appName{
-  color: #858484;
-  font-size: 21px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(35 100 145);
+  transition: 0.3s;
+  padding: 12px;
+}
+
+.study-title{
+  color: grey;
+  text-transform: lowercase;
+  font-weight: 300;
+  font-style: italic;
+}
+.study-title-initial{
+  color:#fe3f408a;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* line-height: 100px; */
+  transition: 0.3s;
 }
 .fixed-top{
-  top:0px !important;
+  top:0px;
 }
+
+
 @media (max-width: 450px) {
   .fixed-top{
-    top:47px;
+    top:0px;
   }
   .appName{
     font-size: 14px;

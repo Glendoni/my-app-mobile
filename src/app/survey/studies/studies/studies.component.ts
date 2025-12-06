@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {QuestionService} from "../../../_services/question.service";
 import {ParticipantsService, StudyService} from "../../../_services";
 import {Router} from "@angular/router";
 import {Observable, of, interval, Subject, distinctUntilChanged, debounceTime} from 'rxjs'
 import {switchMap} from 'rxjs/operators'
 import {FormControl} from "@angular/forms";
-import {DeviceDetectorService} from "ngx-device-detector";
+import {QuestionsComponent} from "../../questions/questions.component";
 
 
 @Component({
@@ -14,6 +14,10 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./studies.component.css']
 })
 export class StudiesComponent implements OnInit, OnDestroy {
+  @ViewChild('dynamicQuestionContainer', { read: ViewContainerRef })containerQuest!: ViewContainerRef;
+  // @ViewChild('dynamicReportContainer', { read: ViewContainerRef })containerReport!: ViewContainerRef;
+
+
   search_word = new FormControl();
   p: number = 1
 
@@ -36,6 +40,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
   participants = true;
   reports = true;
   updatedStudyName: string = ''
+  hideMenu:boolean = false;
 
   public title = 'Survey Builder'
   public navi = [
@@ -78,11 +83,10 @@ export class StudiesComponent implements OnInit, OnDestroy {
   public showSettingsBtn: boolean = true;
   private listingFilter: boolean = false;
   private getAddQuestionStatusCheck: boolean = false;
-  public deviceIsMobile: boolean = false;
 
-  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService,
-              private deviceService: DeviceDetectorService) {
+  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService) {
     this.qs.redirectToDashboard().subscribe((data) => {
+
       this.showDashboard();
 
       if (data) {
@@ -101,6 +105,10 @@ export class StudiesComponent implements OnInit, OnDestroy {
   }
 
   search(packageName: string) {
+
+    if(this.hideMenu){
+      return;
+    }
     this.status = 99
     this.studies = []
     if (!packageName) {
@@ -115,9 +123,6 @@ export class StudiesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
- if(this.deviceService.getDeviceInfo().deviceType == 'mobile'){
-   this.deviceIsMobile = true;
- }
     this.showAddQuestionBtnEval()
     this.studyService.getCreateCategoryToggleClose().subscribe((data) => {
       if (data) {
@@ -145,6 +150,19 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.getPortalStudiesListing()
   }
 
+  loadQuestionComponent() {
+
+    this.containerQuest.clear(); // optional: clears previous components
+    const componentRef =  this.containerQuest.createComponent(QuestionsComponent);
+    componentRef.instance.studyInfo = this.study;
+  }
+
+  // loadReportComponent() {
+  //   this.containerReport.clear(); // optional: clears previous components
+  //   const componentRef =  this.containerReport.createComponent(QuestionsComponent);
+  //   componentRef.instance.studyInfo = this.study;
+  // }
+
   showAddQuestionBtnEval() {
     this.qs.getAddQuestionBtnVisibility().subscribe((data) => {
       this.getAddQuestionStatus()
@@ -155,6 +173,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
         this.showAddQuestionButton = false
       }
     })
+
   }
 
   getAddQuestionStatus(): void {
@@ -166,13 +185,18 @@ export class StudiesComponent implements OnInit, OnDestroy {
   getPortalStudiesListing() {
     this.studyService.getPortalStudies().subscribe((data) => {
         this.studyService.setGlobalActiveMode(data[0]['global_account'] ? false : true)
-
+        this.hideMenu = false;
         this.studies = data
         this.noMatchFound = false
         this.status = data[0]['study']['filterId']
         this.showCreateCategoryToggle = false
       },
       (error) => {
+        if (error['error']['data']['expiredSubscription']) {
+          this.hideMenu = true;
+          this.upgradeNotification = error['error']['data'];
+          return;
+        }
 
         if (!this.listingFilter) {
           this.onAddStudy()
@@ -190,13 +214,13 @@ export class StudiesComponent implements OnInit, OnDestroy {
    * @param study
    */
   onToggleStudyUpdate(study: any) {
-    this.updatedStudyName = study['name']
-
-    this.onNav(study['data'])
-
+    this.updatedStudyName = study.study['name']
+    this.onNav(study)
   }
 
   onToggle(item: string = '') {
+
+
     this.participantsService.setConfirmInviteLimitStatus(false)
     this.studyService.setCreateCategoryToggle(false)
     this.studyService.setRedirectToInvite(false)
@@ -210,10 +234,16 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.settings = true;
     this.showSettings = false;
     this.showCategory = false;
+    if(this.showQuestions){
+      this.containerQuest.clear();
+    }
     this.showQuestions = false;
     this.showstudytitle = true;
     this.showAddStudyMenu = false;
     this.showAddStudyButton = false;
+    // if(this.showReports){
+    //   this.containerReport.clear();
+    // }
     this.showReports = false;
     this.selected_study_title = item;
     this.participants = false;
@@ -222,6 +252,8 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.showCreateCategoryToggle = false
     this.showQrCode = false
     this.showSettingsBtn = true
+    this.showQrCodeMenu =false
+
   }
 
   onAddStudy() {
@@ -325,6 +357,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.dashboard = true
     this.category = false;
     this.settings = false;
+    this.showQrCodeMenu =false
     this.showCategory = false;
     this.showQuestions = false;
     this.showReports = false;
@@ -335,6 +368,13 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.showCreateCategoryToggle = false
     this.reports = false;
     this.showQrCode = false
+    if(this.containerQuest){
+      this.removeQuestContainer()
+    }
+  }
+
+  removeQuestContainer(){
+    this.containerQuest.clear();
   }
 
   questionsVisibility() {
@@ -356,6 +396,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.reports = false;
     this.showCreateCategoryToggle = false
     this.showQrCode = false
+    this.loadQuestionComponent()
   }
 
   communityVisibility() {
@@ -410,6 +451,8 @@ export class StudiesComponent implements OnInit, OnDestroy {
   }
 
   reporter() {
+    //this.containerReport.clear();
+
     this.showllastration = false;
     this.subMenu = true
     this.showDetails = false
@@ -417,7 +460,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.dashboard = false
     this.category = false;
     this.settings = false;
-    this.showReports = false;
+
     this.showQuestions = false;
     this.showAddStudyButton = false;
     this.showParticipants = false
@@ -427,12 +470,14 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.participants = false;
     this.reports = false;
     this.showReports = true;
+    // this.loadReportComponent()
     this.showCreateCategoryToggle = false
     this.showQrCode = false
 
   }
 
   onNav(study: any) {
+    this.containerQuest.clear();
     if (this.blockEntry) {
       return
     }
@@ -441,6 +486,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.onToggle(study.name)
     this.updatedStudyName = study.name
     this.study = study
+    this.showQrCodeMenu =false
     this.studyService.setOptions(study.study_categories);
     this.upgradeNotification = false
     this.showQrCode = false
@@ -450,24 +496,24 @@ export class StudiesComponent implements OnInit, OnDestroy {
 
   onInvite() {
     this.participantsService.inviteUsageCheck(this.study['study']['id']).subscribe((data: any) => {
-        this.showInvite = true;
-        this.participants = false;
-        this.subMenu = true
-        this.showDetails = false
-        this.dashboard = false
-        this.category = false;
-        this.settings = false;
-        this.showReports = false;
-        this.showQuestions = false;
-        this.showAddStudyButton = false;
-        this.showParticipants = false
-        this.showstudytitle = true;
-        this.showAddStudyMenu = false
-        this.surveyCommunity = false;
-        this.showSettingsBtn = false
-        this.reports = false;
-        this.showCreateCategoryToggle = false
-    },(error) => {
+      this.showInvite = true;
+      this.participants = false;
+      this.subMenu = true
+      this.showDetails = false
+      this.dashboard = false
+      this.category = false;
+      this.settings = false;
+      this.showReports = false;
+      this.showQuestions = false;
+      this.showAddStudyButton = false;
+      this.showParticipants = false
+      this.showstudytitle = true;
+      this.showAddStudyMenu = false
+      this.surveyCommunity = false;
+      this.showSettingsBtn = false
+      this.reports = false;
+      this.showCreateCategoryToggle = false
+    }, (error) => {
       this.participantsService.setConfirmInviteLimitStatus(error.error)
       this.showInvite = false;
       this.showParticipants = true
@@ -485,6 +531,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
     this.dashboard = false
     this.category = false;
     this.settings = false;
+    this.showQrCodeMenu =false
     this.showReports = false;
     this.showQuestions = false;
     this.showAddStudyButton = false;

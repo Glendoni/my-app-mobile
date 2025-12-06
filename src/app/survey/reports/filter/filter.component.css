@@ -15,3 +15,9 @@
 .snapIcon .snapshotIcon{
   color:#cc4242!important;
 }
+.checkboxes{
+  display:contents;
+}
+.checkboxes div{
+  padding: 5px;
+}
