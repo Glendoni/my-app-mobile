@@ -85,6 +85,13 @@ export class StudiesComponent implements OnInit, OnDestroy {
   private getAddQuestionStatusCheck: boolean = false;
 
   constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService) {
+
+    this.studyService.getParticipantVisibility().subscribe((data) =>{
+      if(data){
+        this.participantsVisibility()
+      }
+    })
+
     this.qs.redirectToDashboard().subscribe((data) => {
 
       this.showDashboard();

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Inject, ElementRef, ViewChild} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import * as htmlToImage from "html-to-image";
+import {StudyService} from "../../../_services";
 
 @Component({
   selector: 'app-qr-code',
@@ -11,7 +12,7 @@ export class QrCodeComponent implements OnInit {
   @ViewChild("downloadEl") downloadEl!: ElementRef<HTMLBodyElement>
   @Input() studyInfo: any = [];
 
-  constructor(@Inject(DOCUMENT) private coreDoc: Document) {
+  constructor(@Inject(DOCUMENT) private coreDoc: Document,  private studyService: StudyService,) {
   }
 
 
@@ -61,5 +62,8 @@ export class QrCodeComponent implements OnInit {
     }).catch(err => {
       console.error('Could not copy text: ', err);
     });
+  }
+  onReturnToParticipantList() {
+    this.studyService.setParticipantVisibility(true);
   }
 }

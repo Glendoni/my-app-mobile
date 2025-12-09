@@ -81,21 +81,16 @@
           <!--          </a>-->
           <!--        </li>-->
 
-          <li>
+          <li class="d-none d-sm-none d-md-none d-lg-block">
             <a (click)="participantsVisibility()">
               <i class="bi bi-people-fill"></i> {{navi[4]}}
             </a>
           </li>
-          <li class="">
+          <li class="d-none d-sm-none d-md-none d-lg-block">
             <a (click)="reporter()">
               <i class="bi bi-bar-chart"></i> {{navi[5]}}
             </a>
           </li>
-          <li class="text-center text-white d-block d-sm-d-block d-md-d-block d-lg-none logoutBtn mt-4">
-
-            <a routerLink="/auth"> Sign Out</a>
-          </li>
-
           <li class="d-none d-sm-none d-md-none d-lg-block">
             <a (click)="settingsVisibility()">
               <i class="bi bi-gear-wide-connected"></i> {{navi[0]}}
@@ -129,30 +124,44 @@
           </li>
 
         </ul>
+        <ul>
+          <li class="text-center text-white d-block d-sm-d-block d-md-d-block d-lg-none logoutBtn mt-4">
+
+          </li>
+        </ul>
       </div>
     </div>
   </div>
   <main>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-1">
+        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-1 ml-2 ml-md-0">
           <!--          <h3 class="mb-1 mt-1 s-header__logo-img s-header__logo-img-shrink appName"><span>Peeker</span>-->
           <!--            <span-->
           <!--              class="study-title-initial">Pro</span><span-->
           <!--              class="study-title"></span> ~ admin<span class="study-title-period"></span>-->
           <!--          </h3>-->
           <!--          <div *ngIf="!showQuestions" class="separator mb-2"></div>-->
+
+
+
           <h5 *ngIf="study && !createStudy" class=" studyNameTitle blueHeading  offset-4 offset-md-0"
               style="font-weight: 400;  text-align: center; margin-top: 59px;"><span
             *ngIf="showstudytitle">{{updatedStudyName ? updatedStudyName : study['study'].name}}</span></h5>
-
-          <h6 *ngIf="
+<div *ngIf="
             !showReports && !showParticipants && !dashboard && !showQrCode && !showInvite"
-              class="offset-4 offset-md-0 text-center d-block d-sm-none d-md-none d-lg-none mt-4">
-            Rotate to view menu
-            <br><br>Smaller devices have limited features
+     class="offset-4 offset-md-0 text-center  d-md-block d-lg-none mt-5">
+          <h5 class=" d-none d-sm-none d-md-block d-lg-none">
+            Rotate to View Main Menu
 
-            <br><br>
+          </h5>
+  <h6><span class="text-center d-block d-sm-none d-md-none d-lg-none ">Smaller devices have limited features</span></h6>
+</div>
+
+
+
+          <div *ngIf="
+            !showReports && !showParticipants && !dashboard && !showQrCode && !showInvite" class="offset-4 offset-md-0 text-center d-block d-sm-none d-md-block d-lg-none">
             <p class="border-t-neutral-50 btn btn-arrow col-6 btn btn-outline-dark filterBtn mt-5">
               <a (click)="participantsVisibility()">
                 <i class="bi bi-people-fill"></i> {{navi[4]}}
@@ -163,7 +172,7 @@
                 <i class="bi bi-bar-chart"></i> {{navi[5]}}
               </a>
             </p>
-          </h6>
+          </div>
 
           <div *ngIf="dashboard">
             <!--            <div class="modal fade modal-right" id="exampleModal" tabindex="-1" role="dialog"-->

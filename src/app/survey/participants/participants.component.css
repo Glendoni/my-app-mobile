@@ -25,3 +25,19 @@ a{
   display: inline-block;
   margin-left: 5px;
 }
+.links ul li {
+  margin-bottom: 5px;
+  float: inline-start;
+  list-style: none;
+
+
+}
+
+.links ul li button{
+  font-size:11px;
+  background: #236491;
+  color: white;
+}
+.search-sm{
+  width:168px;
+}

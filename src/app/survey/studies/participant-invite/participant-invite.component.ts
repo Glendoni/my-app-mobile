@@ -293,7 +293,8 @@ export class ParticipantInviteComponent implements OnInit {
     this.onToggleBulkUploader = !this.onToggleBulkUploader;
   }
 
-  onReturnToParticipantList() {
 
+  onReturnToParticipantList() {
+this.studyService.setParticipantVisibility(true);
   }
 }

@@ -429,13 +429,11 @@ export class ParticipantsComponent implements OnInit, OnDestroy {
 
   onShowInvite() {
     this.toggleInvite.emit(true);
-    console.log('Invite')
   }
 
   onShowQrCode() {
 
     this.toggleQrCode.emit(true);
-    console.log('Qr Code')
   }
 
 

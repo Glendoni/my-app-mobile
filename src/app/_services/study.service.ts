@@ -18,6 +18,7 @@ export class StudyService {
   public createCategoryToggleClose: BehaviorSubject<boolean>;
   public activemode: BehaviorSubject<boolean>;
   public activeGlobalMode: BehaviorSubject<boolean>;
+  public participantVisibility: BehaviorSubject<boolean>;
 
   private inviteRedirect: BehaviorSubject<boolean>;
   private httpOptions;
@@ -33,6 +34,7 @@ export class StudyService {
     this.inviteRedirect = new BehaviorSubject<boolean>(false);
     this.activemode = new BehaviorSubject<boolean>(false);
     this.activeGlobalMode = new BehaviorSubject<boolean>(false);
+    this.participantVisibility = new BehaviorSubject<boolean>(false);
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -284,5 +286,14 @@ export class StudyService {
         this.alertService.setAlert(result);
         return result
       }));
+  }
+
+
+  setParticipantVisibility(newValue: any): void {
+    this.participantVisibility.next(newValue);
+  }
+
+  getParticipantVisibility(): Observable<any> {
+    return this.participantVisibility.asObservable();
   }
 }
