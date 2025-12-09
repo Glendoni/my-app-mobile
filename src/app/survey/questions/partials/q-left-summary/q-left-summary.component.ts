@@ -9,6 +9,7 @@ import {QuestionService} from "../../../../_services/question.service";
 export class QLeftSummaryComponent implements OnInit {
   @Input() studyInfo: any = [];
   categories: any = [];
+  noCategoryFoundMsg: boolean = false;
 
   constructor(private qs: QuestionService) {
   }
@@ -16,6 +17,8 @@ export class QLeftSummaryComponent implements OnInit {
   ngOnInit() {
     this.qs.getCategories(this.studyInfo['study']['id']).subscribe((data) => {
       this.categories = data
+
+     this.noCategoryFoundMsg = data.length?false:true
     })
   }
 }

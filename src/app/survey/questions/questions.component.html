@@ -7,6 +7,7 @@
       </div>
 
       <app-q-tabs (loadReports)="getReports($event)"></app-q-tabs>
+
       <div class="tab-content mb-4">
         <div class="tab-pane show active" id="first" role="tabpanel" aria-labelledby="first-tab">
           <div class="row">
@@ -14,38 +15,41 @@
               <app-q-left-summary [studyInfo]="studyInfo"></app-q-left-summary>
 
             </div>
+
             <div *ngIf="addQuestion" class="col-12 col-xs-8 col-sm-12 col-md-12  col-lg-8 col-xl-8 mb-4">
               <app-questions-drag-and-drop (toggleEdit)="onToggle($event)" [createQuestion]="true"  [studyInfo]="study"></app-questions-drag-and-drop>
             </div>
-            <div *ngIf="!addQuestion"  class="col-8 col-xs-8 col-sm-12 col-md-12  col-lg-8 col-xl-8 mb-4 offset-4 offset-sm-0">
+            <div *ngIf="!addQuestion"  class="col-12 col-xs-8 col-sm-12 col-md-12  col-lg-8 col-xl-8 mb-4">
               <div class="sortable-survey">
                 <app-questions-drag-and-drop (toggleEdit)="onToggle($event)" [createQuestion]="false" [studyInfo]="study"></app-questions-drag-and-drop>
               </div>
 
-<!--              <div class="text-center mt-5" *ngIf="showAddQuestionBtn" >-->
-<!--                &lt;!&ndash;                <app-q-add-question-button></app-q-add-question-button>&ndash;&gt;-->
-<!--                <button type="button" class="btn btn-outline-primary btn-sm mt-5" (click)="onAddQuestion()" style="-->
-<!--    margin-left: 150px;-->
-<!--">-->
-<!--                  <i class="simple-icon-plus btn-group-icon"></i>-->
-<!--                  Add Element-->
-<!--                </button>-->
-<!--              </div>-->
+              <div class="text-center mt-5 text-center" *ngIf="showAddQuestionBtn" >
+                <!--                <app-q-add-question-button></app-q-add-question-button>-->
+                <button type="button" class="btn btn-outline-primary btn-sm mt-3" (click)="onAddQuestion()" style="
+
+">
+                  <i class="simple-icon-plus btn-group-icon"></i>
+                  Add Question
+                </button>
+              </div>
             </div>
 
 
           </div>
 
         </div>
+
         <div class="tab-pane fade " id="third" role="tabpanel" aria-labelledby="third-tab">
           <div class="row">
-            <div class="col-12 col-lg-4  mb-4 left-side d-none  d-sm-none d-md-none d-lg-block d-xl-block">
-
-              <app-q-result-quota [studyInfo]="studyInfo"></app-q-result-quota>
+            <div class="col-12 col-lg-4  mb-4 left-side">
+              <ng-container #dynamicQuotaContainer></ng-container>
+<!--              <app-q-result-quota [studyInfo]="studyInfo"></app-q-result-quota>-->
             </div>
 
-            <div *ngIf="showReport" class="col-12  col-md-12 col-lg-8 col-xl-8 right-side">
-              <app-q-result-charts [studyInfo]="studyInfo"></app-q-result-charts>
+            <div  class="col-12 col-lg-8 right-side">
+              <ng-container #dynamicContainer></ng-container>
+<!--              <app-reports  [studyInfo]="studyInfo"></app-reports>-->
 <!--              <app-bar-chart-data-processor ></app-bar-chart-data-processor>-->
 
 

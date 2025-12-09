@@ -1,3 +1,55 @@
-.link-question{
+.link-question {
   cursor: grab;
+  font-size: 11px;
+  font-weight: 400;
+
 }
+
+.link-question .highlighter {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.quotaList {
+  height: 188px;
+
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(225, 225, 225, 0.5);
+  box-shadow: 0 0 1px rgb(227, 227, 227);
+}
+
+.sideCard {
+  min-height: 400px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.history-modal {
+  color: white;
+}
+
+.removeIcon {
+  color: red;
+}
+
+.highlightGreen {
+  color: #9be7bb;
+}
+
+@media screen and (min-width: 800px) {
+  .quotaList {
+    height: 300px;
+
+  }
+}
+

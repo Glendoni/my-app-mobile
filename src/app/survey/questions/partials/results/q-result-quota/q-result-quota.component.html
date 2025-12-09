@@ -1,134 +1,128 @@
-<!--<p>src/app/survey/questions/partials/results/q-result-quota/q-result-quota.component.html</p>-->
-
-
-<!--
-"start_date": "2024-06-26",
-"end_date": "2025-10-22",
-"min_number_of_participants": 1,
-"max_number_of_participants": 11,
-"study_sectors": "[\"music\",\"Theater\"]",
-
--->
 <div class="card mb-4">
-  <div class="card-body">
-    <p class="list-item-heading mb-4">Questions</p>
-    <div class="mb-4">
+  <div class="card-body sideCard">
+    <p *ngIf="studyInfo.study.type_of_survey ==1" class="list-item-heading mb-2 text-right"></p>
+    <p *ngIf="studyInfo.study.type_of_survey ==2" class="list-item-heading mb-2 text-right">
+      <span (click)="toggleLeftCardQuestion()" title="Questions" class="cursor-pointer"> <i
+        class="bi bi-question-circle mr-3"></i> </span>
+      <span (click)="toggleLeftCardHistory()" title="Snapshot Dates" class="cursor-pointer"> <i
+        class="bi bi-clock-history"></i></span>
+    </p>
+    <div *ngIf="!showHide" class="mb-4 ">
+      <h6 class="text-center">Questions</h6>
       <div class="progress mb-3">
         <div class="progress-bar" role="progressbar" aria-valuenow="60"
              aria-valuemin="0" aria-valuemax="10"></div>
         <div class="progress-bar bg-theme-2" role="progressbar"
              aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>
       </div>
-
-      <table class="table table-sm table-borderless">
-        <tbody *ngFor="let q of questions; index as i">
-        <tr *ngIf="q['type'] != 'textarea'">
-          <td class="p-0 pb-1 w-10">
-            <span class="log-indicator border-theme-1 align-middle"></span>
-          </td>
-          <td class="p-0 pb-1">
-            <span class="font-weight-medium text-muted text-small link-question"
-              (click)="showQuestion(i)">{{q['label']}}
+      <div class="quotaList overflow-y-scroll">
+        <table class="table table-sm table-borderless">
+          <tbody *ngFor="let q of questions; index as i">
+          <tr *ngIf="q['type'] != 'textarea'">
+            <td class="p-0 pb-1 w-10">
+              <span class="log-indicator border-theme-1 align-middle"></span>
+            </td>
+            <td class="p-0 pb-1 pt-1 link-question">
+            <span class="link-question"
+                  (click)="showQuestion(i,$event)">{{q['label']}}
             </span>
-          </td>
-        </tr>
-
-        </tbody>
-      </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <!--    <div class="mb-4">-->
-    <!--      <p class="mb-2">Study</p>-->
-    <!--      <div class="progress mb-3">-->
-    <!--        <div class="progress-bar" role="progressbar" aria-valuenow="80"-->
-    <!--             aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--        <div class="progress-bar bg-theme-2" role="progressbar"-->
-    <!--             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--      </div>-->
-
-    <!--      <table class="table table-sm table-borderless">-->
-    <!--        <tbody>-->
-    <!--        <tr>-->
-    <!--          <td class="p-0 pb-1 w-10">-->
-    <!--<span-->
-    <!--  class="log-indicator border-theme-1 align-middle"></span>-->
-    <!--          </td>-->
-    <!--          <td class="p-0 pb-1">-->
-    <!--<span-->
-    <!--  class="font-weight-medium text-muted text-small">139/125-->
-    <!--College</span>-->
-    <!--          </td>-->
-    <!--        </tr>-->
-    <!--        <tr>-->
-    <!--          <td class="p-0 pb-1 w-10">-->
-    <!--<span-->
-    <!--  class="log-indicator border-theme-2 align-middle"></span>-->
-    <!--          </td>-->
-    <!--          <td class="p-0 pb-1">-->
-    <!--<span-->
-    <!--  class="font-weight-medium text-muted text-small">95/125-->
-    <!--High School</span>-->
-    <!--          </td>-->
-    <!--        </tr>-->
-    <!--        </tbody>-->
-    <!--      </table>-->
-    <!--    </div>-->
-
-    <!--    <div>-->
-    <!--      &lt;!&ndash;      {{studyInfo['study_categories'] |json}}&ndash;&gt;-->
-    <!--      <p class="mb-2">Categories</p>-->
-    <!--      <div class="progress mb-3">-->
-    <!--        <div class="progress-bar" role="progressbar" aria-valuenow="35"-->
-    <!--             aria-valuemin="0" aria-valuemax="50"></div>-->
-    <!--        <div class="progress-bar bg-theme-2" role="progressbar"-->
-    <!--             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--        <div class="progress-bar bg-theme-3" role="progressbar"-->
-    <!--             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>-->
-    <!--      </div>-->
-
-    <!--      <table class="table table-sm table-borderless">-->
-    <!--        <tbody>-->
-
-    <!--        <tr *ngFor="let item of studyInfo['study_categories']">-->
-    <!--          <td class="p-0 pb-1 w-10">-->
-    <!--<span-->
-    <!--  class="log-indicator border-theme-1 align-middle"></span>-->
-    <!--          </td>-->
-    <!--          <td class="p-0 pb-1">-->
-    <!--<span-->
-    <!--  class="font-weight-medium text-muted text-small">{{item['name']}}-->
-    <!--</span>-->
-    <!--          </td>-->
-    <!--        </tr>-->
-    <!--        &lt;!&ndash;        <tr>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          <td class="p-0 pb-1 w-10">&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                  class="log-indicator border-theme-2 align-middle"></span>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          <td class="p-0 pb-1">&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                  class="font-weight-medium text-muted text-small">40/75&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                    24-30</span>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
-    <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
-    <!--        &lt;!&ndash;        <tr>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          <td class="p-0 pb-1 w-10">&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                  class="log-indicator border-theme-3 align-middle"></span>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          <td class="p-0 pb-1">&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                <span&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                  class="font-weight-medium text-muted text-small">60/75&ndash;&gt;-->
-    <!--        &lt;!&ndash;                                                                    30-40</span>&ndash;&gt;-->
-    <!--        &lt;!&ndash;          </td>&ndash;&gt;-->
-    <!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
-    <!--        </tbody>-->
-    <!--      </table>-->
-    <!--    </div>-->
-
+    <div *ngIf="showHide">
+      <h6 class="text-center">Snapshots</h6>
+      <div class="progress mb-3">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+             aria-valuemin="0" aria-valuemax="10"></div>
+        <div class="progress-bar bg-theme-2" role="progressbar"
+             aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>
+      </div>
+      <div class="quotaList overflow-y-scroll">
+        <h6 *ngIf="!historyList.length" class="text-center">Recorded (0)</h6>
+        <table class="table table-sm table-borderless">
+          <tbody *ngFor="let h of historyList; index as i">
+          <tr>
+            <td class="p-0 pb-1  w-10">
+              <span class="log-indicator border-theme-1 align-middle"></span>
+            </td>
+           <td class="p-0 pb-1 pt-2 link-question">
+            <span *ngIf="h['history']['titleHistory']" (click)="filterHistoryByDatePreset(h,$event)" class="link-question"
+                  title=" {{h['history']['start_date'] |date}} - {{h['history']['end_date']|date}}">
+             {{h['history']['titleHistory'] ?? null}}
+            </span>
+              <span *ngIf="!h['history']['titleHistory']" (click)="filterHistoryByDatePreset(h,$event)"
+                    class="link-question">
+             {{h['history']['start_date'] |date}} - {{h['history']['end_date']|date}}
+            </span>
+            </td>
+            <td class="p-0 pb-1 pt-1 w-10">
+              <i (click)="historyModalData(h)" data-toggle="modal" data-target="#exampleModal"
+                 title="Edit Snapshot" class="bi bi-camera cursor-pointer"></i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
-<!--<pre>{{studyInfo|json}}</pre>-->
-<div *ngIf="showFilter">
+<div *ngIf="modalData['history']" class="modal fade bd-example-modal-sm  history-modal" id="exampleModal" tabindex="-1"
+     role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ">Edit Snapshot Label</h5>
 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showDelete = true">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div *ngIf="modalData['history']['titleHistory']; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <p class="text-left " title="Delete Snapshot">
+           <span>  <i (click)="showDelete = false"
+                      class="bi bi-trash3 removeIcon"></i> {{modalData['history']['titleHistory']}}
+           </span></p>
+          </ng-template>
+
+          <ng-template #elseBlock>
+            <p class="text-left " title="Delete Snapshot">
+              <span> <i (click)="showDelete = false"
+                        class="bi bi-trash3 removeIcon"></i> {{modalData['history']['start_date'] |date}}
+                - {{modalData['history']['end_date']|date}}
+              </span>
+            </p>
+
+          </ng-template>
+
+          <p *ngIf="modalData['history']['titleHistory']" class="text-center">
+            {{modalData['history']['start_date'] |date}} - {{modalData['history']['end_date']|date}}
+          </p>
+          <div class="text-center">
+            <form [formGroup]="formModalFilter" (ngSubmit)="submit(modalData)">
+            <textarea formControlName="titleDateHistoryTitle" type="text" id="titleDateHistoryTitle" tabindex="1"
+                      placeholder="Insert label"></textarea>
+
+              <div *ngIf="!showDelete">
+                <button [class.highlightGreen]="submitted"
+                        class="btn btn-outline-danger sm mt-3 history-modal text-right " (click)="removeDate(modalData)"
+                        data-dismiss="modal" aria-label="Close">Delete Snapshot
+                </button>
+              </div>
+              <div *ngIf="showDelete">
+                <button [class.highlightGreen]="submitted"
+                        class="btn btn-outline-dark sm mt-3 history-modal text-right ">{{submitted ? 'Saved' : 'Save'}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
