@@ -19,9 +19,9 @@
         <div class="card-body">
 
 
-          <p (click)="onReturnToParticipantList()" class="text-right ">
+          <h5 (click)="onReturnToParticipantList()" class="text-right ">
             <i class="bi bi-x-circle"></i>
-          </p>
+          </h5>
           <div *ngIf="onToggleBulkUploader">
             <h5 class="mb-3 text-center blueHeading" title="Send Bulk Invites">CSV Bulk Invite Via Email</h5>
             <p *ngIf="!message" class="text-center mb-4">CSV <strong>name</strong> and <strong>email</strong> column

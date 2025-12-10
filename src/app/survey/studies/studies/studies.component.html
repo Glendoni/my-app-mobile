@@ -135,7 +135,7 @@
   <main>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-1 ml-2 ml-md-0">
+        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-0 ml-0 ml-md-0 pr-0">
           <!--          <h3 class="mb-1 mt-1 s-header__logo-img s-header__logo-img-shrink appName"><span>Peeker</span>-->
           <!--            <span-->
           <!--              class="study-title-initial">Pro</span><span-->
@@ -384,9 +384,9 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid">
+
       <div class="row"><!--        app-row-->
-        <div class="col-12 col-xs-12 col-sm-6 col-md-12 offset-xs-5 offset-sm-5 offset-md-0">
+        <div class="pr-2 pl-2">
           <app-participants *ngIf="showParticipants" [studyInfo]="study" (toggleQrCode)="onToggleQrCode($event)"
                             (toggleInvite)="onToggleInvite($event)"></app-participants>
           <app-qr-code *ngIf="showQrCode" [studyInfo]="study"></app-qr-code>
@@ -399,7 +399,7 @@
         </div>
 
       </div>
-    </div>
+
 
   </main>
 </div>
