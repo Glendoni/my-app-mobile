@@ -62,7 +62,9 @@
 .fixed-top{
   top:0px;
 }
-
+.userDetails button{
+  color: grey;
+}
 
 @media (max-width: 450px) {
   .fixed-top{

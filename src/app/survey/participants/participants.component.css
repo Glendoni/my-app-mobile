@@ -6,6 +6,7 @@ a{
 }
 .filterIcon{
   color: red;
+  text-align: right;
 }
 .inviteStatus{
   text-align: center;
