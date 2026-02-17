@@ -1,10 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.example.app',
-  appName: 'my-apps',
-  webDir: 'dist/my-app',
-  zoomEnabled:false
+  appId: 'com.peekerpro.app',
+  appName: 'peeker-pro-admin',
+  webDir: 'dist/my-app'
 };
 
 export default config;

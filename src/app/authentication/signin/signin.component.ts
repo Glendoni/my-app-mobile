@@ -50,8 +50,8 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
     this.scrollToTop()
     this.loginForm = this.fb.group({
-      email: ['admindemo@peekerpro.com', Validators.required],
-      password: ['_Password123!', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
       otp: [''],
       sword: [''],
       paymentLink: [''],
