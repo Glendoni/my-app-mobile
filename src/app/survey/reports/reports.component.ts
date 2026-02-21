@@ -66,6 +66,7 @@ export class ReportsComponent implements OnInit{
   public noQuestionsMsg: boolean = false;
   public showAverages: boolean = false;
 
+
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
     if (event.keyCode == 27) {

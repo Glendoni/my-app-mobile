@@ -67,6 +67,7 @@ import { UpgradeNotificationComponent } from './studies/upgrade-notification/upg
 import { QrCodeComponent } from './studies/qr-code/qr-code.component';
 import { AveragesComponent } from './reports/averages/averages.component';
 import {RoundValuePipe} from "./round-value.pipe";
+import { CommentsComponent } from './reports/comments/comments.component';
 
 
 @NgModule({
@@ -127,6 +128,7 @@ import {RoundValuePipe} from "./round-value.pipe";
     UpgradeNotificationComponent,
     QrCodeComponent,
     AveragesComponent,
+    CommentsComponent,
     RoundValuePipe
   ],
   imports: [

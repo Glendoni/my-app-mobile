@@ -124,6 +124,7 @@
 
       <br/><br/><br/>
       <!--       {{item[0]['other']|json}}-->
+      <app-comments [otherInfo]="item"></app-comments>
       <div *ngIf="item[0].other && filterChartToggle && showHideComments">
         <app-question-other [otherInfo]="item" [studyType]="studyInfo.study.type_of_survey"></app-question-other>
       </div>
