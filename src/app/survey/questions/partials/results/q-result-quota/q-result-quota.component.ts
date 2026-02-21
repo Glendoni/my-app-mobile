@@ -15,18 +15,24 @@ export class QResultQuotaComponent implements OnDestroy {
   formModalFilter: any = FormGroup;
   questions: any = []
   showFilter: boolean = false;
-  showHide: boolean = false;
+  showHide: number = 1;
+  studyType: number = 1;
   static callCounter: number = 0
   public historyList: any = [];
   public showHistoryIcon: boolean = false;
   private historyIsChecked: Boolean = false;
   public modalData: any = [];
+  public questionComments: any = [];
+
   show: boolean=false;
   public submitted: boolean= false;
   showDelete: boolean= true;
 
   constructor(private fb: FormBuilder, private qs: QuestionService, private rs: ReportsService) {
 
+    this.rs.getQuestionComments().subscribe((data) =>{
+      this.questionComments = data
+    })
 
     this.qs.getQuestion().subscribe((data) => {
       const fin: any = []
@@ -74,12 +80,24 @@ export class QResultQuotaComponent implements OnDestroy {
     if (this.studyInfo['study']['type_of_survey'] == 2) {
       this.showHistoryIcon = true
     }
-    this.showHide = true
+    this.showHide=0
+    this.showHide = 2
   }
 
   toggleLeftCardQuestion() {
-    this.showHide = false
+    this.showHide=0
+    this.showHide = 1
   }
+
+  toggleLeftCardComments() {
+    this.showHide=0
+    this.showHide = 3
+  }
+
+
+
+
+
 
   getDateHistory() {
     if (!this.historyIsChecked) {

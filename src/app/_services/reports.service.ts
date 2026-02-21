@@ -13,11 +13,12 @@ export class ReportsService {
   public storeFilterSelectionArrSelection: BehaviorSubject<[]>;
   public storeFilterSelection: BehaviorSubject<[]>;
   //public locallyStoredFilterSelection: BehaviorSubject<[]>;
-  // public filtercat: BehaviorSubject<[]>;
+ // public filtercat: BehaviorSubject<[]>;
   public filterdates: BehaviorSubject<[]>;
   public filterHistory: BehaviorSubject<[]>;
   public showComments: BehaviorSubject<boolean>;
   public toggleHistoryCard: BehaviorSubject<boolean>;
+  public questionComments: BehaviorSubject<[]>;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -25,15 +26,16 @@ export class ReportsService {
   public url
   public  studyId: string = "9aad164a-d12d-4100-ac31-d38d3e5461da"
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.url = this.authenticationService.url;
+   this.url = this.authenticationService.url;
     this.resultList = new BehaviorSubject<[]>([]);
     this.categoryList = new BehaviorSubject<[]>([]);
     this.storeFilterSelection = new BehaviorSubject<[]>([]);
-    // this.locallyStoredFilterSelection = new BehaviorSubject<[]>([]);
+   // this.locallyStoredFilterSelection = new BehaviorSubject<[]>([]);
     this.storeFilterSelectionArrSelection = new BehaviorSubject<[]>([]);
     //this.filtercat = new BehaviorSubject<[]>([]);
     this.filterdates = new BehaviorSubject<[]>([]);
     this.filterHistory = new BehaviorSubject<[]>([]);
+    this.questionComments = new BehaviorSubject<[]>([]);
     this.showComments = new BehaviorSubject<boolean>(false);
     this.toggleHistoryCard = new BehaviorSubject<boolean>(true);
   }
@@ -139,6 +141,16 @@ export class ReportsService {
 
   getToggleHistoryCard(): Observable<any> {
     return this.toggleHistoryCard.asObservable();
+  }
+
+  setQuestionComments(newValue: any): void {
+
+
+    this.questionComments.next(newValue);
+  }
+
+  getQuestionComments(): Observable<any> {
+    return this.questionComments.asObservable();
   }
 
 }

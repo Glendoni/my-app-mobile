@@ -1,13 +1,24 @@
 <div class="card mb-4">
   <div class="card-body sideCard">
-    <p *ngIf="studyInfo.study.type_of_survey ==1" class="list-item-heading mb-2 text-right"></p>
+    <p *ngIf="studyInfo.study.type_of_survey ==1" class="list-item-heading mb-2 text-right">
+
+         <span (click)="toggleLeftCardQuestion()" title="Questions" class="cursor-pointer"> <i
+           class="bi bi-question-circle mr-3"></i> </span>
+         <span (click)="toggleLeftCardComments()" title="study participant comments" class="cursor-pointer">
+        <i class="bi bi-chat-quote"></i>
+      </span>
+    </p>
     <p *ngIf="studyInfo.study.type_of_survey ==2" class="list-item-heading mb-2 text-right">
       <span (click)="toggleLeftCardQuestion()" title="Questions" class="cursor-pointer"> <i
         class="bi bi-question-circle mr-3"></i> </span>
       <span (click)="toggleLeftCardHistory()" title="Snapshot Dates" class="cursor-pointer"> <i
-        class="bi bi-clock-history"></i></span>
+        class="bi bi-clock-history mr-3"></i></span>
+
+      <span (click)="toggleLeftCardComments()" title="study participant comments" class="cursor-pointer">
+        <i class="bi bi-chat-quote"></i>
+      </span>
     </p>
-    <div *ngIf="!showHide" class="mb-4 ">
+    <div *ngIf="showHide==1" class="mb-4 ">
       <h6 class="text-center">Questions</h6>
       <div class="progress mb-3">
         <div class="progress-bar" role="progressbar" aria-valuenow="60"
@@ -32,7 +43,7 @@
         </table>
       </div>
     </div>
-    <div *ngIf="showHide">
+    <div *ngIf="showHide==2">
       <h6 class="text-center">Snapshots</h6>
       <div class="progress mb-3">
         <div class="progress-bar" role="progressbar" aria-valuenow="60"
@@ -67,8 +78,48 @@
         </table>
       </div>
     </div>
+    <div *ngIf="showHide==3">
+
+      <h6 class="text-center">Participant Comments ({{questionComments.length}})
+<!--        <span >  {{questionComments[0]['get_category']['name']|json}}</span>-->
+      </h6>
+      <p *ngIf="this.studyInfo['study']['type_of_survey'] ==2" class="text-center">{{studyInfo['study_categories'][0]['name']}}</p>
+      <div class="progress mb-3">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+             aria-valuemin="0" aria-valuemax="10"></div>
+        <div class="progress-bar bg-theme-2" role="progressbar"
+             aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>
+      </div>
+
+
+<div class="quotaList overflow-y-scroll">
+
+      <div *ngFor="let item of questionComments">
+<!--        {{item['id']|json}}-->
+
+        <div class="  feedback-text overflow-y-scroll text-center">
+          <p class="feedback-date">
+
+            <span *ngIf="this.studyInfo['study']['type_of_survey'] !=2"><strong>Category: </strong> </span>
+            <span *ngIf="this.studyInfo['study']['type_of_survey'] !=2"> {{item['get_category']['name']}} | </span>
+            <span class="comment-date">{{item['created_at'] | date}}</span>
+          <br>
+            <span style="font-weight: 300;">{{item['answer'] }}</span>
+
+          </p>
+          <hr/>
+        </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
   </div>
 </div>
+
+
 <div *ngIf="modalData['history']" class="modal fade bd-example-modal-sm  history-modal" id="exampleModal" tabindex="-1"
      role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm">
