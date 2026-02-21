@@ -93,7 +93,6 @@ export class AccountComponent {
       pause: [false],
     });
 
-    console.log(this.userPhone)
     if (this.deviceService.isMobile()) {
 
       this.profileShower()

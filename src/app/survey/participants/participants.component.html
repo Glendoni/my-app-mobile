@@ -87,7 +87,7 @@
   </div>
 
 <div class="row">
-  <div class="col-md-4 d-none d-sm-block ">
+  <div class="col-md-4 d-none d-sm-none d-md-block ">
     <div class="card mb-3">
       <div class="card-body pt-3 pl-1 pl-lg-4 pr-1">
         <div *ngIf="editDetails || showFilterIcon">
@@ -206,9 +206,9 @@
         <span class="visually-hidden">Loading...</span>
       </div>
 
-      <div
-        *ngFor="let participant of participants | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'participants'}  index as i"
-        class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+      <div *ngFor="let participant of participants | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'participants'}  index as i"
+        class="col-12 col-sm-8 col-md-12 col-lg-6 offset-0 offset-sm-4 offset-md-0  col-lg-6">
         <div class="card d-flex flex-row mb-4 media-thumb-container">
 
           <a [class.not-allowed]="!participant.user[0].name" class="d-flex align-self-center media-thumbnail-icon"
@@ -255,6 +255,8 @@
           </div>
         </div>
       </div>
+
+
       <div *ngIf="participants>5">
         <pagination-controls (pageChange)="p = $event" id="participants" class="float-right"></pagination-controls>
       </div>

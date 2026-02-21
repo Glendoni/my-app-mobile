@@ -2,12 +2,12 @@
 <div class="container-fluid" *ngIf="studyInfo">
   <div class="row">
     <div class="col-12 survey-app">
-      <div class="mb-2">
+      <div class="mb-2 offset-4 offset-sm-4 offset-md-0">
 <!--  <app-q-header></app-q-header>-->
-      </div>
+
 
       <app-q-tabs (loadReports)="getReports($event)"></app-q-tabs>
-
+      </div>
       <div class="tab-content mb-4">
         <div class="tab-pane show active" id="first" role="tabpanel" aria-labelledby="first-tab">
           <div class="row">
@@ -42,12 +42,12 @@
 
         <div class="tab-pane fade " id="third" role="tabpanel" aria-labelledby="third-tab">
           <div class="row">
-            <div class="col-12 col-lg-4  mb-4 left-side">
+            <div class="d-none d-md-none d-lg-block col-12 col-lg-4 mb-4 left-side">
               <ng-container #dynamicQuotaContainer></ng-container>
 <!--              <app-q-result-quota [studyInfo]="studyInfo"></app-q-result-quota>-->
             </div>
 
-            <div  class="col-12 col-lg-8 right-side">
+            <div  class="col-12 col-sm-12 offset-4 offset-md-0 col-lg-8 right-side">
               <ng-container #dynamicContainer></ng-container>
 <!--              <app-reports  [studyInfo]="studyInfo"></app-reports>-->
 <!--              <app-bar-chart-data-processor ></app-bar-chart-data-processor>-->

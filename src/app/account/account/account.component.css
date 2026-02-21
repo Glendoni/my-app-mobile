@@ -136,3 +136,7 @@ p {
 .logo h4 span {
   color: #fe3f40;
 }
+
+.navbar .user .name {
+   display: block;
+}

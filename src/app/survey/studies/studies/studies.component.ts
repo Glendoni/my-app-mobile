@@ -6,6 +6,7 @@ import {Observable, of, interval, Subject, distinctUntilChanged, debounceTime} f
 import {switchMap} from 'rxjs/operators'
 import {FormControl} from "@angular/forms";
 import {QuestionsComponent} from "../../questions/questions.component";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -41,6 +42,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
   reports = true;
   updatedStudyName: string = ''
   hideMenu:boolean = false;
+  showRotateMsg: boolean =false;
 
   public title = 'Survey Builder'
   public navi = [
@@ -83,8 +85,32 @@ export class StudiesComponent implements OnInit, OnDestroy {
   public showSettingsBtn: boolean = true;
   private listingFilter: boolean = false;
   private getAddQuestionStatusCheck: boolean = false;
+  public device: string;
+  public deviceVisibility: string ='list-unstyled d-sm-none d-md-block d-lg-block';
 
-  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router, private participantsService: ParticipantsService) {
+  constructor(private qs: QuestionService, private studyService: StudyService, private router: Router,
+              private participantsService: ParticipantsService,
+              private deviceService: DeviceDetectorService) {
+
+    this.device =deviceService.getDeviceInfo().device
+
+    console.log(this.device)
+
+
+    switch (this.device) {
+      case "iPad" :
+      case "Macintosh":
+       this.deviceVisibility = 'list-unstyled d-block'
+        console.log('is iPad Or Macintosh')
+        break;
+      case'iPhone':
+        this.deviceVisibility = 'list-unstyled d-none'
+        this.showRotateMsg = true
+        console.log('is iPhone')
+        break;
+    }
+
+
 
     this.studyService.getParticipantVisibility().subscribe((data) =>{
       if(data){
@@ -169,6 +195,7 @@ export class StudiesComponent implements OnInit, OnDestroy {
   //   const componentRef =  this.containerReport.createComponent(QuestionsComponent);
   //   componentRef.instance.studyInfo = this.study;
   // }
+
 
   showAddQuestionBtnEval() {
     this.qs.getAddQuestionBtnVisibility().subscribe((data) => {

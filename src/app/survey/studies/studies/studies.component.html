@@ -8,7 +8,7 @@
   <div class="menu">
     <div *ngIf="!hideMenu" class="main-menu d-none d-sm-block">
       <div class="scroll">
-        <ul *ngIf="dashboard" class="list-unstyled d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="dashboard" [className]="deviceVisibility">
           <li>
             <a (click)="onAddStudy()">
               <i class="iconsminds-shop-4"></i>
@@ -18,7 +18,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="createStudy" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="createStudy" [className]="deviceVisibility">
           <li>
             <a (click)="showDashboard()">
               <i class="bi bi-house-gear-fill"></i>
@@ -39,7 +39,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="showParticipants" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showParticipants" [className]="deviceVisibility">
           <li>
             <a (click)="onInvite()">
               <i class="iconsminds-shop-4 cursor-pointer"></i>
@@ -49,7 +49,7 @@
           <li>
           </li>
         </ul>
-        <ul *ngIf="showQrCodeMenu" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showQrCodeMenu" [className]="deviceVisibility">
           <li>
             <a (click)="onQrCode()">
               <i class="bi bi-qr-code"></i>
@@ -63,14 +63,14 @@
           </li>
 
         </ul>
-        <ul *ngIf="showDetails" class="list-unstyled">
-          <li *ngIf="!type_of_survey" class="d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showDetails" [className]="deviceVisibility">
+          <li *ngIf="!type_of_survey" >
             <a (click)="categoryVisibility()">
               <i class="bi bi-layers"></i>
               <span>{{navi[1]}}</span>
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li [className]="deviceVisibility">
             <a (click)="questionsVisibility()">
               <i class="bi bi-question-diamond"></i> {{navi[2]}}
             </a>
@@ -81,17 +81,17 @@
           <!--          </a>-->
           <!--        </li>-->
 
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li [className]="deviceVisibility">
             <a (click)="participantsVisibility()">
               <i class="bi bi-people-fill"></i> {{navi[4]}}
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li [className]="deviceVisibility">
             <a (click)="reporter()">
               <i class="bi bi-bar-chart"></i> {{navi[5]}}
             </a>
           </li>
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+          <li [className]="deviceVisibility">
             <a (click)="settingsVisibility()">
               <i class="bi bi-gear-wide-connected"></i> {{navi[0]}}
             </a>
@@ -103,8 +103,8 @@
           <!--          </a>-->
           <!--        </li>-->
         </ul>
-        <ul *ngIf="showQuestions && showAddQuestionButton" class="list-unstyled">
-          <li class="d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showQuestions && showAddQuestionButton" [className]="deviceVisibility">
+          <li [className]="deviceVisibility">
             <a (click)="showAddQuestion()">
               <i class="bi bi-question-diamond"></i> Add Question
             </a>
@@ -113,7 +113,7 @@
         <ul *ngIf="showDetails" class="list-unstyled">
 
         </ul>
-        <ul *ngIf="showCreateCategoryToggle" class="list-unstyled d-none d-sm-none d-md-none d-lg-block">
+        <ul *ngIf="showCreateCategoryToggle" [className]="deviceVisibility">
           <li>
             <a (click)="onAddCategory()">
               <i class="iconsminds-shop-4"></i>
@@ -158,11 +158,11 @@
              !showSettings &&
              !showInvite"
      class="offset-4 offset-md-0 text-center  d-md-block d-lg-none mt-5">
-          <h5 class=" d-none d-sm-none d-md-block d-lg-none mt-5">
+          <h5  *ngIf="showRotateMsg" class=" d-none d-sm-none d-md-block d-lg-none mt-5">
             Rotate to View Main Menu
 
           </h5>
-  <h6><span class="text-center d-block d-sm-none d-md-none d-lg-none ">Smaller devices have limited features</span></h6>
+  <h6><span class="text-center d-block d-sm-none d-md-none d-lg-none ">Limited features On Smaller Devices </span></h6>
 </div>
 
 
@@ -174,6 +174,7 @@
              !showCategory &&
              !showQuestions &&
              !showSettings &&
+             showRotateMsg &&
              !showInvite" class="offset-4 offset-md-0 text-center d-block d-sm-none d-md-block d-lg-none">
             <p class="border-t-neutral-50 btn btn-arrow col-5 btn btn-outline-dark filterBtn mt-5">
               <a (click)="participantsVisibility()">
@@ -341,7 +342,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="showllastration" class="d-none d-sm-none d-md-none d-lg-block">
+    <div *ngIf="showllastration && device!='iPad'" [className]="deviceVisibility">
       <app-setup-illustration></app-setup-illustration>
     </div>
     <div *ngIf="showDetails">

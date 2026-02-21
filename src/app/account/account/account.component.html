@@ -46,11 +46,10 @@
 <!--                        <img alt="Profile Picture" src="assets/img/profiles/l-1.jpg"/>-->
                     </span>
       </button>
-
       <div class="dropdown-menu dropdown-menu-right">
         <div *ngIf="surveyForm.valid; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock> <a   class="dropdown-item" [routerLink]="['/survey']">Dashboard</a></ng-template>
-        <ng-template #elseBlock> <a  href="javascript:" class="dropdown-item globalNavDisabled">Dashboard</a></ng-template>
+        <ng-template #elseBlock> <a  [routerLink]="['/survey']" class="dropdown-item ">Dashboard</a></ng-template>
         <!--        <a *ngIf="false" class="dropdown-item" [routerLink]="['/survey']">Dashboard</a>-->
 
         <a class="dropdown-item" [routerLink]="['/account']">Account</a>
@@ -65,7 +64,7 @@
 
 </div>
 
-<div class="col-4 d-none d-sm-block">
+<div class="col-4 d-none d-xs-none  d-sm-block d-md-block">
   <div class="menu">
     <div class="main-menu">
       <div class="scroll">
@@ -76,8 +75,7 @@
               <span (click)="onGlobalShow($event)">Global Preferences</span>
             </a>
           </li>
-
-          <li *ngIf="!create" >
+          <li>
             <a>
               <i class="bi bi-person-bounding-box"></i>
               <span (click)="onProfileShow($event)">Password</span>
@@ -89,9 +87,9 @@
               <span (click)="on2Fa($event)">2F Authentication</span>
             </a>
           </li>
-          <li *ngIf="!showNewUserWelcomeMgs" >
+          <li *ngIf="!showNewUserWelcomeMgs" class="d-none d-sm-none d-md-none d-lg-block" >
             <a>
-              <i class="bi bi-receipt-cutoff"></i>
+              <i class="bi bi-receipt-cutoff "></i>
               <span (click)="onInvoice($event)">Invoices</span>
             </a>
           </li>
@@ -139,7 +137,7 @@
 
           <form [formGroup]="surveyForm" (ngSubmit)="onUpdate()">
             <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-6 mb-0">
+              <div class="offset-sm-2 offset-md-0 col-sm-10 col-md-12 col-lg-6 mb-0">
 
                 <div class="card mb-4">
                   <div *ngIf=edit class="card-body">
@@ -282,7 +280,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="offset-sm-2 offset-md-0 col-sm-10 col-md-12 col-lg-6 mb-0">
                 <div class="card mb-4">
                   <div class="card-body">
                     <h4 class="mb-4 blueHeading">Send Email Notifications:</h4>
