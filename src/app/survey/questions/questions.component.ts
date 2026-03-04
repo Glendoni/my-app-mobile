@@ -28,7 +28,7 @@ export class QuestionsComponent implements OnInit , AfterViewInit, OnDestroy{
   public showReport: boolean = false;
 
   constructor(private qs: QuestionService) {
-console.log('I am loaded')
+
     qs.setAddQuestion(false)
     this.addQuestion = false
     this.showAddQuestionBtn = true
@@ -107,8 +107,7 @@ console.log('I am loaded')
     // this.containerQuota.remove();
     this.loadComponent(null)
     this.loadQuotaComponent()
-  //  this.qs.setAddQuestionBtnVisibility($event)
-
+    this.qs.setAddQuestionBtnVisibility($event)
   }
   loadComponent(history:any) {
 

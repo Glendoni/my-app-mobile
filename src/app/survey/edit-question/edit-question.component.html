@@ -9,12 +9,12 @@
         {{question.label}}
       </div>
     </div>
-    <div class="custom-control custom-checkbox pl-1 align-self-center pr-4">
-      <button *ngIf="question['type']=='select'" class="btn btn-outline-theme-3 icon-button view-button">
-        <i class="bi bi-menu-up"></i>
+    <div class="custom-control custom-checkbox pl-1 text-right pr-4 pt-4">
+      <button *ngIf="question['type']=='checkbox'" class="btn btn-outline-theme-3 icon-button view-button" title="Checkbox">
+        <i class="bi bi-ui-checks"></i>
       </button>
-      <button *ngIf="question['type']=='radio'" class="btn btn-outline-theme-3 icon-button view-button">
-        <i class="bi bi-check2-circle"></i>
+      <button *ngIf="question['type']=='select'" class="btn btn-outline-theme-3 icon-button view-button" title="Dropdown/Select">
+        <i class="bi bi-menu-button-wide-fill"></i>
       </button>
       <button *ngIf="question['type']=='number'" class="btn btn-outline-theme-3 icon-button view-button">
         <i class="bi bi-123"></i>

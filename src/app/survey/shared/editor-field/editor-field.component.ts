@@ -68,7 +68,6 @@ export class EditorFieldComponent {
   }
 
   ngOnInit() {
-    console.log(this.f.editor)
     if(this.action) {
       // console.log(this.studyInfo)
       // console.log(this.optionListItems['options']['editor'])

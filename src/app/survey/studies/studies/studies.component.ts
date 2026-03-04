@@ -93,25 +93,6 @@ export class StudiesComponent implements OnInit, OnDestroy {
               private deviceService: DeviceDetectorService) {
 
     this.device =deviceService.getDeviceInfo().device
-
-    console.log(this.device)
-
-
-    switch (this.device) {
-      case "iPad" :
-      case "Macintosh":
-       this.deviceVisibility = 'list-unstyled d-block'
-        console.log('is iPad Or Macintosh')
-        break;
-      case'iPhone':
-        this.deviceVisibility = 'list-unstyled d-none'
-        this.showRotateMsg = true
-        console.log('is iPhone')
-        break;
-    }
-
-
-
     this.studyService.getParticipantVisibility().subscribe((data) =>{
       if(data){
         this.participantsVisibility()
@@ -126,7 +107,6 @@ export class StudiesComponent implements OnInit, OnDestroy {
         this.createStudy = false
         this.showSettings = false
         this.getPortalStudiesListing()
-
       }
     })
 
@@ -155,6 +135,19 @@ export class StudiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    switch (this.device) {
+      case "iPad" :
+      case "Macintosh":
+        this.deviceVisibility = 'list-unstyled d-block'
+        console.log('is iPad Or Macintosh')
+        break;
+      case'iPhone':
+        this.deviceVisibility = 'list-unstyled d-none'
+        this.showRotateMsg = true
+        console.log('is iPhone')
+        break;
+    }
 
     this.showAddQuestionBtnEval()
     this.studyService.getCreateCategoryToggleClose().subscribe((data) => {
@@ -200,7 +193,6 @@ export class StudiesComponent implements OnInit, OnDestroy {
   showAddQuestionBtnEval() {
     this.qs.getAddQuestionBtnVisibility().subscribe((data) => {
       this.getAddQuestionStatus()
-
       if (!this.getAddQuestionStatusCheck && !data) {
         this.showAddQuestionButton = true
       } else if (data) {
