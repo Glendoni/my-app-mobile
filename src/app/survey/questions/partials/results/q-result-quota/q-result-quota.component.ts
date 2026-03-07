@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class QResultQuotaComponent implements OnDestroy {
   @Input() studyInfo: any = [];
-  @Output() filterHistoryId = new EventEmitter<boolean>(); //event emitter
+  @Output() filterHistoryId = new EventEmitter<string>(); //event emitter
   @Output() titleHistoryReq = new EventEmitter<string>(); //event emitter
   formModalFilter: any = FormGroup;
   questions: any = []
@@ -24,13 +24,13 @@ export class QResultQuotaComponent implements OnDestroy {
   public modalData: any = [];
   public questionComments: any = [];
 
-  show: boolean=false;
-  public submitted: boolean= false;
-  showDelete: boolean= true;
+  show: boolean = false;
+  public submitted: boolean = false;
+  showDelete: boolean = true;
 
   constructor(private fb: FormBuilder, private qs: QuestionService, private rs: ReportsService) {
 
-    this.rs.getQuestionComments().subscribe((data) =>{
+    this.rs.getQuestionComments().subscribe((data) => {
       this.questionComments = data
     })
 
@@ -70,36 +70,32 @@ export class QResultQuotaComponent implements OnDestroy {
     return this.formModalFilter.controls;
   }
 
-  showQuestion(i: number,event: Event) {
+  showQuestion(i: number, event: Event):void {
     this.highlight(event)
     this.qs.setChartReportPagination(i + 1)
   }
 
-  toggleLeftCardHistory() {
+  toggleLeftCardHistory():void {
     this.getDateHistory()
     if (this.studyInfo['study']['type_of_survey'] == 2) {
       this.showHistoryIcon = true
     }
-    this.showHide=0
+    this.showHide = 0
     this.showHide = 2
   }
 
-  toggleLeftCardQuestion() {
-    this.showHide=0
+  toggleLeftCardQuestion():void {
+    this.showHide = 0
     this.showHide = 1
   }
 
-  toggleLeftCardComments() {
-    this.showHide=0
+  toggleLeftCardComments():void {
+    this.showHide = 0
     this.showHide = 3
   }
 
 
-
-
-
-
-  getDateHistory() {
+  getDateHistory():void {
     if (!this.historyIsChecked) {
       this.rs.getQuestionReportDateHistory(this.studyInfo['study']['id']).subscribe((data) => {
         this.historyList = data
@@ -108,12 +104,12 @@ export class QResultQuotaComponent implements OnDestroy {
     }
   }
 
-  filterHistoryByDatePreset(history: any, event: Event) {
+  filterHistoryByDatePreset(history: any, event: Event):void {
     this.highlight(event)
     this.filterHistoryId.emit(history.id)
   }
 
-  removeDate(h: any) {
+  removeDate(h: any):void {
     this.rs.removeChartHistory(h['id']).subscribe((data) => {
       this.historyIsChecked = false
       this.getDateHistory()
@@ -123,15 +119,13 @@ export class QResultQuotaComponent implements OnDestroy {
   ngOnDestroy() {
   }
 
-  historyModalData(h: any) {
+  historyModalData(h: any):void {
     console.log(h.history.titleHistory)
     this.m.titleDateHistoryTitle.patchValue(h.history.titleHistory)
     this.modalData = h
   }
 
-  submit(modalData: any) {
-
-
+  submit(modalData: any):void {
     this.m.study_id.patchValue(this.studyInfo['study']['id'])
     this.rs.setChartHistoryName(modalData['id'], this.formModalFilter.value).subscribe((data) => {
       this.historyIsChecked = false
@@ -140,29 +134,32 @@ export class QResultQuotaComponent implements OnDestroy {
     })
   }
 
-  removeAllHighlights() {
+  removeAllHighlights():void {
     const elements = document.querySelectorAll('.highlighter');
     elements.forEach(el => el.className = ''); // wipes all classes
   }
-  highlight(event: Event) {
+
+  highlight(event: Event):void {
     this.removeAllHighlights();
 
     const element = event.target as HTMLElement;
-    element.classList.toggle('highlighter',false);
+    element.classList.toggle('highlighter', false);
     element.classList.toggle('highlighter');
   }
 
-  private submitSuccess() {
+  private submitSuccess():void {
     this.submitted = true;
     setTimeout(() => {
       this.submitted = false;
     }, 4000);
   }
 
-  removeDateAlert() {
+  removeDateAlert():void {
     this.showDelete = false
   }
+
+  onResetChartDates():void {
+    this.removeAllHighlights()
+    this.filterHistoryId.emit('a07968d9-3c16-48af-a5b7-9cdffe80acp4')
+  }
 }
-
-
-
