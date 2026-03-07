@@ -260,15 +260,15 @@
 
               <h4 *ngIf="!noMatchFound" class="text-center blueHeading">Studies</h4>
 
-              <div *ngIf="!hideMenu" class="col-12 row mt-4 mr-4" style="width:600px;">
+              <div *ngIf="!hideMenu" class="col-12 row mt-4 mr-4" >
                 <div
-                  class="col-4 search-sm  mr-1 mb-1 align-top ">
-                  <input placeholder="Search..." id="study-searcher" (keyup)="search(getValue($event))">
+                  class="col-6 col-sm-4 col-md-4 col-lg-3 search-sm mb-1 align-top mr-2">
+                  <input placeholder="Search..." id="study-searcher" (keyup)="search(getValue($event))" class="col-12">
                 </div>
 
                 <div
-                  class="col-6  statusBar{{status}}">
-                  <select (ngModelChange)="onSearchStatus($event)" [(ngModel)]="status" class="form-select-sm"
+                  class="col-5 ml-3 statusBar{{status}} ml-1 ml-sm-0">
+                  <select (ngModelChange)="onSearchStatus($event)" [(ngModel)]="status" class="form-select-sm col-"
                           id="study-type-selector">
                     <option></option>
                     <option [value]="99">All</option>
@@ -288,13 +288,13 @@
             <div *ngIf="studies" class="col-8 offset-4 col-md-12 offset-md-0 col-xs-12 col-lg-12 offset-lg-0">
               <div class="card d-flex flex-row mb-3"
                    *ngFor="let study of studies | paginate: { itemsPerPage: 5, currentPage: p} index as i ">
-                <div class="d-flex flex-grow-1 min-width-zero">
+                <div class="d-flex flex-grow-1 min-width-zero" (click)="onNav(study)">
                   <div
                     class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                     <p class="list-item-heading mb-0 truncate w-80  w-sm-80  w-xs-100 mt-0">
                       <i class="simple-icon-refresh heading-icon"></i>
                       <span class="align-middle d-inline-block onNav"
-                            (click)="onNav(study)">{{study['study'].name}}</span>
+                            >{{study['study'].name}}</span>
                     </p>
                     <p *ngIf="study['study'].type_of_survey"></p>
                     <div *ngIf="study['study'].type_of_survey ==2; then qrBlock else studyBlock"></div>

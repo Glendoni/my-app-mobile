@@ -1,7 +1,7 @@
 <nav class="noprint navbar fixed-top">
-  <div class="d-flex align-items-center navbar-left offset-1">
+  <div class="d-flex align-items-center navbar-left offset-1 pt-3  mt-md-0">
 
-    <h4 class="ml-2 pl-xs-0 mb-xs-1 mt-xs-0    s-header__logo-img s-header__logo-img-shrink appName">
+    <h4 class="ml-2 pl-xs-0 mb-xs-1 mt-xs-0    s-header__logo-img s-header__logo-img-shrink appName pt-4" style="position: absolute;">
       <span>Peeker</span>
       <span
         class="study-title-initial">Pro </span>
@@ -19,7 +19,7 @@
 
   <a class="navbar-logo" href="Dashboard.Default.html">
     <span class="logo d-none d-xs-block"></span>
-    <span class="logo-mobile d-block d-xs-none"></span>
+    <span class="logo-mobile d-none d-xs-none"></span>
   </a>
 
   <div class="navbar-right">
@@ -114,13 +114,13 @@
 </div>
 
 <!--{{ surveyForm.value |json}}-->
-<div class="col-auto offset-0 offset-md-1 offset-lg-1 mt-5 pl-0 pl-md-5 show-spinner " style="top: 76px;">
+<div class="col-12 col-lg-9 offset-0 offset-md-0 offset-lg-1 mt-5 pl-0 pl-md-5 show-spinner ">
   <div class="container-fluid">
     <div class="row">
 
 
 
-      <div class="col-sm-12">
+      <div class="col-sm-12 mt-5">
 
 
         <!--  <h1 class="mb-1 mt-1"><span class="study-title-initial">L</span><span class="study-title">ime</span><span-->
@@ -137,7 +137,7 @@
 
           <form [formGroup]="surveyForm" (ngSubmit)="onUpdate()">
             <div class="row">
-              <div class="offset-sm-2 offset-md-0 col-sm-10 col-md-12 col-lg-6 mb-0">
+              <div class="offset-sm-2 offset-md-1 col-sm-10 col-md-11 col-lg-12 mb-0 mt-5">
 
                 <div class="card mb-4">
                   <div *ngIf=edit class="card-body">
@@ -280,7 +280,7 @@
                   </div>
                 </div>
               </div>
-              <div class="offset-sm-2 offset-md-0 col-sm-10 col-md-12 col-lg-6 mb-0">
+              <div class="offset-sm-2 offset-md-1 col-sm-10 col-md-11 col-lg-12 mb-0 mt-1 mt-md-2 mt-lg-2">
                 <div class="card mb-4">
                   <div class="card-body">
                     <h4 class="mb-4 blueHeading">Send Email Notifications:</h4>

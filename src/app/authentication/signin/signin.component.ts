@@ -29,6 +29,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
   public recoveryCodeValue: any = [];
   chk = ''
   private webLink: boolean = false;
+  public resetPasswordShow: boolean = false;
 
   constructor(public alertS: AlertService, private fb: FormBuilder, private qs: QuestionService, private route: ActivatedRoute,
               private router: Router, private authenticationService: AuthenticationService) {
@@ -52,7 +53,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['admindemo@peekerpro.com', Validators.required],
       password: ['_Password123!', Validators.required],
-      otp: [''],
+      otp: ['1099842588'], //necessary to prevent OTP showing on
       sword: [''],
       paymentLink: [''],
       recovery_code: ['', this.recoveryCodeValue]
@@ -78,6 +79,14 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
   }
 
+  onResetPassword(){
+    this.resetPasswordShow = true
+
+  }
+  onResetPasswordCancel(){
+    this.resetPasswordShow = false
+  }
+
   checkPaymentLink() {
     this.authenticationService.checkPaymentLink(this.id).subscribe((data: any) => {
       if (data['data']['createPasswordLogin']) {
@@ -100,7 +109,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
   onCheckOTPStatus() {
 
-
+console.log(+this.f.otp.value.length)
     if (+this.f.otp.value.length < 6) {
       this.otpRequired = true;
       return false;
@@ -113,8 +122,6 @@ export class SigninComponent extends BaseComponent implements OnInit {
   }
 
   onCheckRecoveryStatus() {
-
-
     if (+this.f.recovery_code.value.length < 10) {
       this.otpRecoveryCode = true
       return false;
@@ -127,7 +134,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
 
-
+    this.recoveryCodeValue = ''
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       this.submitted = true;
@@ -148,6 +155,10 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
         this.router.navigate([url_redirect])
 
+      }, (error: any) => {
+        console.log(error)
+
+      //  this.alertS.setAlert(error)
       });
     }
 
@@ -190,10 +201,12 @@ export class SigninComponent extends BaseComponent implements OnInit {
   }
 
   userRecoveryCode() {
+    this.f.recovery_code.setValue('')
     this.otpRecoveryCode = true
   }
 
   redirectToLogin(){
+    this.loginForm.reset();
     this.otpRequired = false
     this.otpRecoveryCode = false
     this.showSignInBtn = true;

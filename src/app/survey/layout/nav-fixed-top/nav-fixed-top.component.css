@@ -61,6 +61,8 @@
 }
 .fixed-top{
   top:0px;
+  bottom: 20px;
+  height:100px
 }
 .userDetails button{
   color: grey;

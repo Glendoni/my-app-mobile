@@ -101,11 +101,14 @@ p {
   padding: 12px;
 }
 .fixed-top{
-  top:0px;
+top:0px;
+  bottom: 20px;
+  height:100px
 }
 @media (max-width: 450px) {
   .fixed-top{
     top:47px;
+    height: 125px;
   }
   .appName{
     font-size: 14px;
