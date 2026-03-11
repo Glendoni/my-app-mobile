@@ -1,8 +1,8 @@
-<div class="col-sm-10 col-md-8  offset-sm-2 col-sm-10 col-md-8 offset-0 offset-xs-0">
+<div class="col-sm-10 col-md-8 offset-sm-1  col-md-11 col-lg-12 offset-0 offset-xs-0">
   <div class=" card mb-4">
     <form [formGroup]="google2Fa" (ngSubmit)="onSave()">
       <div class="card-header">
-        <h4 class="text-center blueHeading">Admin Account Authenticator</h4>
+        <h4 class="text-center blueHeading mt-5">Admin Account Authenticator</h4>
         <div class="form-check form-switch text-center mb-4 mt-2">
 
           <label class="form-check-label">Google Authenticator
@@ -25,8 +25,8 @@
         </ng-template>
       </div>
       <div class="flex-container">
-        <div class="card-body col-md-4">
-          <div class="col-md-4" *ngIf="otpValue">
+        <div class="card-body col-md-12">
+          <div class="col-md-12" *ngIf="otpValue">
 
 
 <div *ngIf="qrCodeSvg">

@@ -135,7 +135,7 @@
   <main>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mb-4 mt-0 ml-0 ml-md-0 pr-0">
+        <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-11 mt-0 ml-0 ml-md-0 pr-0">
           <!--          <h3 class="mb-1 mt-1 s-header__logo-img s-header__logo-img-shrink appName"><span>Peeker</span>-->
           <!--            <span-->
           <!--              class="study-title-initial">Pro</span><span-->
@@ -288,13 +288,13 @@
             <div *ngIf="studies" class="col-8 offset-4 col-md-12 offset-md-0 col-xs-12 col-lg-12 offset-lg-0">
               <div class="card d-flex flex-row mb-3"
                    *ngFor="let study of studies | paginate: { itemsPerPage: 5, currentPage: p} index as i ">
-                <div class="d-flex flex-grow-1 min-width-zero" (click)="onNav(study)">
+                <div class="d-flex flex-grow-1 min-width-zero">
                   <div
                     class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                     <p class="list-item-heading mb-0 truncate w-80  w-sm-80  w-xs-100 mt-0">
                       <i class="simple-icon-refresh heading-icon"></i>
                       <span class="align-middle d-inline-block onNav"
-                            >{{study['study'].name}}</span>
+                            (click)="onNav(study)">{{study['study'].name}}</span>
                     </p>
                     <p *ngIf="study['study'].type_of_survey"></p>
                     <div *ngIf="study['study'].type_of_survey ==2; then qrBlock else studyBlock"></div>
@@ -387,7 +387,7 @@
     </div>
 
       <div class="row"><!--        app-row-->
-        <div class="pr-2 pl-2">
+        <div class="pr-0 pr-md-2 pl-2">
           <app-participants *ngIf="showParticipants" [studyInfo]="study" (toggleQrCode)="onToggleQrCode($event)"
                             (toggleInvite)="onToggleInvite($event)"></app-participants>
           <app-qr-code *ngIf="showQrCode" [studyInfo]="study"></app-qr-code>

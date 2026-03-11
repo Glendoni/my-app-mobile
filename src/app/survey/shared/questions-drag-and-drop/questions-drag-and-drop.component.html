@@ -4,7 +4,7 @@
     class="simple-icon-cursor-move"></i> to sort order</p>
   <div *ngIf="todo.length" cdkDropList [cdkDropListConnectedTo]="['done']"
        [cdkDropListData]="todo"
-       (cdkDropListDropped)="drop($event)">
+       (cdkDropListDropped)="drop($event)" class="pr-md-4 pr-1">
     <div cdkDrag [cdkDragDisabled]="togglemove"
          *ngFor="let item of todo | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'first'} index as i">
 

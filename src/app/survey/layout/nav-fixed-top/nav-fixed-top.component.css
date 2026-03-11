@@ -72,7 +72,7 @@
   .fixed-top{
     top:0px;
   }
-  .appName{
+  .appName,.study-title-initial{
     font-size: 14px;
   }
 
