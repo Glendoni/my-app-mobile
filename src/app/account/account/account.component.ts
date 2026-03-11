@@ -271,4 +271,9 @@ export class AccountComponent {
     element.classList.toggle('highlightGreen', false);
     element.classList.toggle('highlightGreen');
   }
+
+  OnRedirect(){
+
+    window.location.href = 'https://www.peekerpro.com/auth?webLink=>'
+  }
 }

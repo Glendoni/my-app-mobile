@@ -1,21 +1,93 @@
 <div class="col-8  offset-4  col-sm-8 offset-sm-4 col-md-12 offset-md-0">
-  <div *ngIf="!createQuestion && paginationPages" class="text-right pr-2 pb-0 pr-3 pageNumInfo"> {{' Page: ' + p + ' of ' + paginationPages}}</div>
-  <p *ngIf="!createQuestion" class="pb-0 mb-1">Click <i class="bi bi-chevron-down"></i> to edit element | Drag <i
-    class="simple-icon-cursor-move"></i> to sort order</p>
-  <div *ngIf="todo.length" cdkDropList [cdkDropListConnectedTo]="['done']"
+  <div [class.spinner-border]="spinner" role="status"></div>
+  <div *ngIf="!createQuestion && paginationPages" class="text-right pr-2 pb-0 pr-3 pageNumInfo">
+    <form [formGroup]="pageItem">
+      <select formControlName="pageItems" class="form-select-sm" style="
+    width: 60px;
+" (change)="itemNumber()" >
+        <option value="100">All</option>
+        <option value="5" >5</option>
+        <option value="10" >10</option>
+        <option value="200" >List View</option>
+      </select>
+    </form>
+
+    <div *ngIf="!listView">{{' Page: ' + p + ' of ' + paginationPages}}</div></div>
+  <h4 *ngIf="listView" class="text-center blueHeading" >List View </h4>
+<div class="row mb-1">
+ <div class="col-6">
+  <p *ngIf="!createQuestion" class="pb-0 mb-1">
+    <span *ngIf="!listView"  >Click
+      <i class="bi bi-chevron-down"></i>
+      to edit | Click & Drag to
+      <!--       <i  class="bi bi-list"></i>-->
+    </span>
+
+    <i *ngIf="!listView" class="simple-icon-cursor-move">
+    </i> sort order <i *ngIf="listView" class="bi bi-arrow-down-up"></i>
+  </p>
+ </div>
+  <div class="col-6">
+  <div *ngIf="listView" class="form-check">
+    <div  class="form-check form-switch text-right" >
+      <!--        <pre>{{a|json}}</pre>-->
+
+      <input class="form-check-input"
+             type="checkbox"
+             role="switch"
+             value=""
+             id="flexSwitchCheckChecked"
+             checked="{{!toggleDragAndDrop?'':'checked'}}"
+             (click)="onToggleMovex(toggleDragAndDrop)" >
+      <label class="form-check-label" for="flexSwitchCheckChecked">Drag and Drop (<strong>{{toggleDragAndDrop?'on':'off'}}</strong>)</label>
+    </div>
+    <!--      <input class="form-check form-switch" type="checkbox" [(ngModel)]="a.checked"-->
+    <!--             (change)="getSelectedValue(a.checked,a.name,a.id,i,a )"  role="switch" id="flexSwitchCheckChecked"  data-toggle="switch" checked>-->
+    <!--      <label class="form-check-label" for="flexSwitchCheckChecked">{{a.name}}</label>-->
+  </div>
+  </div>
+</div>
+  <div *ngIf="todo.length && !listView" cdkDropList [cdkDropListConnectedTo]="['done']"
        [cdkDropListData]="todo"
-       (cdkDropListDropped)="drop($event)" class="pr-md-4 pr-1">
+       (cdkDropListDropped)="drop($event)">
+
     <div cdkDrag [cdkDragDisabled]="togglemove"
-         *ngFor="let item of todo | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'first'} index as i">
+         *ngFor="let item of todo | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'first', totalItems:datalength} index as i">
 
       <app-edit-question [question]="item"
                          [studyInfo]="studyInfo"
-                         [idx]="i"
-                         (toggleDragMove)="onToggleMove($event)">
+                         [idx]="i+(p*pageItems-pageItems)"
+                         (toggleDragMove)="onToggleMove($event)"
+                         (toggleClickDragMove)="onToggleClickMove($event)"
+      >
       </app-edit-question>
     </div>
-    <pagination-controls (pageChange)="p = $event" id="first" class="float-right"></pagination-controls>
+    <pagination-controls (pageChange)="p = $event" id="first" class="float-right pills"></pagination-controls>
   </div>
+
+  <div *ngIf="todo.length && listView" cdkDropList [cdkDropListConnectedTo]="['done']"
+       [cdkDropListData]="todo"
+       (cdkDropListDropped)="drop($event)" class="overflow-y-scroll listView p-3">
+
+
+    <div cdkDrag [cdkDragDisabled]="togglemove" *ngFor="let item of todo  index as i">
+      <div  class="questionListView">
+        <span>
+        {{i+(p*pageItems-pageItems)+1}}
+
+          <i class="d-inline" class="bi bi-list"></i>
+              </span>
+        <i *ngIf="item.type == 'textarea'" class="bi bi-textarea-t"></i>
+        <i *ngIf="item.pagebreak" class="bi bi-file-earmark-break">
+
+        </i>
+       <span>{{item.label}}</span>
+      </div>
+
+    </div>
+  </div>
+
+
   <div *ngIf="createQuestion">
 
     <app-add-question [question]="[]"
@@ -26,4 +98,6 @@
 
   </div>
 </div>
+
+
 

@@ -20,6 +20,7 @@ export class EditQuestionComponent implements OnInit {
   @Output() addQuestion = new EventEmitter<any>();
   @Output() triggerMenuRefresh = new EventEmitter<any>();
   @Output() toggleDragMove = new EventEmitter<any>();
+  @Output() toggleClickDragMove = new EventEmitter<any>();
 
   filedTypeMenus;
   selectedFieldType: any
@@ -181,6 +182,9 @@ this.selectedFieldType = question.type
 
   onToggleMoveCh() {
     this.toggleDragMove.emit(false);
+  }
+  onToggleClickMoveCh() {
+    this.toggleClickDragMove.emit(false);
   }
 
   onToggleStopCh() {

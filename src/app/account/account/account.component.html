@@ -35,7 +35,7 @@
 
     </div>
 
-    <div class="user d-inline-block">
+    <div class="user d-inline-block pr-4 pt-1 ">
       <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
         <span class="name">{{userDetails}}  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
@@ -94,7 +94,8 @@
             </a>
           </li>
           <li *ngIf="!create"  class="d-none d-sm-none d-md-none d-lg-block">
-            <a class="text-decoration-none" href="https://www.peekerpro.com/auth?webLink=>">
+
+            <a class="text-decoration-none" data-toggle="modal" data-target="#exampleModal">
               <i class="bi bi-person-fill-lock"></i>
               <span  >Upgrades</span>
             </a>
@@ -363,6 +364,37 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <div   class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            Upgrades
+          </div>
+
+<div class="modal-body text-white">
+  <h6 class="text-center">All upgrades must be completed on our web portal</h6>
+  <p class="text-center mt-4 mb-3">Click continue to redirect to the web portal</p>
+  <div class="text-center">
+  <button class="btn btn-secondary-gradient text-decoration-none text-white" data-dismiss="modal"  (click)="OnRedirect()">
+
+    <span  >Continue</span>
+  </button>
+    <button class="ml-3 btn btn-secondary-gradient text-decoration-none text-white" data-dismiss="modal">
+
+    <span  >Close</span>
+  </button>
+  </div>
+        </div>
+
+
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

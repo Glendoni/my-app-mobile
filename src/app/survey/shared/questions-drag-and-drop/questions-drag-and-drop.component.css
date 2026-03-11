@@ -2,3 +2,46 @@
   font-size: 0.9em;
   font-weight: 100;
 }
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgb(107, 114, 122);
+  box-shadow: 0 0 1px rgb(227, 227, 227);
+}
+.listView{
+  max-height: 600px;
+  background: #f6f6f6;
+  padding-bottom: 50px;
+  padding-left: 5px;
+}
+.questionListView{
+  background: #e1e1e1;
+  color: #3f4a72;
+  padding: 3px 2px 3px 1px;
+  margin: 0px;
+  font-size: 1em;
+  margin-bottom: 3px;
+}
+
+.questionListView .bi-file-earmark-break{
+  color: #e0e0e0;
+  background: #0a58ca;
+}
+.questionListView span{
+  background: #ffffff;
+  padding: 5px;
+  margin-right: 4px;
+  color: black;
+}
+.spinner-border{
+  margin-left: 46%;
+  margin-top: 30px;
+}
+.pills .polite{
+  background: red !important;
+}

@@ -43,7 +43,7 @@ p {
 }
 .study-title-initial{
   color:#fe3f408a;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   /* line-height: 100px; */
@@ -93,7 +93,7 @@ p {
   color: #b0b0b0 ;
 }
 .appName{
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   color: rgb(35 100 145);
@@ -107,13 +107,21 @@ top:0px;
 }
 @media (max-width: 450px) {
   .fixed-top{
-    top:47px;
+    top:0px;
     height: 125px;
   }
   .appName{
-    font-size: 14px;
+    /*font-size: 14px;*/
   }
 
+}
+
+
+@media (max-width: 767px) {
+  .navbar .navbar-right .user {
+    margin-right: 15px;
+    width: 100%;
+  }
 }
 
 @media print {
@@ -121,6 +129,7 @@ top:0px;
     visibility: hidden;
   }
 }
+
 .header-area .main-nav .logo h4 {
   font-size: 24px;
   font-weight: 700;

@@ -7,6 +7,7 @@
           {{idx + 1}}
           </span>
         {{question.label}}
+
       </div>
     </div>
     <div class="custom-control custom-checkbox pl-1 text-right pr-4 pt-4">
@@ -16,20 +17,23 @@
       <button *ngIf="question['type']=='select'" class="btn btn-outline-theme-3 icon-button view-button" title="Dropdown/Select">
         <i class="bi bi-menu-button-wide-fill"></i>
       </button>
-      <button *ngIf="question['type']=='number'" class="btn btn-outline-theme-3 icon-button view-button">
+      <button *ngIf="question['type']=='radio'" class="btn btn-outline-theme-3 icon-button view-button" title="Radio">
+        <i class="bi bi-check2-circle"></i>
+      </button>
+      <button *ngIf="question['type']=='number'" class="btn btn-outline-theme-3 icon-button view-button" title="Number">
         <i class="bi bi-123"></i>
       </button>
-      <button *ngIf="question['type']=='textarea'" class="btn btn-outline-theme-3 icon-button view-button">
+      <button *ngIf="question['type']=='textarea'" class="btn btn-outline-theme-3 icon-button view-button" title="Editor">
         <i class="bi bi-textarea-t"></i>
       </button>
-      <button *ngIf="question['type']=='multivalued'" class="btn btn-outline-theme-3 icon-button view-button">
-        <i class="bi bi-check2-square"></i>
+      <button *ngIf="question['type']=='multivalued'" class="btn btn-outline-theme-3 icon-button view-button" title="Multi-Value">
+        <i class="bi bi-list-check"></i>
       </button>
-      <button *ngIf="orderForm.value.pagebreak" class="btn btn-outline-theme-3 icon-button view-button pageBreakBackgroundColor">
+      <button *ngIf="orderForm.value.pagebreak" class="btn btn-outline-theme-3 icon-button view-button pageBreakBackgroundColor" title="Page-break">
         <i class="bi bi-file-earmark-break"></i>
       </button>
       <button *ngIf="question['otherField'] && question['type'] !='textarea'"
-              class="btn btn-outline-theme-3 icon-button view-button">
+              class="btn btn-outline-theme-3 icon-button view-button" title="Other Field Is Set">
         <i class="simple-icon-eye"></i>
       </button>
 
@@ -42,13 +46,13 @@
       <!--        <i  *ngIf="question['type']=='radio'" class="bi bi-check2-circle"></i>-->
       <!--        <i  *ngIf="question['type']=='number'" class="bi bi-list-ol"></i>-->
       <!--      </button>-->
-      <button (mousedown)="onToggleMoveCh()" (mouseleave)="onToggleStopCh()" (mouseup)="onToggleStopCh()"
-              (click)="onToggleMoveCh()" class="btn btn-outline-theme-3 icon-button view-button">
+      <button (mousedown)="onToggleMoveCh()" (mouseleave)="onToggleStopCh()" (mouseup)="onToggleStopCh()" title="Move"
+              (click)="onToggleClickMoveCh()" class="btn btn-outline-theme-3 icon-button view-button">
         <!--        <i class="simple-icon-eye"></i>-->
         <i class="simple-icon-cursor-move"></i>
       </button>
       <button
-        class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate"
+        class="btn btn-outline-theme-3 icon-button rotate-icon-click rotate" title="Toggle Edit"
         type="button" data-toggle="collapse" [attr.data-target]="'#q' + question.id"
         aria-expanded="true" aria-controls="q1">
         <i class="simple-icon-arrow-down with-rotate-icon"></i>
@@ -59,17 +63,17 @@
     <div class="question-collapse collapse" id="q{{question.id}}">
       <div class="card-body pt-0">
         <div class="edit-mode">
-          <p>Note: To remove question delete question options or inserted values from field </p>
+
           <div>
-            <div class="form-check mb-4">
+            <div class="form-check mb-3">
               <input formControlName="pagebreak" class="form-check-input" type="checkbox" value=""
                      id="flexCheckDefault">
               <label class="form-check-label" for="flexCheckDefault">
-                 Insert Page-Break
+                Insert Page-Break
               </label>
             </div>
             <div class="form-floating form-group mb-4">
-<!--              <label>Question</label>-->
+              <!--              <label>Question</label>-->
               <textarea formControlName="question" class="form-control" id="question" aria-label="Question"></textarea>
               <label for="question">Question</label>
               <div *ngIf="f.question.invalid && (f.question.dirty || f.question.touched)"
