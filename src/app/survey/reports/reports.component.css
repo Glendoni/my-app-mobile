@@ -21,3 +21,7 @@
 .questionTitle{
   font-size: 0.8em;
 }
+/*Hides pagination links*/
+/*.hide-page-numbers /deep/ .ngx-pagination li:not(.pagination-previous):not(.pagination-next) {*/
+/*  display: none;*/
+/*}*/

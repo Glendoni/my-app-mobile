@@ -1,66 +1,84 @@
-<div class="row text-center">
-  <div class="form-check form-switch col-sm-6">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-           (click)="onShowHideComments()" [checked]="showHideComments">
-    <label class="form-check-label" for="flexSwitchCheckChecked">Comments: {{showHideComments?' On': 'Off'}} </label>
+<div class="row ">
+
+  <div class="col-6 col-md-4 offset-0 offset-md-2 "
+       [class.col-12]="disableFilterByDate"
+       [class.offset-lg-2]="!disableFilterByDate"
+       [class.offset-lg-4]="disableFilterByDate"
+       [class.offset-md-4]="disableFilterByDate"
+  >
+
+    <div class="form-check form-switch text-center pl-2 pl-md-0 ">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+             (click)="onShowHideComments()" [checked]="showHideComments">
+      <label class="form-check-label"
+             for="flexSwitchCheckChecked">Comments: {{showHideComments ? ' On' : 'Off'}} </label>
+    </div>
   </div>
-  <div *ngIf="!disableFilterByDate" class="col-sm-5 " >
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox"   role="switch" (click)="showDateRange()" [disabled]="disableFilterByDate"
-             id="flexSwitchCheckDefault" [checked]="showDateRangeBool" />
-      <label class="form-check-label" for="flexSwitchCheckDefault" >Filter By Date</label>
+  <div *ngIf="!disableFilterByDate" class="col-6 col-md-4 ">
+    <div class="form-check form-switch text-center">
+      <input class="form-check-input" type="checkbox" role="switch" (click)="showDateRange()"
+             [disabled]="disableFilterByDate"
+             id="flexSwitchCheckDefault" [checked]="showDateRangeBool"/>
+      <label class="form-check-label" for="flexSwitchCheckDefault">Filter By Date</label>
     </div>
   </div>
 </div>
 
 <div *ngIf="items">
-<form [formGroup]="formFilter" (ngSubmit)="submit()">
-  <div *ngIf="showDateRangeBool && !disableFilterByDate">
-    <div class="row justify-content-center mt-4">
-
-      <div class="col-lg-3 col-sm-3">
-        <label for="startDate">Start</label>
-        <input id="startDate" formControlName="startDateRange" class="form-control" type="date"/>
-        <span id="startDateSelected"></span>
-      </div>
-      <div class="col-lg-3 col-sm-3">
-        <label for="endDate">End</label>
-        <input id="endDate" formControlName="endDateRange" class="form-control" type="date"/>
-        <span id="endDateSelected"></span>
-      </div>
-          <div class="col-lg-3 col-sm-3 resetBtn">
-            <p (click)="onStoreHistory()" title="Click to also save snapshot of dates">
+  <form [formGroup]="formFilter" (ngSubmit)="submit()">
+    <div *ngIf="showDateRangeBool && !disableFilterByDate">
+      <div class="row justify-content-center mt-4 ">
+        <div class="col-5 col-md-4 col-lg-3 offset-0 offset-md-0">
+          <label for="startDate">Start</label>
+          <input id="startDate" formControlName="startDateRange" class="form-control" type="date"/>
+          <span id="startDateSelected"></span>
+        </div>
+        <div class="col-5  col-md-4 col-lg-3">
+          <label for="endDate">End</label>
+          <input id="endDate" formControlName="endDateRange" class="form-control" type="date"/>
+          <span id="endDateSelected"></span>
+          <p (click)="onStoreHistory()" title="Click to also save snapshot of dates" class="d-none d-xs-none d-sm-none d-md-block d-lg-block">
                 <span [class.snapIcon]="this.formFilter.value.storeHistory">
-                  <i class="bi bi-record-circle-fill snapshotIcon" ></i>
-                </span> Record Snapshot </p>
-            <p  (click)="onDateRangeReset()" title="Reset to config dates">Reset<i class="bi bi-arrow-return-left"></i></p>
-
-
-
-
-
-            </div>
-
-    </div>
-  </div>
-  <div *ngIf="studyInfo.study.type_of_survey==1" class="row">
-    <p class="mb-2 mt-5 fw-medium fw-medium">TOGGLE CATEGORY LIST</p>
-<!--{{items |json}}-->
-
-    <div  class="mb-3 checkboxes" formArrayName="checkboxes">
-      <div *ngFor="let checkbox of items; let i = index">
-        <label>
-          <input type="checkbox" [formControlName]="i"/>
-          {{ items[i].name }}
-        </label>
+                  <br><i class="bi bi-record-circle-fill snapshotIcon"></i>
+                Record Snapshot </span>
+            <span (click)="onDateRangeReset()" title="Reset to config dates">Reset<i
+              class="bi bi-arrow-return-left"></i></span>
+          </p>
+        </div>
+<!--        <div class="d-none d-md-block col-12 resetBtn mt-4 text-right">-->
+<!--          <p (click)="onStoreHistory()" title="Click to also save snapshot of dates ">-->
+<!--                <span [class.snapIcon]="this.formFilter.value.storeHistory">-->
+<!--                  <i class="bi bi-record-circle-fill snapshotIcon"></i>-->
+<!--                Record Snapshot </span>-->
+<!--            <span (click)="onDateRangeReset()" title="Reset to config dates">Reset<i-->
+<!--              class="bi bi-arrow-return-left"></i></span>-->
+<!--          </p>-->
+<!--        </div>-->
       </div>
     </div>
+    <div *ngIf="studyInfo.study.type_of_survey==1" class=" ">
+      <p class="mb-2 mt-4 fw-medium fw-medium text-center">SHOW/HIDE COLUMNS</p>
+      <!--{{items |json}}-->
+      <div class="col-10 offset-2">
+<div class="row">
+
+      <div class="mb-3 checkboxes " formArrayName="checkboxes">
+        <div *ngFor="let checkbox of items; let i = index" class="col-auto">
+          <label>
+            <input type="checkbox" [formControlName]="i"/>
+            {{ items[i].name }}
+          </label>
+        </div>
+      </div>
   </div>
-  <div class="mt-5 mb-3 text-center">
-    <p *ngIf="missingSelectionNotice"><strong>Filter must contain at least one checked category!</strong></p>
-  <button type="submit" class="btn btn-secondary btn-sm">Save Filter </button> or
-  <button type="button" class="btn btn-secondary btn-sm" (click)="onReturnToChart()"> Return to Chart </button>
-  </div>
-</form>
+</div>
+    </div>
+    <div class="mt-5 mb-3 text-center">
+      <p *ngIf="missingSelectionNotice"><strong>Filter must contain at least one checked category!</strong></p>
+      <button type="submit" class="btn btn-secondary btn-sm">Save Filter</button>
+      or
+      <button type="button" class="btn btn-secondary btn-sm" (click)="onReturnToChart()"> Return to Chart</button>
+    </div>
+  </form>
 </div>
 
