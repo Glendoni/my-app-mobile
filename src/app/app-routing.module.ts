@@ -19,6 +19,9 @@ const routes: Routes = [
     path: 'test', component: TestComponent
   },
   {
+    path: 'reset-password-checker', loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+  },
+  {
     path: 'link-payment-checker', loadChildren: () => import('./link-payment-checker/link-payment-checker.module').then(m => m.LinkPaymentCheckerModule),
   },
   {path: 'reset-password', component: ResetPasswordComponent},

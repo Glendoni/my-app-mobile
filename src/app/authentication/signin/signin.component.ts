@@ -53,11 +53,13 @@ export class SigninComponent extends BaseComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      otp: ['1099842588'], //necessary to prevent OTP showing on
+      otp: [''],
       sword: [''],
       paymentLink: [''],
       recovery_code: ['', this.recoveryCodeValue]
     });
+
+
     this.route.queryParams.subscribe(params => {
       if (params['link_id']) {
         this.id = params['link_id']
@@ -109,7 +111,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
   onCheckOTPStatus() {
 
-console.log(+this.f.otp.value.length)
+
     if (+this.f.otp.value.length < 6) {
       this.otpRequired = true;
       return false;
@@ -158,7 +160,7 @@ console.log(+this.f.otp.value.length)
       }, (error: any) => {
         console.log(error)
 
-      //  this.alertS.setAlert(error)
+        //  this.alertS.setAlert(error)
       });
     }
 
@@ -211,5 +213,14 @@ console.log(+this.f.otp.value.length)
     this.otpRecoveryCode = false
     this.showSignInBtn = true;
     this.showEmail = true;
+  }
+
+  redirectToIosApp(url:string){
+    console.log('I was clicked')
+    // window.location.replace("https://apps.apple.com/app/id6752488386");
+
+    window.open(url, "_blank");
+    // this.router.navigate(['https://apps.apple.com/app/id6752488386'])
+
   }
 }

@@ -26,7 +26,9 @@ export class AuthenticationService {
     this.twoFactorRequired = new BehaviorSubject<boolean>(false);
     this.envSelector()
   }
-
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   setTwoFactorRequired(newValue: any): void {
     this.twoFactorRequired.next(newValue);
@@ -35,6 +37,46 @@ export class AuthenticationService {
   getTwoFactorRequired(): Observable<boolean> {
     return this.twoFactorRequired.asObservable();
   }
+
+  forgottenPassword(email: string): any {
+    console.log(email)
+    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('plan');
+    return this.http.post(this.url + '/api/forget-password-mobile', email, this.httpOptions)
+      .pipe(
+        catchError((error: any) => {
+          console.log(error['error']['data']['email'][0])
+          // this.alertService.setAlert(error['error']['data']['email'][0]);
+          return throwError('Something went wrong');
+        }),
+        map((res: any) => {
+          return res
+        }));
+  }
+
+  resetPassword(valueArr: any): any {
+
+    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('plan');
+    return this.http.post(this.url + '/api/reset-admin-password', valueArr, this.httpOptions)
+      .pipe(
+        catchError((error: any) => {
+          this.alertService.setAlert(error['error']['data']);
+          return throwError('Something went wrong');
+        }),
+        map((res: any) => {
+          return res
+        }));
+  }
+
+  resetPasswordTokenChecker(linkId: string) {
+    return this.http.get(this.url + '/api/reset-password-token-confirmation/' + linkId)
+      .pipe(map((res: any) => {
+        return res;
+
+      }))
+  }
+
 
   login(email: string, password: string, otp: bigint,  recovery_code:string): any {
   //console.log('chaps')
@@ -48,6 +90,7 @@ export class AuthenticationService {
         'client': 'administration'
       })
     };
+
 
     return this.http.post(this.url + '/api/login', JSON.stringify(
       {email: email, password: password, otp: otp, recovery_code: recovery_code}), httpOptions)

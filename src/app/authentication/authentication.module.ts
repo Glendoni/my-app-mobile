@@ -14,6 +14,7 @@ import {ProfileComponent} from "./user/profile/profile.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LinkCheckerComponent } from './link-checker/link-checker.component';
 import {ShareModule} from "../share/share.module";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -33,12 +34,13 @@ import {ShareModule} from "../share/share.module";
     exports: [
         ProfileComponent
     ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AuthenticationRoutingModule,
-      ShareModule
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AuthenticationRoutingModule,
+    ShareModule,
+    TranslateModule
+  ]
 })
 export class AuthenticationModule { }

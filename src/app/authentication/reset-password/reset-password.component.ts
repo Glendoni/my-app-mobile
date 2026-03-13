@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../_services";
@@ -10,8 +10,9 @@ import {AuthenticationService} from "../../_services";
 })
 export class ResetPasswordComponent implements OnInit{
 
-
+  @Output() dismiss = new EventEmitter;
   public resetForm: any = FormGroup
+  public resetFormId: any = FormGroup
   passwordsMatching:boolean = false;
   submitted:boolean = false;
   isConfirmPasswordDirty:boolean  = false;
@@ -47,6 +48,8 @@ export class ResetPasswordComponent implements OnInit{
       }
     }
   }
+  public loading: boolean = false;
+  public resetPasswordShow: boolean =false;
 
   constructor(private fb: FormBuilder,protected route: ActivatedRoute,
               private authenticationService: AuthenticationService,
@@ -55,16 +58,24 @@ export class ResetPasswordComponent implements OnInit{
 
   ngOnInit() {
     this.resetForm = this.fb.group({
-        password: this.password,
-        confirmPassword: this.confirmPassword,
+        email: ['', Validators.required],
       },
       {
-        validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      });
+
+    this.resetFormId = this.fb.group({
+        resetId: ['', Validators.required],
+      },
+      {
       });
   }
 
   get f() {
     return this.resetForm.controls;
+  }
+
+  get frid() {
+    return this.resetFormId.controls;
   }
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
@@ -90,9 +101,29 @@ export class ResetPasswordComponent implements OnInit{
 
   onSubmit(){
     if (this.resetForm.invalid) {
+      console.log('form is invalid')
       this.submitted = true;
       return;
     }
+    console.log('form is valid')
     console.log(this.resetForm.value)
-    }
+
+    this.loading = true;
+    this.resetPasswordShow = true
+    this.authenticationService.forgottenPassword(this.resetForm.value).subscribe((data: any) => {
+
+      console.log(data['data'])
+      //   this.resetPasswordShow = true
+    });
+    console.log(this.resetForm.invalid)
+    console.log(this.resetForm.value)
+  }
+
+  onResetPasswordCancel() {
+    this.dismiss.emit(true)
+  }
+
+  onSubmitIdChecker() {
+    console.log(this.resetFormId.value)
+  }
 }
