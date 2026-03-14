@@ -2,20 +2,21 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../_services";
+import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit {
 
   @Output() dismiss = new EventEmitter;
   public resetForm: any = FormGroup
   public resetFormId: any = FormGroup
-  passwordsMatching:boolean = false;
-  submitted:boolean = false;
-  isConfirmPasswordDirty:boolean  = false;
+  passwordsMatching: boolean = false;
+  submitted: boolean = false;
+  isConfirmPasswordDirty: boolean = false;
   confirmPasswordClass = 'form-control';
   password = new FormControl('_Password123!', [
     (c: AbstractControl) => Validators.required(c),
@@ -49,9 +50,11 @@ export class ResetPasswordComponent implements OnInit{
     }
   }
   public loading: boolean = false;
-  public resetPasswordShow: boolean =false;
+  public resetPasswordShow: boolean = false;
+  public codeIdInvalid: string = '';
+  public forbidden: string = '';
 
-  constructor(private fb: FormBuilder,protected route: ActivatedRoute,
+  constructor(private fb: FormBuilder, protected route: ActivatedRoute,
               private authenticationService: AuthenticationService,
               private router: Router) {
   }
@@ -60,14 +63,12 @@ export class ResetPasswordComponent implements OnInit{
     this.resetForm = this.fb.group({
         email: ['', Validators.required],
       },
-      {
-      });
+      {});
 
     this.resetFormId = this.fb.group({
         resetId: ['', Validators.required],
       },
-      {
-      });
+      {});
   }
 
   get f() {
@@ -89,34 +90,38 @@ export class ResetPasswordComponent implements OnInit{
       //   return;
       // }
       if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirmedValidator: true });
+        matchingControl.setErrors({confirmedValidator: true});
       } else {
         matchingControl.setErrors(null);
       }
     };
   }
-  submit(event:any){
-    console.log(event)
+
+  submit(event: any) {
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.resetForm.invalid) {
-      console.log('form is invalid')
       this.submitted = true;
       return;
     }
-    console.log('form is valid')
-    console.log(this.resetForm.value)
 
-    this.loading = true;
-    this.resetPasswordShow = true
     this.authenticationService.forgottenPassword(this.resetForm.value).subscribe((data: any) => {
-
-      console.log(data['data'])
       //   this.resetPasswordShow = true
+      this.loading = true;
+      this.resetPasswordShow = true
+
+    }, (error: any) => {
+      if (error.error.data.error) {
+        this.forbidden = error.error.data.error
+      }
+
+      if (error.error.data.email[0]) {
+        this.forbidden = error.error.data.email
+      }
+
+      console.log(error.error.data.error)
     });
-    console.log(this.resetForm.invalid)
-    console.log(this.resetForm.value)
   }
 
   onResetPasswordCancel() {
@@ -124,6 +129,15 @@ export class ResetPasswordComponent implements OnInit{
   }
 
   onSubmitIdChecker() {
-    console.log(this.resetFormId.value)
+    this.submitted = true
+    if (!this.resetFormId.valid) {
+      return;
+    }
+    this.authenticationService.resetPasswordTokenChecker(this.resetFormId.value['resetId']).subscribe((data) => {
+      window.open(data.data.host, "_parent");
+    }, (error) => {
+      this.codeIdInvalid = error.error.data['error']
+      console.log(error)
+    })
   }
 }

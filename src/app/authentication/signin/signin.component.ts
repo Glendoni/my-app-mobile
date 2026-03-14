@@ -53,7 +53,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      otp: [''],
+      otp: ['1099842588'],
       sword: [''],
       paymentLink: [''],
       recovery_code: ['', this.recoveryCodeValue]

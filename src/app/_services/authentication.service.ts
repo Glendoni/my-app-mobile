@@ -43,12 +43,12 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     // localStorage.removeItem('plan');
     return this.http.post(this.url + '/api/forget-password-mobile', email, this.httpOptions)
-      .pipe(
-        catchError((error: any) => {
-          console.log(error['error']['data']['email'][0])
-          // this.alertService.setAlert(error['error']['data']['email'][0]);
-          return throwError('Something went wrong');
-        }),
+     .pipe(
+        // catchError((error: any) => {
+        //   console.log(error['error']['data']['email'][0])
+        //   // this.alertService.setAlert(error['error']['data']['email'][0]);
+        //   return throwError('Something went wrong');
+        // }),
         map((res: any) => {
           return res
         }));
