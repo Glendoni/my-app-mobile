@@ -50,7 +50,7 @@
   filter: brightness(3) saturate(100%);
 }
 .login-section{
-  border-left: solid thin grey;
+  /*border-left: solid thin grey;*/
 }
 
 .auth-links span{
@@ -85,4 +85,5 @@
 }
 .a-link-grey{
   color: #b8babb;
+  font-size: 12px;
 }
