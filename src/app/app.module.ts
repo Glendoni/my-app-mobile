@@ -12,6 +12,7 @@ import { AuthenticationService, UserService} from './_services';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {httpInterceptorProviders} from './_helpers';
+import {ShareModule} from "../app/share/share.module";
 
 import { TestComponent } from './test/test.component';
 
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient){
     AdminModule,
     CommunityModule,
     NgChartsModule,
+    ShareModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

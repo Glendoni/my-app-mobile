@@ -53,13 +53,17 @@ export class ResetPasswordComponent implements OnInit {
   public resetPasswordShow: boolean = false;
   public codeIdInvalid: string = '';
   public forbidden: string = '';
-
+  public disableResetButton: boolean = false;
+  public disableResetCodeButton: boolean = false;
   constructor(private fb: FormBuilder, protected route: ActivatedRoute,
               private authenticationService: AuthenticationService,
               private router: Router) {
   }
 
   ngOnInit() {
+
+
+
     this.resetForm = this.fb.group({
         email: ['', Validators.required],
       },
@@ -101,10 +105,13 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+
+
     if (this.resetForm.invalid) {
       this.submitted = true;
       return;
     }
+this.disableResetButton = true
 
     this.authenticationService.forgottenPassword(this.resetForm.value).subscribe((data: any) => {
       //   this.resetPasswordShow = true
@@ -118,6 +125,7 @@ export class ResetPasswordComponent implements OnInit {
 
       if (error.error.data.email[0]) {
         this.forbidden = error.error.data.email
+        this.disableResetButton = true
       }
 
       console.log(error.error.data.error)
@@ -133,11 +141,12 @@ export class ResetPasswordComponent implements OnInit {
     if (!this.resetFormId.valid) {
       return;
     }
+    this.disableResetCodeButton = true
     this.authenticationService.resetPasswordTokenChecker(this.resetFormId.value['resetId']).subscribe((data) => {
-      window.open(data.data.host, "_parent");
+       window.open("/../../reset-password-checker?id="+data.data.host, "_self");
     }, (error) => {
+      this.disableResetCodeButton = false
       this.codeIdInvalid = error.error.data['error']
-      console.log(error)
     })
   }
 }

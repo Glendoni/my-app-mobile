@@ -30,6 +30,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
   chk = ''
   private webLink: boolean = false;
   public resetPasswordShow: boolean = false;
+  public terms: boolean =false;
 
   constructor(public alertS: AlertService, private fb: FormBuilder, private qs: QuestionService, private route: ActivatedRoute,
               private router: Router, private authenticationService: AuthenticationService) {
@@ -222,5 +223,9 @@ export class SigninComponent extends BaseComponent implements OnInit {
     window.open(url, "_blank");
     // this.router.navigate(['https://apps.apple.com/app/id6752488386'])
 
+  }
+
+  tAndC() {
+    this.terms = true
   }
 }

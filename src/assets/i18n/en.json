@@ -7,6 +7,15 @@
     "signIn" : "Sign In",
     "signOut" : "Log Out",
     "myAccount" : "My Account"
+  },
+  "forms": {
+    "login": "Login",
+    "forgotten password": "Forgotten Password?",
+    "openApp": "Open In App",
+    "reset Forgotten Password": "Reset forgotten password",
+    "cancel": "cancel",
+    "Accept Invitation": "Accept Invitation",
+    "contact-us": "Send Message"
   }
 }
 
