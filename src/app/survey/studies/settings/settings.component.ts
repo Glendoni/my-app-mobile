@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   public replicateForm: any = FormGroup
   showCancelButton = false;
   disabled: boolean = false;
+  disableTypeOfSurvey: boolean = false;
   state = false;
   url: string = ''
   isLocal: boolean = false
@@ -34,10 +35,10 @@ export class SettingsComponent implements OnInit {
   }
 
   sectionTitle: any;
-  nrSelect:any
-  nrSelected:any
-  nrSelectType:any
-  City: any = ['Technology', 'Sports', 'Politics', 'Education', 'Business','Hospitality','Business', 'Medical', 'Social', 'Transportation', 'Property','Music', 'Travel', 'Food', 'Recruitment','Games','Television']
+  nrSelect: any
+  nrSelected: any
+  nrSelectType: any
+  City: any = ['Technology', 'Sports', 'Politics', 'Retail', 'Education', 'Business', 'Hospitality', 'Business', 'Medical', 'Social', 'Transportation', 'Property', 'Music', 'Travel', 'Food', 'Recruitment', 'Games', 'Television']
   surveyTypes: any = ['Private', 'Public & Private Access']
   hostEnv: string = ''
 
@@ -102,7 +103,17 @@ if(this.studyInfo) {
 
         }
 
+        if (data.hasLiveParticipants) {
+          this.disabled = true
 
+        } else {
+          this.disabled = false
+        }
+
+        if(data.hasLiveParticipants || data['study_categories'].length >=2){
+          this.disableTypeOfSurvey = true
+
+        }
         const settings = data.settings
         const study = data.study
         if (study.active == 2 || study.active == 3) {
@@ -137,10 +148,7 @@ if(this.studyInfo) {
       this.studyService.checkStudyUsage().subscribe((data) => {
         },
         (error) => {
-        console.log(error.error.data)
           this.addStudyRestriction.emit(error.error.data);
-
-
           // This block will only execute if catchError is used
           // console.info('Error handler:', error.error.data);
         }
@@ -208,22 +216,22 @@ if(this.studyInfo) {
   archiveStudyModal() {
     this.modelStatus = 3
     this.modelHeader = 'Archive Study '
-    this.modelBtn = 'ARCHIVE'
-    this.modelBody = 'Are you sure you would like to archive this study?'
+    this.modelBtn = 'Yes Archive Study'
+    this.modelBody = 'This study will be added to the archived study group. To delete a study permanently it must first be archived. Are you sure you would like to archive this study?'
   }
 
   replicateStudyModal() {
     this.modelStatus = 6
     this.modelHeader = 'Replicate Study '
     this.modelBtn = 'REPLICATE STUDY'
-    this.modelBody = 'New replicated study will exclude participants!'
+    this.modelBody = 'Note: Participants will not be included in the replication of this study!'
   }
 
   purgeStudyModal() {
     this.modelStatus = 4
     this.modelHeader = 'Purge   Data'
-    this.modelBtn = 'Purge Data'
-    this.modelBody = 'This action will only remove participant answers for this study that were captured in Development-Mode?'
+    this.modelBtn = 'Yes Purge Data'
+    this.modelBody = 'This action will remove participant answers captured in Development-Mode for this study only. Are you sure you want to continue ?'
   }
 
   restoreStudyModal() {

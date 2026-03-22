@@ -45,33 +45,32 @@
               class="bi bi-arrow-return-left"></i></span>
           </p>
         </div>
-<!--        <div class="d-none d-md-block col-12 resetBtn mt-4 text-right">-->
-<!--          <p (click)="onStoreHistory()" title="Click to also save snapshot of dates ">-->
-<!--                <span [class.snapIcon]="this.formFilter.value.storeHistory">-->
-<!--                  <i class="bi bi-record-circle-fill snapshotIcon"></i>-->
-<!--                Record Snapshot </span>-->
-<!--            <span (click)="onDateRangeReset()" title="Reset to config dates">Reset<i-->
-<!--              class="bi bi-arrow-return-left"></i></span>-->
-<!--          </p>-->
-<!--        </div>-->
+        <!--        <div class="d-none d-md-block col-12 resetBtn mt-4 text-right">-->
+        <!--          <p (click)="onStoreHistory()" title="Click to also save snapshot of dates ">-->
+        <!--                <span [class.snapIcon]="this.formFilter.value.storeHistory">-->
+        <!--                  <i class="bi bi-record-circle-fill snapshotIcon"></i>-->
+        <!--                Record Snapshot </span>-->
+        <!--            <span (click)="onDateRangeReset()" title="Reset to config dates">Reset<i-->
+        <!--              class="bi bi-arrow-return-left"></i></span>-->
+        <!--          </p>-->
+        <!--        </div>-->
       </div>
     </div>
     <div *ngIf="studyInfo.study.type_of_survey==1" class=" ">
       <p class="mb-2 mt-4 fw-medium fw-medium text-center">SHOW/HIDE COLUMNS</p>
       <!--{{items |json}}-->
       <div class="col-10 offset-2">
-<div class="row">
-
-      <div class="mb-3 checkboxes " formArrayName="checkboxes">
-        <div *ngFor="let checkbox of items; let i = index" class="col-auto">
-          <label>
-            <input type="checkbox" [formControlName]="i"/>
-            {{ items[i].name }}
-          </label>
+        <div class="row">
+          <div class="mb-3 checkboxes " formArrayName="checkboxes">
+            <div *ngFor="let checkbox of items; let i = index" class="col-auto">
+              <label>
+                <input type="checkbox" [formControlName]="i"/>
+                {{ items[i].name }}
+              </label>
+            </div>
+          </div>
         </div>
       </div>
-  </div>
-</div>
     </div>
     <div class="mt-5 mb-3 text-center">
       <p *ngIf="missingSelectionNotice"><strong>Filter must contain at least one checked category!</strong></p>

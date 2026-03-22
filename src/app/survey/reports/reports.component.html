@@ -27,8 +27,7 @@
   </div>
 
 </div>
-<div *ngIf="result.length" id="orange" class="col-8 col-sm-8 col-md-12">
-  <h5 class="text-center mt-3 mb-4 d-block d-sm-block d-md-none">Responses</h5>
+<div *ngIf="result.length" id="orange" class="col-12 offset-0 col-sm-0 offset-sm-0  offset-md-0 offset-lg-1 offset-xl-0">
   <div *ngIf="!showInfoIcons" class="alert alert-info fade show mt-1" data-timeout="5000" role="alert">
     <p style="text-align: end;" (click)="hideShowInfoIcons()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" style="width: 15px; ">
@@ -60,8 +59,8 @@
         <div class="card-body" [class]="fullScreenPadding">
           <div *ngIf="showEdit">
             <div *ngIf="chartShow" #downloadEl>
-              <h6 class="toggle-fullscreen text-center " title="Toggle Fullscreen">
-              <span class="d-none d-lg-block" (click)="openOrangeFullscreen() " data-toggle="modal" data-target="#exampleModal">
+              <h6 class="toggle-fullscreen text-center" title="Toggle Fullscreen">
+              <span (click)="openOrangeFullscreen() " data-toggle="modal" data-target="#exampleModal">
             <span [hidden]="hideFilterIcon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="
     width: 20px;
@@ -79,20 +78,16 @@
 
               <p *ngIf="filterInfo['showDateRange']">{{filterInfo['startDateRange'] |date}}
                 - {{filterInfo['endDateRange']|date}}</p>
-              <p class="text-right chartFilterBtn"><span *ngIf="item[0]['type']=='multivalued'" (click)="onAverage()">AVG | </span>
+              <p class="text-right chartFilterBtn"><span *ngIf="item[0]['type']=='multivalued'" (click)="onAverage()">{{showAverages?'Chart': 'AVG'}} | </span>
                 <span (click)="toggleFilterReport()" [class]="filterChartToggleIcon? 'toggleOn': 'toggleOff'"
                       title="Filter Chart Options">
               <i [hidden]="hideFilterIcon" class="bi bi-funnel"></i> <i class="fa-solid fa-magnifying-glass"></i>
             </span>
               </p>
-
               <div *ngIf="showAverages">
-
                 <app-averages [result]="item"></app-averages>
               </div>
-
               <div [hidden]="showAverages">
-
                 <div *ngIf="item[0]['chartType']== '1'">
                   <app-bar-chart-data-processor [result]="item"></app-bar-chart-data-processor>
                 </div>
@@ -117,8 +112,9 @@
         </div>
       </div>
       <div *ngIf="filterChartToggle">
-        <pagination-controls  (pageChange)="onPageNumberChange($event)" id="reports"
-                             class="float-right owl-drag "></pagination-controls>
+
+        <pagination-controls (pageChange)="onPageNumberChange($event)" id="reports"
+                             class="float-right owl-drag" ></pagination-controls>
       </div>
       <!-- Button trigger modal -->
 

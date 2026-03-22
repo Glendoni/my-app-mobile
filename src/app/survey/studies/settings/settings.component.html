@@ -183,7 +183,7 @@
                 <h6 class="mb-3 mt 3 text-center">Study Actions</h6>
 
 
-                <div *ngIf="studyInfo['study'].active == 3">
+                <div *ngIf="studyInfo['study'].active == 3" style="text-align: center;color: white;">
                   <a href="javascript:void[0]" class="btn btn-warning" (click)="restoreStudyModal()"
                      data-bs-toggle="modal" data-bs-target="#exampleModal">Restore Study</a>
                   <a class="btn btn-danger" (click)="removeStudyModal()" data-bs-toggle="modal"
