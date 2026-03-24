@@ -1,269 +1,255 @@
-
 <div class="container-fluid library-app">
-  <div class="row  mt-1">
-    <h4 class="mb-4 blueHeading text-center col-6 offset-5 offset-md-3 offset-xl-0">Participants</h4>
-    <div class="col-4 col-md-6 offset-4 offset-md-0">
-      <div class="search-sm  mb-1 align-top">
-        <input placeholder="Search Active" (keyup)="search(getValue($event))" id="participant-searcher">
-    </div>
-    </div>
-    <div class="col-4 col-lg-6 text-right">
-      <div class="text-right d-inline-block d-md-inline-block d-lg-none links">
-        <ul>
-          <li>
-             <button (click)="onShowInvite()" class="btn  btn-sm cursor-pointer mr-1">INVITE </button>
+  <div class="row">
+    <div class="col-12 mt-4">
+      <div class="text-right d-block d-md-none d-lg-none ">
 
+        <ul class="mobileSubMenu">
+          <li>
+            <button (click)="onShowInvite()" class="btn btn-outline-dark btn-sm">INVITE
+
+            </button>
+            <span *ngIf="studyInfo.study.type_of_survey==2"> |
+          </span>
           </li>
           <li *ngIf="studyInfo.study.type_of_survey==2">
-
-             <button    class="btn  btn-sm cursor-pointer" (click)="onShowQrCode()">QR-CODE</button>
+            <button    class="btn btn-outline-dark btn-sm"
+                       (click)="onShowQrCode()">QR-CODE
+            </button>
           </li>
         </ul>
+
+
+
+
+
+
       </div>
+      <div class="d-none  d-md-none d-lg-block mb-0">
+        <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
+           role="button" aria-expanded="true" aria-controls="displayOptions">
+          Display Options
+          <i class="simple-icon-arrow-down align-middle"></i>
+        </a>
+        <div class="collapse d-md-block" id="displayOptions">
+          <div class="d-block d-md-inline-block">
+            <div class="btn-group float-md-right mr-1 mb-1">
+              <!--              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"-->
+              <!--                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+              <!--                Order By-->
+              <!--              </button>-->
+              <!--              <div class="dropdown-menu">-->
+              <!--                <a class="dropdown-item" href="#">Action</a>-->
+              <!--                <a class="dropdown-item" href="#">Another action</a>-->
+              <!--              </div>-->
+
+              <h4 class="mb-4 blueHeading">Study Participants</h4>
+            </div>
+            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+              <input placeholder="Search Active" (keyup)="search(getValue($event))" id="participant-searcher">
+            </div>
+          </div>
+          <div class="float-md-right mr-5">
+            <span class="text-muted text-small">Displaying 1-{{pageItems}} of {{participants.length}} items </span>
+            <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{pageItems}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" #sel (click)="changed(5)">5</a>
+              <a class="dropdown-item active" href="#" (click)="changed(10)">10</a>
+              <a class="dropdown-item" href="#" (click)="changed(30)">30</a>
+              <a class="dropdown-item" href="#" (click)="changed(50)">50</a>
+              <a class="dropdown-item" href="#" (click)="changed(100)">100</a>
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="separator mb-4"></div>
     </div>
-    <!--        <h4 class="mb-4 blueHeading">Participants  </h4>-->
-<!--    <h6 class="btn blueHeading offset-1"> Invite  | <span class=" pt-0 pl-0 "-->
-<!--        data-toggle="collapse"-->
-<!--        data-target="#displayOptions"-->
-<!--        aria-expanded="false"-->
-<!--        role="button"-->
-<!--        aria-controls="displayOptions">-->
-<!--      Display Options-->
-<!--      <i class="simple-icon-arrow-down align-middle"></i>-->
-<!--      </span>-->
-<!--    </h6>-->
-
-<!--    <div class="cols-6 " id="displayOptions">-->
-
-
-<!--            <span class="text-muted text-small">Per Page-->
-<!--              &lt;!&ndash;              {{pageItems}}&ndash;&gt;-->
-<!--              &lt;!&ndash;              of {{participants.length}} items &ndash;&gt;-->
-<!--            </span>-->
-<!--      <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"-->
-<!--              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--        {{pageItems}}-->
-<!--      </button>-->
-<!--      <div class="dropdown-menu dropdown-menu-right">-->
-<!--        <a class="dropdown-item" #sel (click)="changed(5)">5</a>-->
-<!--        <a class="dropdown-item active" href="#" (click)="changed(10)">10</a>-->
-<!--        <a class="dropdown-item" href="#" (click)="changed(30)">30</a>-->
-<!--        <a class="dropdown-item" href="#" (click)="changed(50)">50</a>-->
-<!--        <a class="dropdown-item" href="#" (click)="changed(100)">100</a>-->
-<!--      </div>-->
-
-
-<!--      <div>-->
-<!--        &lt;!&ndash;            <div class="btn-group float-md-right mr-1 mb-1">&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;              <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;                Order By&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;              </button>&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;              <div class="dropdown-menu">&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;                <a class="dropdown-item" href="#">Action</a>&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;                <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;              &lt;!&ndash;              </div>&ndash;&gt;&ndash;&gt;-->
-
-
-<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        <div class="row offset-4">-->
-<!--          <div class="search-sm d-block float-left mr-1 mb-1 align-top col-6">-->
-<!--            <input placeholder="Search Active" (keyup)="search(getValue($event))" id="participant-searcher">-->
-<!--          </div>-->
-
-
-<!--        </div>-->
-<!--      </div>-->
-
-
-<!--      &lt;!&ndash;    <div class="col-6  mb-3  ">&ndash;&gt;-->
-<!--      &lt;!&ndash;      <div class="search-sm ">&ndash;&gt;-->
-<!--      &lt;!&ndash;        <input placeholder="Search Active" (keyup)="search(getValue($event))" id="participant-searcher">&ndash;&gt;-->
-<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-<!--      &lt;!&ndash;    </div>&ndash;&gt;-->
-<!--    </div>-->
-  <div class="separator mt-1 mb-4 "></div>
-
   </div>
+  <div class="row">
 
-<div class="row">
-  <div class="col-md-4 d-none d-sm-none d-md-block ">
-    <div class="card mb-3">
-      <div class="card-body pt-3 pl-1 pl-lg-4 pr-1">
-        <div *ngIf="editDetails || showFilterIcon">
-          <p [class]="filterIcon" style="text-align: right" class="mr-4" (click)="OnFilter()"><i class="bi bi-funnel"></i></p>
-        </div>
-        <div *ngIf="!editDetails" class="row">
-          <div class="container item" *ngIf="model">
-            <h6 class="fw-bold mb-3 mt-4 text-center">Filter Results</h6>
+    <div class="col-md-4 d-none d-sm-block ">
 
-            <app-dynamic-form [model]="model" (profile)="submit($event)"
-                              (resetFilter)="refreshData()"></app-dynamic-form>
-            <!--              <div class="progress mt-3">-->
-            <!--                <div class="progress-bar" role="progressbar" aria-valuenow="60"-->
-            <!--                     aria-valuemin="0" aria-valuemax="10"></div>-->
-            <!--                <div class="progress-bar bg-theme-2" role="progressbar"-->
-            <!--                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>-->
-            <!--              </div>-->
+      <!--       <div class="card drop-area">-->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div *ngIf="editDetails || showFilterIcon">
+            <p [class]="filterIcon" style="text-align: right" (click)="OnFilter()"><i class="bi bi-funnel"></i></p>
           </div>
+          <div *ngIf="!editDetails" class="row">
 
 
-        </div>
-        <div *ngIf="editDetails">
-          <div class="row col-12">
-            <div>
+            <div class="container item" *ngIf="model">
+              <h6 class="fw-bold mb-3 text-center">Filter Results</h6>
 
-              <div *ngIf="editDetails.user_profile.username; then thenBlock else elseBlock"></div>
-              <ng-template #thenBlock>
-                <h5 style="text-align: center; font-size: 1em">
-                  {{editDetails.user_profile.username }}
-                </h5>
-
-              </ng-template>
-              .
-              <ng-template #elseBlock>
-                <h5 style="text-align: center;  font-size: 1em">
-
-                  {{editDetails['user'][0]['name']}}
-                </h5>
-                <p
-                  class="text-center fw-bold">  {{editDetails['user_categories'][0]['is_read'] ? '' : 'Status: Pending'}}</p>
-              </ng-template>
-
-              <h5 *ngIf="editDetails.user_profile.username" style="text-align: center;">
-                {{editDetails.user_profile.username ?? editDetails['user'][0]['name'] }}
-              </h5>
+              <app-dynamic-form [model]="model" (profile)="submit($event)"
+                                (resetFilter)="refreshData()"></app-dynamic-form>
+              <!--              <div class="progress mt-3">-->
+              <!--                <div class="progress-bar" role="progressbar" aria-valuenow="60"-->
+              <!--                     aria-valuemin="0" aria-valuemax="10"></div>-->
+              <!--                <div class="progress-bar bg-theme-2" role="progressbar"-->
+              <!--                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="70"></div>-->
+              <!--              </div>-->
             </div>
-            <div class="separator mt-3 mb-2"></div>
-            <div class="col-4" *ngIf="editDetails.user_profile.length ==1">
-              <img src="{{editDetails.user_profile[0].profile_img}}" style="width: 100%;max-height: 100px;">
-            </div>
+
+
+          </div>
+          <div *ngIf="editDetails">
             <div class="row col-12">
-              <div *ngIf="editDetails.user_profile[0]" id="part-user-summary">
-                <p>Country: <strong>{{editDetails.user_profile[0].country}}</strong><br/>
-                  Age Bracket: <strong>{{editDetails.user_profile[0].age_group}}</strong></p>
+              <div>
+
+                <div *ngIf="editDetails.user_profile.username; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                  <h5 style="text-align: center; font-size: 1em">
+                    {{editDetails.user_profile.username }}
+                  </h5>
+
+                </ng-template>
+                .
+                <ng-template #elseBlock>
+                  <h5 style="text-align: center;  font-size: 1em">
+                    {{editDetails['user'][0]['name']}}
+                  </h5>
+                  <p
+                    class="text-center fw-bold">  {{editDetails['user_categories'][0]['is_read'] ? '' : 'Status: Pending'}}</p>
+                </ng-template>
+
+                <h5 *ngIf="editDetails.user_profile.username" style="text-align: center;">
+                  {{editDetails.user_profile.username ?? editDetails['user'][0]['name'] }}
+                </h5>
               </div>
-              <p style="text-align: right; cursor: grab">
-                <span data-toggle="modal" data-target="#exampleModal" class="">Show More...</span>
-                <span *ngIf="filterGroup|| !editDetails.user_categories.length" data-toggle="modal"
-                      data-target="#deleteInvite"> | Remove  Invite</span>
-              </p>
+              <div class="separator mt-3 mb-2"></div>
+              <div class="col-4" *ngIf="editDetails.user_profile.length ==1">
+                <img src="{{editDetails.user_profile[0].profile_img}}" style="width: 100%;max-height: 100px;">
+              </div>
+              <div class="row col-12">
+                <div *ngIf="editDetails.user_profile[0]" id="part-user-summary">
+                  <p>Country: <strong>{{editDetails.user_profile[0].country}}</strong><br/>
+                    Age Bracket: <strong>{{editDetails.user_profile[0].age_group}}</strong></p>
+                </div>
+                <p style="text-align: right; cursor: grab">
+                  <span data-toggle="modal" data-target="#exampleModal" class="">Show More...</span>
+                  <span *ngIf="filterGroup|| !editDetails.user_categories.length" data-toggle="modal"
+                        data-target="#deleteInvite"> | Remove  Invite</span>
+                </p>
+              </div>
+            </div>
+            <div class="separator  mb-2"></div>
+            <div class="row col-12">
+              <p style="text-align: center"><strong>Allocated Categories</strong></p>
+
+
+              <a class="badge bg-dark text-bg-dark"
+                 [className]="category.completed? 'badge bg-success text-bg-dark' : 'badge bg-dark text-bg-dark' "
+                 *ngFor="let category of editDetails.user_categories; index as i">
+
+
+                {{category.name }}
+                <span *ngIf="category.completed"><br> Completed: {{  category.updated_at|date}}</span>
+              </a>
+
             </div>
           </div>
-          <div class="separator  mb-2"></div>
-          <div class="row col-12 ml-1">
-            <p style="text-align: center"><strong>Allocated Categories</strong></p>
+        </div>
+      </div>
+      <app-q-result-matrix [studyInfo]="studyInfo" class="mt-5"></app-q-result-matrix>
+    </div>
+    <div class="col-8 offset-4 offset-sm-0 col-xs-12 col-sm-12 col-md-6" data-check-all="checkAll">
 
 
-            <a class="badge bg-dark text-bg-dark"
-               [className]="category.completed? 'badge bg-success text-bg-dark' : 'badge bg-dark text-bg-dark' "
-               *ngFor="let category of editDetails.user_categories; index as i">
+      <div *ngIf="user_categories && participants.length >= 1"
+           class="alert alert-danger alert-dismissible fade show rounded mb-0" role="alert">
+        <strong>Holy guacamole!</strong> There are currently no associated <strong>categories</strong> attached to this
+        study.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!--      <div *ngIf="participants && participants.length <1" class="alert alert-danger alert-dismissible fade show rounded mb-0" role="alert">-->
+      <!--        <strong>Holy guacamole!</strong> There are currently <strong>0</strong> invited <strong>participants</strong> allocated to this-->
+      <!--        study.-->
+      <!--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+      <!--          <span aria-hidden="true">&times;</span>-->
+      <!--        </button>-->
+      <!--      </div>-->
+
+      <div class="row" *ngIf="!user_categories">
 
 
-              {{category.name }}
-              <span *ngIf="category.completed"><br> Completed: {{  category.updated_at|date}}</span>
+        <div *ngIf="showUpdatePackageMsg">
+          <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
+        </div>
+        <!--<pre>{{participants |json}}</pre>-->
+        <p *ngIf="filterGroup==1" class="inviteStatus">Pending Invites ({{participants.length}}) </p>
+        <p *ngIf="filterGroup==2" class="inviteStatus">Accepted Invites ({{participants.length}}) </p>
+        <p *ngIf="filterGroup==3" class="inviteStatus">Search Participants Result (0) </p>
+
+        <div *ngIf="participants && participants.length <1 && !upgradeNotification || showSpinner"
+             class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div
+          *ngFor="let participant of participants | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'participants'}  index as i"
+          class="col-12 col-sm-12 col-md-12 col-lg-6">
+          <div class="card d-flex flex-row mb-4 media-thumb-container">
+
+            <a [class.not-allowed]="!participant.user[0].name" class="d-flex align-self-center media-thumbnail-icon"
+               href="javascript:" (click)="edit(participant)">
+              <i class="bi bi-person-circle"></i>
             </a>
 
-          </div>
-        </div>
-      </div>
-    </div>
-    <app-q-result-matrix [studyInfo]="studyInfo" class="mt-5"></app-q-result-matrix>
-  </div>
-  <div class="col-8 offset-4 offset-sm-0 col-xs-12 col-sm-12 col-md-6" data-check-all="checkAll">
-
-
-    <div *ngIf="user_categories && participants.length >= 1"
-         class="alert alert-danger alert-dismissible fade show rounded mb-0" role="alert">
-      <strong>Holy guacamole!</strong> There are currently no associated <strong>categories</strong> attached to this
-      study.
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <!--      <div *ngIf="participants && participants.length <1" class="alert alert-danger alert-dismissible fade show rounded mb-0" role="alert">-->
-    <!--        <strong>Holy guacamole!</strong> There are currently <strong>0</strong> invited <strong>participants</strong> allocated to this-->
-    <!--        study.-->
-    <!--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-    <!--          <span aria-hidden="true">&times;</span>-->
-    <!--        </button>-->
-    <!--      </div>-->
-
-    <div class="row" *ngIf="!user_categories">
-
-
-      <div *ngIf="showUpdatePackageMsg">
-        <app-upgrade-notification [notification]="upgradeNotification"></app-upgrade-notification>
-      </div>
-      <!--<pre>{{participants |json}}</pre>-->
-      <p *ngIf="filterGroup==1" class="inviteStatus">Pending Invites ({{participants.length}}) </p>
-      <p *ngIf="filterGroup==2" class="inviteStatus">Accepted Invites ({{participants.length}}) </p>
-      <p *ngIf="filterGroup==3" class="inviteStatus">Search Participants Result (0) </p>
-
-      <div *ngIf="participants && participants.length <1 && !upgradeNotification || showSpinner"
-           class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-
-
-      <div *ngFor="let participant of participants | paginate: { itemsPerPage: pageItems, currentPage: p, id: 'participants'}  index as i"
-        class="col-12 col-sm-8 col-md-12 col-lg-6 offset-0 offset-sm-4 offset-md-0  col-lg-6">
-        <div class="card d-flex flex-row mb-4 media-thumb-container">
-
-          <a [class.not-allowed]="!participant.user[0].name" class="d-flex align-self-center media-thumbnail-icon"
-             href="javascript:" (click)="edit(participant)">
-            <i class="bi bi-person-circle"></i>
-          </a>
-
-          <div class="d-flex flex-grow-1 min-width-zero">
-            <div
-              class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-              <div *ngIf="participant.user[0].name; then thenBlock else elseBlock"></div>
-              <ng-template #thenBlock>
-                <a href="javascript:" class="w-100">
+            <div class="d-flex flex-grow-1 min-width-zero">
+              <div
+                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
+                <div *ngIf="participant.user[0].name; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                  <a href="javascript:" class="w-100">
 
                   <span class="list-item-heading mb-1 truncate d-none d-sm-none d-lg-block"
                         (click)="edit(participant)">
                     {{participant.user[0].name}}
                   </span>
-                  <span class="list-item-heading mb-1 truncate d-block d-sm-block d-lg-none " data-toggle="modal"
-                        data-target="#exampleModal"
-                        (click)="edit(participant)">
+                    <span class="list-item-heading mb-1 truncate d-block d-sm-block d-lg-none " data-toggle="modal"
+                          data-target="#exampleModal"
+                          (click)="edit(participant)">
                     {{participant.user[0].name}}
                   </span>
-                </a></ng-template>
-              <ng-template #elseBlock>
-                <p class="list-item-heading mb-1 truncate"
-                   (click)="edit(participant)">
-                  <a href="javascript:" class="w-100" style="cursor: not-allowed;">
-                    {{participant.user[0].name ?? 'Anonymous'}}
-                  </a>
-                </p>
+                  </a></ng-template>
+                <ng-template #elseBlock>
+                  <p class="list-item-heading mb-1 truncate"
+                     (click)="edit(participant)">
+                    <a href="javascript:" class="w-100" style="cursor: not-allowed;">
+                      {{participant.user[0].name ?? 'Anonymous'}}
+                    </a>
+                  </p>
 
 
-              </ng-template>
-              <p *ngIf="participant.user_profile[0]"
-                 class="mb-1 text-muted text-small w-100 truncate"> {{participant.user_profile[0].country}}</p>
+                </ng-template>
+                <p *ngIf="participant.user_profile[0]"
+                   class="mb-1 text-muted text-small w-100 truncate"> {{participant.user_profile[0].country}}</p>
+              </div>
+              <!--              <div class="pl-1 align-self-center">-->
+              <!--                <label class="custom-control custom-checkbox mb-0">-->
+              <!--                  <input type="checkbox" class="custom-control-input">-->
+              <!--                  <span class="custom-control-label"></span>-->
+              <!--                </label>-->
+              <!--              </div>-->
             </div>
-            <!--              <div class="pl-1 align-self-center">-->
-            <!--                <label class="custom-control custom-checkbox mb-0">-->
-            <!--                  <input type="checkbox" class="custom-control-input">-->
-            <!--                  <span class="custom-control-label"></span>-->
-            <!--                </label>-->
-            <!--              </div>-->
           </div>
+        </div>
+        <div *ngIf="participants>5">
+          <pagination-controls (pageChange)="p = $event" id="participants" class="float-right"></pagination-controls>
         </div>
       </div>
 
-
-      <div *ngIf="participants>5">
-        <pagination-controls (pageChange)="p = $event" id="participants" class="float-right"></pagination-controls>
-      </div>
     </div>
-
   </div>
-</div>
 </div>
 <!-- Modal -->
 <div *ngIf="editDetails" class="modal fade " id="deleteInvite" tabindex="-1" role="dialog" aria-hidden="true"
