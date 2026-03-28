@@ -25,6 +25,8 @@ export class AccountComponent {
   public globalShow: boolean = true;
   public profileShow: boolean = false;
   public pricing: boolean = false;
+  public socials: boolean = false;
+
   status: string = 'alert';
   public notificationMessage: any = ''
   public twoFa: boolean = false;
@@ -34,6 +36,8 @@ export class AccountComponent {
   public userFirstName: string = '';
   private userEmail: any;
   public userPhone: number = 123;
+  private businessName: any='';
+
 
   constructor(private fb: FormBuilder,
               private route: ActivatedRoute,
@@ -63,6 +67,8 @@ export class AccountComponent {
     const usr = JSON.parse(locals);
     this.userEmail = usr['email']
     this.userPhone = usr['phone']
+    this.businessName =usr['business_name']
+
 
     this.activatedRoute.queryParams.subscribe(params => {
       const id = this.route.snapshot.paramMap.get('mobileLogin');
@@ -112,6 +118,7 @@ export class AccountComponent {
     this.pricing = false
     this.twoFa = false
     this.invoice = false
+    this.socials = false
     this.highlight(event)
   }
 
@@ -121,6 +128,7 @@ export class AccountComponent {
     this.pricing = false
     this.twoFa = false
     this.invoice = false
+    this.socials = false
   }
 
   onProfileShow(event: Event) {
@@ -129,6 +137,7 @@ export class AccountComponent {
     this.pricing = false
     this.twoFa = false
     this.invoice = false
+    this.socials = false
     this.highlight(event)
   }
 
@@ -162,6 +171,7 @@ export class AccountComponent {
         this.create = false
       } else {
         this.create = true
+        this.f.appName.setValue(this.businessName)
       }
     })
 
@@ -212,6 +222,7 @@ export class AccountComponent {
     this.create = false
     this.twoFa = true
     this.invoice = false
+    this.socials = false
     this.highlight(event)
   }
 
@@ -222,6 +233,7 @@ export class AccountComponent {
     this.create = false
     this.twoFa = false
     this.invoice = true
+    this.socials = false
     this.highlight(event)
   }
 
@@ -233,6 +245,7 @@ export class AccountComponent {
     this.pricing = true
     this.create = false
     this.invoice = false
+    this.socials = false
 
   }
 
@@ -244,6 +257,19 @@ export class AccountComponent {
     this.twoFa = false
     this.pricing = true
     this.create = false
+    this.invoice = false
+    this.socials = false
+    this.highlight(event)
+  }
+
+  onSocials(event: Event) {
+    this.scrollToTop()
+    this.profileShow = false
+    this.globalShow = false
+    this.twoFa = false
+    this.pricing = false
+    this.create = false
+    this.socials = true
     this.invoice = false
     this.highlight(event)
   }
@@ -275,5 +301,21 @@ export class AccountComponent {
   OnRedirect(){
 
     window.location.href = 'https://www.peekerpro.com/auth?webLink=>'
+  }
+
+  onNotify():void {
+    setTimeout(() => {
+      if(!this.surveyForm.value.part_joined && !this.surveyForm.value.study_created && !this.surveyForm.value.study_updated){
+        this.f.pause.setValue(true)
+      }else{
+        this.f.pause.setValue(false)
+      }
+    }, 1000)
+  }
+
+  pauseNotify(){
+    this.f.part_joined.setValue(false)
+    this.f.study_created.setValue(false)
+    this.f.study_updated.setValue(false)
   }
 }
