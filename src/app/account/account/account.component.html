@@ -332,7 +332,7 @@
                       <div class="form-check  mb-5  col-12 text-center">
                         <input formControlName="pause" class="form-check-input" type="checkbox" id="pause" (mouseup)="pauseNotify()">
                         <label class="form-check-label" for="active">
-                          Pause All Notifications <span><strong>({{f['pause'].value ? 'On' : 'Off'}})</strong></span>
+                          Pause Notifications <span><strong>({{f['pause'].value ? 'On' : 'Off'}})</strong></span>
                         </label>
                         <p *ngIf="f['pause'].value">All non essential email notifications will be paused</p>
                       </div>
