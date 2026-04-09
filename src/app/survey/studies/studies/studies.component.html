@@ -6,6 +6,7 @@
     <app-alerts></app-alerts>
   </div>
   <div class="menu">
+
     <div *ngIf="!hideMenu" class="main-menu d-none d-sm-block">
       <div class="scroll">
         <ul *ngIf="dashboard" [className]="deviceVisibility">
@@ -387,12 +388,16 @@
     </div>
 
       <div class="row"><!--        app-row-->
-        <div class="pr-0 pr-md-2 pl-2">
+        <div *ngIf="showParticipants"  class="col-8 offset-4 col-md-12 offset-md-0 pr-0 pr-md-2 pl-2">
           <app-participants *ngIf="showParticipants" [studyInfo]="study" (toggleQrCode)="onToggleQrCode($event)"
                             (toggleInvite)="onToggleInvite($event)"></app-participants>
+        </div>
+        <div  *ngIf="showQrCode"  class="col-8 offset-4 col-md-12 offset-md-0 pr-0 pr-md-2 pl-2">
           <app-qr-code *ngIf="showQrCode" [studyInfo]="study"></app-qr-code>
 
         </div>
+
+
         <div *ngIf="showReports"
              class="col-8 col-xs-8 col-sm-8 col-md-12 offset-4 offset-md-0 col-lg-10 col-xl-9 offset-xl-1 right-side">
           <app-reports [studyInfo]="study"></app-reports>

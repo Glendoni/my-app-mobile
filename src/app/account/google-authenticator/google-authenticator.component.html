@@ -1,64 +1,63 @@
-<div class="col-sm-10 col-md-8 offset-sm-1  col-md-11 col-lg-12 offset-0 offset-xs-0">
-  <div class=" card mb-4">
-    <form [formGroup]="google2Fa" (ngSubmit)="onSave()">
-      <div class="card-header">
-        <h4 class="text-center blueHeading mt-5">Admin Account Authenticator</h4>
-        <div class="form-check form-switch text-center mb-4 mt-2">
+<div class=" card mb-4">
+  <form [formGroup]="google2Fa" (ngSubmit)="onSave()">
+    <div class="card-header">
+      <h4 class="text-center blueHeading mt-5">Admin Account Authenticator</h4>
+      <div class="form-check form-switch text-center mb-4 mt-2">
 
-          <label class="form-check-label">Google Authenticator
-            is:  <strong>{{otpValue ? 'Enabled' : 'Disabled'}}</strong> </label>
-        </div>
-        <div *ngIf="otpValue; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock>
-          <div class="text-center">
-            <button (click)="onDeactivate()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
-              class="simple-icon-plus btn-group-icon "></i> Click to Deactivate
-            </button>
-          </div>
-        </ng-template>
-        <ng-template #elseBlock>
-          <div class="text-center">
-            <button (click)="onActivate()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
-              class="simple-icon-plus btn-group-icon "></i> Click to Activate
-            </button>
-          </div>
-        </ng-template>
+        <label class="form-check-label">Google Authenticator
+          is: <strong>{{ otpValue ? 'Enabled' : 'Disabled' }}</strong> </label>
       </div>
-      <div class="flex-container">
-        <div class="card-body col-md-12">
-          <div class="col-md-12" *ngIf="otpValue">
+      <div *ngIf="otpValue; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <div class="text-center">
+          <button (click)="onDeactivate()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
+            class="simple-icon-plus btn-group-icon "></i> Click to Deactivate
+          </button>
+        </div>
+      </ng-template>
+      <ng-template #elseBlock>
+        <div class="text-center">
+          <button (click)="onActivate()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
+            class="simple-icon-plus btn-group-icon "></i> Click to Activate
+          </button>
+        </div>
+      </ng-template>
+    </div>
+    <div class="flex-container">
+      <div class="card-body col-md-12">
+        <div class="col-md-12" *ngIf="otpValue">
 
 
-<div *ngIf="qrCodeSvg">
-<app-svg-img [svgimg]="qrCodeSvg"></app-svg-img>
-</div>
+          <div *ngIf="qrCodeSvg">
+            <app-svg-img [svgimg]="qrCodeSvg"></app-svg-img>
           </div>
         </div>
-        <div class="card-body col-md-8">
+      </div>
+      <div class="card-body col-md-8">
 
-          <div *ngIf="recoveryCodes.length&& otpValue" class="col-md-12">
+        <div *ngIf="recoveryCodes.length&& otpValue" class="col-md-12">
 
 
-            <h5>Recovery Codes</h5>
-            <p>In case you are unable to login. <strong>Please copy and store these recover codes somewhere safe</strong></p>
-            <ul class="recoverCodeListing">
+          <h5>Recovery Codes</h5>
+          <p>In case you are unable to login. <strong>Please copy and store these recover codes somewhere safe</strong>
+          </p>
+          <ul class="recoverCodeListing">
 
             <li *ngFor="let code of recoveryCodes">
-              {{code}}
+              {{ code }}
             </li>
-            </ul>
+          </ul>
 
 
-          </div>
-          <div *ngIf="recoveryCodes.length && otpValue" class="mt-4">
-            <button (click)="regenerateRecoveryCodes()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
-              class="simple-icon-plus btn-group-icon  "></i> Click To Regenerate New Recovery Codes
-            </button>
+        </div>
+        <div *ngIf="recoveryCodes.length && otpValue" class="mt-4">
+          <button (click)="regenerateRecoveryCodes()" type="button" class="btn btn-outline-primary btn-sm mb-2 "><i
+            class="simple-icon-plus btn-group-icon  "></i> Click To Regenerate New Recovery Codes
+          </button>
 
-          </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
 

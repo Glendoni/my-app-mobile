@@ -14,12 +14,12 @@ export class StudyService {
   public options: BehaviorSubject<[]>;
   public portalStudies: BehaviorSubject<[]>;
   public portalStudiesRefresh: BehaviorSubject<[]>;
+  public socials: BehaviorSubject<[]>;
   public createCategoryToggle: BehaviorSubject<boolean>;
   public createCategoryToggleClose: BehaviorSubject<boolean>;
   public activemode: BehaviorSubject<boolean>;
   public activeGlobalMode: BehaviorSubject<boolean>;
   public participantVisibility: BehaviorSubject<boolean>;
-
   private inviteRedirect: BehaviorSubject<boolean>;
   private httpOptions;
   public url
@@ -28,7 +28,7 @@ export class StudyService {
     this.options = new BehaviorSubject<[]>([]);
     this.portalStudies = new BehaviorSubject<[]>([]);
     this.portalStudiesRefresh = new BehaviorSubject<[]>([]);
-
+    this.socials = new BehaviorSubject<[]>([]);
     this.createCategoryToggle = new BehaviorSubject<boolean>(false);
     this.createCategoryToggleClose = new BehaviorSubject<boolean>(false);
     this.inviteRedirect = new BehaviorSubject<boolean>(false);
@@ -125,12 +125,29 @@ export class StudyService {
       }));
   }
 
+
+  getStudySocials() {
+    return this.http.get(this.url + '/api/getStudySocials', this.httpOptions)
+      .pipe(map((result: any) => {
+        this.alertService.setAlert(result);
+        return result
+      }));
+  }
+
   setOptions(newValue: any): void {
     this.options.next(newValue);
   }
 
   getOptions(): Observable<any> {
     return this.options.asObservable();
+  }
+
+  setSocials(newValue: any): void {
+    this.socials.next(newValue);
+  }
+
+  getSocials(): Observable<any> {
+    return this.socials.asObservable();
   }
 
   getStudyRefresh(): Observable<any> {
@@ -287,7 +304,6 @@ export class StudyService {
         return result
       }));
   }
-
 
   setParticipantVisibility(newValue: any): void {
     this.participantVisibility.next(newValue);

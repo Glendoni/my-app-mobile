@@ -14,6 +14,7 @@ import {InvoiceComponent} from './invoice/invoice.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient} from "@angular/common/http";
 import {HttpLoaderFactory} from "../app.module";
+import {SocialFollowComponent} from "./social-follow/social-follow.component";
 
 
 
@@ -25,7 +26,8 @@ import {HttpLoaderFactory} from "../app.module";
     GoogleAuthenticatorComponent,
     SvgImgComponent,
     InvoiceComponent,
-    PricingComparisonComponent
+    PricingComparisonComponent,
+    SocialFollowComponent
   ],
   imports: [
     CommonModule,

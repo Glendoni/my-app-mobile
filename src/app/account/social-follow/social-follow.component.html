@@ -1,0 +1,166 @@
+<div >
+
+
+  <div class="card mb-4">
+    <div class="card-body">
+
+      <div *ngIf="spinner" class="text-center mt-5">
+        <span class="spinner-border"></span>
+      </div>
+      <div class="row">
+
+
+        <h4 class="mb-4 blueHeading text-center">Social Marketing Links </h4>
+        <div>
+
+          <p class="text-center ">Show active link icons after a participant completes a category</p>
+          <p *ngIf="!showSocialForm" class="text-center "><span class="saved">Saved</span></p>
+        </div>
+        <div *ngIf="showSocialForm" class="col-8 offset-2 ">
+
+          <form [formGroup]="socialForm" (ngSubmit)="onUpdate()">
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="weblink" class="col-form-label"><i class="bi bi-globe2"></i></label>
+              </div>
+              <div class="col-8 s-input">
+
+                <input formControlName="weblink" type="text" id="weblink" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+
+              <div class="col-auto d-none d-xl-inline-block">
+                <span id="weblinks" class="form-text">Website </span>
+
+              </div>
+
+              <div *ngIf="submitted && f['weblink'].errors"
+                   class="error-text is-invalid mt-0 ">
+                <div>Website Link url is formatted incorrectly</div>
+              </div>
+
+
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label"><i class="bi bi-facebook"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="facebook" type="text" id="inputPassword6" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-auto d-none d-xl-block">
+                <span id="passwordHelpInline" class="form-text">Facebook </span>
+              </div>
+              <div *ngIf="submitted && f['facebook'].errors" class="error-text is-invalid mt-0 ">
+                <div class="error-text is-invalid">Facebook Link url is formatted incorrectly</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label "><i class="bi bi-instagram"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="instagram" type="text" id="inputPassword4" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-auto d-none d-xl-block">
+                <span id="inputPassword4Link" class="form-text">Instagram </span>
+              </div>
+              <div *ngIf="submitted && f['instagram'].errors" class="error-text is-invalid mt-0">
+                <div>Instagram Link url is formatted incorrectly</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label "><i class="bi bi-pinterest"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="pinterest" type="text" id="pinterest" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-auto d-none d-xl-block">
+                <span id="inputPassword5Link" class="form-text">
+              Pinterest Link
+                </span>
+              </div>
+              <div *ngIf="submitted && f['pinterest'].errors" class="error-text is-invalid mt-0">
+                <div>Pinterest Link url is formatted incorrectly</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto ">
+                <label for="LinkedIn" class="col-form-label "><i class="bi bi-linkedin"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="linkedin" type="text" id="LinkedIn" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-auto d-none d-xl-block">
+<span id="LinkedIns" class="form-text s-input ">
+LinkedIn Link
+</span>
+              </div>
+              <div *ngIf="submitted && f['linkedin'].errors" class="error-text is-invalid mt-0">
+                <div>Linkedin url is formatted incorrectly</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="youtube" class="col-form-label "><i class="bi bi-youtube"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="youtube" type="text" id="youtube" placeholder="https://"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-auto d-none d-xl-block">
+                <span id="youtube" class="form-text s-input ">YouTube </span>
+              </div>
+              <div *ngIf="submitted && f['youtube'].errors" class="error-text is-invalid mt-0">
+                <div>Youtube url is formatted incorrectly</div>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center mb-2">
+              <div class="col-auto">
+                <label for="whatsApp" class="col-form-label"><i class="bi bi-whatsapp"></i></label>
+              </div>
+              <div class="col-8 s-input">
+                <input formControlName="whatsapp" type="text" id="whatsapp" placeholder="e.g +447123456789"
+                       class="form-control form-control-sm"
+                       aria-describedby="passwordHelpInline">
+
+              </div>
+              <div class="col-3 d-none d-xl-block">
+                <span id="passwordHelpInline" class="form-text">WhatsApp</span>
+              </div>
+              <div *ngIf="submitted && f['whatsapp'].errors" class="error-text is-invalid mt-0 ">
+                <div class="error-text is-invalid">WhatsApp link is formatted incorrectly</div>
+              </div>
+            </div>
+
+            <div class="mb-5 mt-5 text-right">
+              <button type="submit"
+                      class="text-uppercase btn btn-dark s-btn s-btn--md s-btn--primary-bg g-radius--50 g-padding-x-80--xs">
+                Update Links
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

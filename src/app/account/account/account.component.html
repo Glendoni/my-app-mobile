@@ -8,13 +8,13 @@
       <span
         class="study-title"> ~ admin</span>
     </h4>
-    <!--    <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none">-->
-    <!--      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">-->
-    <!--        <rect x="0.5" y="0.5" width="25" height="1"/>-->
-    <!--        <rect x="0.5" y="7.5" width="25" height="1"/>-->
-    <!--        <rect x="0.5" y="15.5" width="25" height="1"/>-->
-    <!--      </svg>-->
-    <!--    </a>-->
+<!--    <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none">-->
+<!--      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">-->
+<!--        <rect x="0.5" y="0.5" width="25" height="1"/>-->
+<!--        <rect x="0.5" y="7.5" width="25" height="1"/>-->
+<!--        <rect x="0.5" y="15.5" width="25" height="1"/>-->
+<!--      </svg>-->
+<!--    </a>-->
   </div>
 
   <a class="navbar-logo" href="Dashboard.Default.html">
@@ -69,31 +69,52 @@
     <div class="main-menu">
       <div class="scroll">
         <ul *ngIf="!showNewUserWelcomeMgs" class="list-unstyled">
-          <li class="d-none d-sm-none d-md-block d-lg-block " >
+          <li *ngIf="!create && auth && !isMobile"  >
+            <a  (click)="onServicesReturn($event)">
+              <i class="bi bi-arrow-left-circle"></i>
+              <span></span>
+            </a>
+          </li>
+          <li *ngIf="!create && !auth && !isMobile"  >
+            <a (click)="onServices($event)">
+              <i class="bi bi-arrow-right-circle"></i>
+              <span ></span>
+            </a>
+          </li>
+
+          <li *ngIf="!gp"  [class]="isTablet">
             <a >
-              <i class="bi bi-gear-wide-connected"></i>
+              <i class="bi bi-gear-wide-connected "></i>
               <span (click)="onGlobalShow($event)">Global Preferences</span>
             </a>
           </li>
-          <li>
+          <li *ngIf="!create && !pwd||isMobile"  class="">
+            Glen
             <a>
               <i class="bi bi-person-bounding-box"></i>
               <span (click)="onProfileShow($event)">Password</span>
             </a>
           </li>
-          <li *ngIf="!create"  class="d-none d-sm-none d-md-none d-lg-block">
+
+          <li *ngIf="!create && !sco"  [class]="isTablet" >
+            <a>
+              <i class="bi bi-globe2"></i>
+              <span (click)="onSocials($event)">Socialites</span>
+            </a>
+          </li>
+          <li *ngIf="!create && !authent"   [class]="isTablet">
             <a>
               <i class="bi bi-person-fill-lock"></i>
               <span (click)="on2Fa($event)">2F Authentication</span>
             </a>
           </li>
-          <li *ngIf="!showNewUserWelcomeMgs" class="d-none d-sm-none d-md-none d-lg-block" >
+          <li *ngIf="!showNewUserWelcomeMgs && !inv" [class]="isTablet" class="d-none d-sm-none d-md-none d-lg-block">
             <a>
               <i class="bi bi-receipt-cutoff "></i>
               <span (click)="onInvoice($event)">Invoices</span>
             </a>
           </li>
-          <li *ngIf="!create"  class="d-none d-sm-none d-md-none d-lg-block">
+          <li *ngIf="!create && !upg" >
 
             <a class="text-decoration-none" data-toggle="modal" data-target="#exampleModal">
               <i class="bi bi-person-fill-lock"></i>
@@ -352,7 +373,7 @@
           </form>
         </div>
 
-        <div *ngIf="twoFa">
+        <div *ngIf="twoFa" class="col-sm-10 offset-sm-2 offset-md-1 col-lg-12 offset-lg-1 mt-5">
           <app-google-authenticator></app-google-authenticator>
         </div>
 
@@ -360,11 +381,11 @@
           <app-pricing-comparison></app-pricing-comparison>
         </div>
 
-        <div *ngIf="socials">
-<!--          <app-social-follow ></app-social-follow>-->
+        <div *ngIf="socials" class="col-10 col-md-11 col-lg-12 offset-md-1 offset-2 mt-5">
+          <app-social-follow ></app-social-follow>
         </div>
 
-        <div *ngIf="invoice">
+        <div *ngIf="invoice" class="col-10 offset-1 mt-5">
           <app-invoice></app-invoice>
         </div>
       </div>

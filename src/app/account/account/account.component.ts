@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {QuestionService} from "../../_services/question.service";
 import {AlertService, AuthenticationService, StudyService} from "../../_services";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +10,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
   userDetails: any = []
   public surveyForm: any = FormGroup
   edit: boolean = false;
@@ -37,6 +37,16 @@ export class AccountComponent {
   private userEmail: any;
   public userPhone: number = 123;
   private businessName: any='';
+  public services : boolean = false;
+  public gp : boolean = false;
+  public pwd : boolean = true;
+  public auth : boolean = false;
+  public inv : boolean = true;
+  public upg : boolean = false;
+  public sco : boolean = false;
+  public authent : boolean = true;
+  protected isTablet: any;
+  public isMobile: boolean = false;
 
 
   constructor(private fb: FormBuilder,
@@ -49,6 +59,7 @@ export class AccountComponent {
               private deviceService: DeviceDetectorService) {
     this.isVisible = false;
     this.alert.getAlert().subscribe((data: any) => {
+
       if (data['error']) {
         this.status = 'alert-danger'
       }
@@ -100,9 +111,12 @@ export class AccountComponent {
     });
 
     if (this.deviceService.isMobile()) {
-
+        this.isMobile = true;
+        console.log('mobile')
+      this.onServicesReset()
       this.profileShower()
     } else {
+      console.log('is not mobile')
       this.getGlobalSettings()
     }
 
@@ -111,6 +125,17 @@ export class AccountComponent {
 
   }
 
+  onServicesReset() {
+this.isMobile = true;
+    this.gp  = false;
+    this.pwd = true;
+    this.auth  = false;
+    this.inv  = true;
+    this.upg  = false;
+    this.sco  = false;
+    this.authent  = true;
+
+  }
 
   onGlobalShow(event: Event) {
     this.profileShow = false
@@ -223,6 +248,31 @@ export class AccountComponent {
     this.twoFa = true
     this.invoice = false
     this.socials = false
+    this.highlight(event)
+  }
+
+  onServices(event: Event) {
+
+ this.gp  = true;
+this.pwd = false;
+this.auth  = true;
+this.inv  = false;
+this.upg  = true;
+this.sco  = true;
+this.authent  = false;
+    this.highlight(event)
+  }
+
+
+  onServicesReturn(event: Event) {
+
+    this.gp  = false;
+    this.pwd = true;
+    this.auth  = false;
+    this.inv  = true;
+    this.upg  = false;
+    this.sco  = false;
+    this.authent  = true;
     this.highlight(event)
   }
 

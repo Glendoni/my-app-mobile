@@ -1,0 +1,16 @@
+label i{
+  font-size: x-large;
+  color: #6c6cd1;
+}
+.saved{
+  color: black;
+  background: greenyellow;
+  padding: 9px;
+}
+.align-items-center {
+  /*height: 65px;*/
+}
+.error-text{
+  font-size: 14px;
+  color: red;
+}

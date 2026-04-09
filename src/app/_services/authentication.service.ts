@@ -279,6 +279,62 @@ export class AuthenticationService {
   //   console.log('I error')
   //
   // }
+
+
+  socials(details: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'client': 'administration'
+      })
+    }
+
+
+    return this.http.post(this.url + '/api/setStudySocials', details, httpOptions)
+      .pipe(map((result: any) => {
+        this.alertService.setAlert(result);
+        return result
+      }));
+
+  }
+  /**
+   * used for stripe payment link
+   * @param url
+   */
+  isLocalhost(url: string): boolean {
+    var myKey = /localhost/;
+    return this.checkMatch(url,myKey)
+  }
+  /**
+   * used for stripe payment link
+   * @param url
+   */
+  isStaging(url: string): boolean {
+    var myKey = /admin/;
+    return this.checkMatch(url,myKey)
+  }
+  /**
+   * used for stripe payment link
+   * @param url
+   * @todo make env in heroku
+   */
+  isProduction(url: string): boolean {
+    var myKey = /production/;
+    return this.checkMatch(url,myKey)
+  }
+
+  checkMatch(url:any, myKey:any){
+    var myMatch = url.search(myKey);
+    if(myMatch != -1)
+    {
+      return true
+    }
+    else
+    {
+      return false
+    }
+  }
 }
 
 
